@@ -1,0 +1,45 @@
+_entity char {
+   actions {
+      rob
+      beg
+      intimidate
+   }
+}
+
+_entity item {
+   actions {
+      identify
+   }
+}
+
+There's a crossroads.
+
+If you go left, go to _$LEFT
+If you go right, go to _$RIGHT
+
+_:LEFT
+There's a dude.
+
+He says "sup, bro".
+
+_#You may rob dude [go to _$FIGHT], beg from dude [go to _$BEG], or simply ignore
+_#him and move on.
+
+_# these are each tables:
+_# rob
+_# beg
+_# task about illuminati
+_# task about Sue Anne
+_# intimidate
+_# 
+_# items in each row are obfuscated into numbers
+_# rob table:
+_# aslkdj
+_# asdlk
+_# dude -> $FIGHT
+_# alkjsdl
+_# 
+_# this would mean that I have a large set of operations (rob, beg, talk about,
+_# ...) that I have to know about and try for every entity (e.g. dude)
+_# 
+_# starting to feel like a computer game?
