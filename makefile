@@ -20,6 +20,7 @@ all: \
 
 clean:
 	rm -rf bin
+	rm -rf src/prattle
 
 dirs:
 	@mkdir -p $(OBJ_DIR)/debug/cmn
@@ -36,17 +37,7 @@ dirs:
 # ----------------------------------------------------------------------
 # prattle
 
-include prattle/prattle.mak
-
-PRATTLE_HDR = $(patsubst %.cpp,%.hpp,$(PRATTLE_SRC))
-
-PRATTLE_IMPORTS = $(PRATTLE_SRC) $(PRATTLE_HDR)
-
-# copy the source so build, #include, etc. works basically identically
-$(PRATTLE_IMPORTS): %: prattle/%
-	$(info [import] $< --> $@)
-	@mkdir -p src/prattle
-	@cp $< $@
+include prattle/import.mak
 
 # ----------------------------------------------------------------------
 # cmn
