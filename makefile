@@ -38,26 +38,25 @@ dirs:
 
 include prattle/prattle.mak
 
-PRATTLE_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(PRATTLE_SRC)))
+PRATTLE_HDR = $(patsubst %.cpp,%.hpp,$(PRATTLE_SRC))
 
-$(PRATTLE_DEBUG_OBJ): $(OBJ_DIR)/debug/%.o: prattle/src/%.cpp
-	$(info $< --> $@)
-	@$(COMPILE_CMD) $(DEBUG_CC_FLAGS) $< -o $@
+PRATTLE_IMPORTS = $(PRATTLE_SRC) $(PRATTLE_HDR)
 
-PRATTLE_RELEASE_OBJ = $(subst src,$(OBJ_DIR)/release,$(patsubst %.cpp,%.o,$(PRATTLE_SRC)))
-
-$(PRATTLE_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: prattle/src/%.cpp
-	$(info $< --> $@)
-	@$(COMPILE_CMD) $(RELEASE_CC_FLAGS) $< -o $@
+# copy the source so build, #include, etc. works basically identically
+$(PRATTLE_IMPORTS): %: prattle/%
+	$(info [import] $< --> $@)
+	@mkdir -p src/prattle
+	@cp $< $@
 
 # ----------------------------------------------------------------------
 # cmn
 
 CMN_SRC = \
+	$(PRATTLE_SRC)
 
 CMN_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(CMN_SRC)))
 
-$(OUT_DIR)/debug/cmn.lib: $(CMN_DEBUG_OBJ) $(PRATTLE_DEBUG_OBJ)
+$(OUT_DIR)/debug/cmn.lib: $(PRATTLE_IMPORTS) $(CMN_DEBUG_OBJ)
 	$(info $< --> $@)
 	@ar crs $@ $^
 
@@ -67,7 +66,7 @@ $(CMN_DEBUG_OBJ): $(OBJ_DIR)/debug/%.o: src/%.cpp
 
 CMN_RELEASE_OBJ = $(subst src,$(OBJ_DIR)/release,$(patsubst %.cpp,%.o,$(CMN_SRC)))
 
-$(OUT_DIR)/release/cmn.lib: $(CMN_RELEASE_OBJ) $(PRATTLE_RELEASE_OBJ)
+$(OUT_DIR)/release/cmn.lib: $(PRATTLE_IMPORTS) $(CMN_RELEASE_OBJ)
 	$(info $< --> $@)
 	@ar crs $@ $^
 
