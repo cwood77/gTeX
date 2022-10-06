@@ -66,6 +66,7 @@ $(CMN_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 # gTeX
 
 GTEX_SRC = \
+	src/gTeX/lexor.cpp \
 	src/gTeX/main.cpp \
 	src/gTeX/middleTarget.cpp \
 	src/gTeX/parsePass.cpp \
