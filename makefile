@@ -18,11 +18,13 @@ all: \
 	debug \
 	$(OUT_DIR)/release/gTeX.exe \
 
+include prattle/import.mak
+
 clean:
 	rm -rf bin
 	rm -rf src/prattle
 
-dirs:
+dirs: $(PRATTLE_IMPORTS)
 	@mkdir -p $(OBJ_DIR)/debug/cmn
 	@mkdir -p $(OBJ_DIR)/debug/gTeX
 	@mkdir -p $(OBJ_DIR)/debug/prattle
@@ -33,11 +35,6 @@ dirs:
 	@mkdir -p $(OUT_DIR)/release
 
 .PHONY: debug all clean dirs test
-
-# ----------------------------------------------------------------------
-# prattle
-
-include prattle/import.mak
 
 # ----------------------------------------------------------------------
 # cmn
@@ -70,6 +67,9 @@ $(CMN_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 
 GTEX_SRC = \
 	src/gTeX/main.cpp \
+	src/gTeX/middleTarget.cpp \
+	src/gTeX/parsePass.cpp \
+	src/gTeX/textTarget.cpp \
 
 GTEX_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(GTEX_SRC)))
 
