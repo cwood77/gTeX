@@ -1,3 +1,4 @@
 [submodule "prattle"]
 	path = prattle
 	url = https://github.com/cwood77/prattle.git
+   branch = users/cwood/poc

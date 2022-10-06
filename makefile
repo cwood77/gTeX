@@ -24,12 +24,31 @@ clean:
 dirs:
 	@mkdir -p $(OBJ_DIR)/debug/cmn
 	@mkdir -p $(OBJ_DIR)/debug/gTeX
+	@mkdir -p $(OBJ_DIR)/debug/prattle
 	@mkdir -p $(OBJ_DIR)/release/cmn
 	@mkdir -p $(OBJ_DIR)/release/gTeX
+	@mkdir -p $(OBJ_DIR)/release/prattle
 	@mkdir -p $(OUT_DIR)/debug
 	@mkdir -p $(OUT_DIR)/release
 
 .PHONY: debug all clean dirs test
+
+# ----------------------------------------------------------------------
+# prattle
+
+include prattle/prattle.mak
+
+PRATTLE_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(PRATTLE_SRC)))
+
+$(PRATTLE_DEBUG_OBJ): $(OBJ_DIR)/debug/%.o: prattle/src/%.cpp
+	$(info $< --> $@)
+	@$(COMPILE_CMD) $(DEBUG_CC_FLAGS) $< -o $@
+
+PRATTLE_RELEASE_OBJ = $(subst src,$(OBJ_DIR)/release,$(patsubst %.cpp,%.o,$(PRATTLE_SRC)))
+
+$(PRATTLE_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: prattle/src/%.cpp
+	$(info $< --> $@)
+	@$(COMPILE_CMD) $(RELEASE_CC_FLAGS) $< -o $@
 
 # ----------------------------------------------------------------------
 # cmn
@@ -38,7 +57,7 @@ CMN_SRC = \
 
 CMN_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(CMN_SRC)))
 
-$(OUT_DIR)/debug/cmn.lib: $(CMN_DEBUG_OBJ)
+$(OUT_DIR)/debug/cmn.lib: $(CMN_DEBUG_OBJ) $(PRATTLE_DEBUG_OBJ)
 	$(info $< --> $@)
 	@ar crs $@ $^
 
@@ -48,7 +67,7 @@ $(CMN_DEBUG_OBJ): $(OBJ_DIR)/debug/%.o: src/%.cpp
 
 CMN_RELEASE_OBJ = $(subst src,$(OBJ_DIR)/release,$(patsubst %.cpp,%.o,$(CMN_SRC)))
 
-$(OUT_DIR)/release/cmn.lib: $(CMN_RELEASE_OBJ)
+$(OUT_DIR)/release/cmn.lib: $(CMN_RELEASE_OBJ) $(PRATTLE_RELEASE_OBJ)
 	$(info $< --> $@)
 	@ar crs $@ $^
 
