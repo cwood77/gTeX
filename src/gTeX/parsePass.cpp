@@ -10,12 +10,13 @@ using namespace prattle::pass;
 
 void loadPass::run(config& c, void *pIr)
 {
+   fileNode *pRoot = reinterpret_cast<fileNode*>(pIr);
+
    std::cout << "loading file" << std::endl;
    std::unique_ptr<iLexorInput> pIn(fileLoader::load("testdata.txt"));
 
    lexor l(*pIn);
    parser p(l);
-   std::unique_ptr<fileNode> pRoot(new fileNode());
    p.parseFile(*pRoot);
 
    dumpVisitor v;

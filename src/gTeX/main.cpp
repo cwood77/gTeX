@@ -1,5 +1,7 @@
 #include "../prattle/config.hpp"
 #include "../prattle/pass.hpp"
+#include "node.hpp"
+#include <memory>
 
 using namespace prattle;
 using namespace prattle::pass;
@@ -33,8 +35,8 @@ int main(int,const char*[])
 
    passRunChain rc; // DUP
    passScheduler().inflate(sched,rc);
-   void *pIr = NULL;
-   passManager().run(cfg,rc,pIr);
+   std::unique_ptr<fileNode> pRoot(new fileNode());
+   passManager().run(cfg,rc,pRoot.get());
 
    return 0;
 }

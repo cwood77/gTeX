@@ -52,3 +52,33 @@ public:
    virtual void visit(labelNode& n);
    virtual void visit(paragraphNode& n);
 };
+
+// TODO the complete list of imaginable transforms
+//
+//                                          ----- front end
+// 2 file finder
+// * file loader
+//                                          ----- middle end
+// paragraph disassembler
+//  - location jumps
+//  - entities
+// entity/table generator
+// linker
+// DOT printer
+//                                          ----- 2nd middle end
+// label randomizer
+// label mover
+//                                          ----- back end
+// jump formatter
+// 1 label formatter
+// table formatter
+// entity formatter
+// 1 entity remover
+// paragraph reassembler
+//
+// 1 printer
+//
+// 1 what I need first
+// 2 what I need second
+// * done
+//
