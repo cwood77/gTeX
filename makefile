@@ -72,6 +72,7 @@ GTEX_SRC = \
 	src/gTeX/node.cpp \
 	src/gTeX/parsePass.cpp \
 	src/gTeX/parser.cpp \
+	src/gTeX/textPrintPass.cpp \
 	src/gTeX/textTarget.cpp \
 
 GTEX_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(GTEX_SRC)))

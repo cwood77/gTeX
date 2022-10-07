@@ -38,5 +38,9 @@ int main(int,const char*[])
    std::unique_ptr<fileNode> pRoot(new fileNode());
    passManager().run(cfg,rc,pRoot.get());
 
+   // diag dump
+   dumpVisitor v;
+   pRoot->acceptVisitor(v);
+
    return 0;
 }

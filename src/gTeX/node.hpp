@@ -44,6 +44,15 @@ public:
    cdwImplNode(paragraphNode,iGTeXVisitor);
 };
 
+class gTeXVisitor : public iGTeXVisitor {
+public:
+   virtual void visit(node& n) {}
+   virtual void visit(fileNode& n) {}
+   virtual void visit(entityNode& n) {}
+   virtual void visit(labelNode& n) {}
+   virtual void visit(paragraphNode& n) {}
+};
+
 class dumpVisitor : public iGTeXVisitor {
 public:
    virtual void visit(node& n);

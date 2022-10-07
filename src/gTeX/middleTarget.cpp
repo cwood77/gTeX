@@ -1,5 +1,4 @@
 #include "../prattle/pass.hpp"
-#include "parsePass.hpp"
 
 using namespace prattle;
 using namespace prattle::pass;
@@ -10,7 +9,8 @@ public:
    virtual std::string getPredecessorTarget() { return ""; }
    virtual void adjustPasses(passCatalog& c, passSchedule& s)
    {
-      s.append(c.demand<loadPass>());
+      extern const char *kLoadPassName;
+      s.append(c.demand(kLoadPassName));
    }
 };
 

@@ -20,7 +20,11 @@ class textTarget : public iTarget {
 public:
    virtual void configure(config& c) {}
    virtual std::string getPredecessorTarget() { return "middle"; }
-   virtual void adjustPasses(passCatalog& c, passSchedule& s) {}
+   virtual void adjustPasses(passCatalog& c, passSchedule& s)
+   {
+      extern const char *kTextPrintPassName;
+      s.append(c.demand(kTextPrintPassName));
+   }
 };
 
 autoTargetInfo<textTarget> gTextTgt("text");
