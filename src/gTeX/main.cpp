@@ -25,7 +25,7 @@ int main(int,const char*[])
 
    // we should now have a final pass
    //auto targetName = cfg.demand<stringSetting>().value;
-   std::string targetName = cfg.createOrFetch<stringSetting>().value;
+   std::string targetName = cfg.createOrFetch<stringSetting>("target").value;
 
    // run real passses from target chain
    targetChain tc;
@@ -38,9 +38,11 @@ int main(int,const char*[])
    std::unique_ptr<fileNode> pRoot(new fileNode());
    passManager().run(cfg,rc,pRoot.get());
 
+#if 0
    // diag dump
    dumpVisitor v;
    pRoot->acceptVisitor(v);
+#endif
 
    return 0;
 }

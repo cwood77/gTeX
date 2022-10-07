@@ -7,8 +7,9 @@ RELEASE_CC_FLAGS = -O3 -c -Wall
 DEBUG_LNK_FLAGS_POST = -ggdb -static-libgcc -static-libstdc++ -static
 RELEASE_LNK_FLAGS_POST = -static-libgcc -static-libstdc++ -static
 
-test: \
-	debug \
+test: debug
+	@bin/out/debug/gTeX.exe
+	@cmd.exe /c "fc testdata.txt-out testdata.txt-out-expected"
 
 debug: \
 	dirs \
