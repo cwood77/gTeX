@@ -6,7 +6,7 @@ using namespace prattle::pass;
 
 class defaultTargetPass : public iPass {
 public:
-   virtual void run(config& c, void*& pIr)
+   virtual void run(config& c, void *pIr)
    {
       auto& s = c.createOrFetch<stringSetting>();
       if(s.value.empty())

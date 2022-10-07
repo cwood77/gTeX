@@ -10,9 +10,7 @@ public:
    virtual std::string getPredecessorTarget() { return ""; }
    virtual void adjustPasses(passCatalog& c, passSchedule& s)
    {
-      //s.append(c.demand<loadPass>());
-      //s.append(c.demand(typeid(loadPass).name())); // UNIMPLED
-      s.append(gLoadPass);
+      s.append(c.demand<loadPass>());
    }
 };
 

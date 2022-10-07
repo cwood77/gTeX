@@ -1,23 +1,24 @@
+#include "../prattle/node.hpp"
 #include "lexor.hpp"
 
 namespace {
 
-const tokenTableEntry gCommonTokens[] = {
-   { tokenTableEntry::kPunctuation,  "_#", lexor::kComment, "comment" },
-   { tokenTableEntry::kPunctuation,  NULL }
+const lexemeTableEntry gCommonTokens[] = {
+   { lexemeTableEntry::kPunctuation,  "_#", lexor::kComment },
+   { lexemeTableEntry::kPunctuation,  NULL }
 };
 
-const tokenTableEntry gTopLevelTokens[] = {
-   { tokenTableEntry::kAlphanumeric, "_entity", lexor::kEntity, "entity" },
-   { tokenTableEntry::kPunctuation,  "_:",      lexor::kLabel,  "label" },
-   { tokenTableEntry::kPunctuation,  NULL }
+const lexemeTableEntry gTopLevelTokens[] = {
+   { lexemeTableEntry::kAlphanumeric, "_entity", lexor::kEntity },
+   { lexemeTableEntry::kPunctuation,  "_:",      lexor::kLabel  },
+   { lexemeTableEntry::kPunctuation,  NULL }
 };
 
-const tokenTableEntry gEntityTokens[] = {
-   { tokenTableEntry::kPunctuation,  "{",       lexor::kLBrace,  "left brace" },
-   { tokenTableEntry::kPunctuation,  "}",       lexor::kRBrace,  "right brace" },
-   { tokenTableEntry::kAlphanumeric, "actions", lexor::kActions, "actions" },
-   { tokenTableEntry::kPunctuation,  NULL }
+const lexemeTableEntry gEntityTokens[] = {
+   { lexemeTableEntry::kPunctuation,  "{",       lexor::kLBrace  },
+   { lexemeTableEntry::kPunctuation,  "}",       lexor::kRBrace  },
+   { lexemeTableEntry::kAlphanumeric, "actions", lexor::kActions },
+   { lexemeTableEntry::kPunctuation,  NULL }
 };
 
 } // anonymous namespace
@@ -42,4 +43,17 @@ scanStrategies::scanStrategies()
 lexor::lexor(iLexorInput& src)
 : lexorBase(scanStrategies::get().topLevel,src)
 {
+   publishToken(kComment, "comment");
+   publishToken(kEntity,  "entity");
+   publishToken(kLBrace,  "left brace");
+   publishToken(kRBrace,  "right brace");
+   publishToken(kActions, "actions");
+   publishToken(kLabel,   "label");
+   publishToken(kWord,    "word");
+}
+
+void lexor::setup(node& n)
+{
+   n.filePath = getFileName();
+   n.lineNumber = getLineNumber();
 }

@@ -7,7 +7,5 @@ using namespace prattle::pass;
 
 class loadPass : public iPass {
 public:
-   virtual void run(config& c, void*& pIr);
+   virtual void run(config& c, void *pIr);
 };
-
-extern autoPassInfo<loadPass> gLoadPass;

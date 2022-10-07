@@ -69,7 +69,9 @@ GTEX_SRC = \
 	src/gTeX/lexor.cpp \
 	src/gTeX/main.cpp \
 	src/gTeX/middleTarget.cpp \
+	src/gTeX/node.cpp \
 	src/gTeX/parsePass.cpp \
+	src/gTeX/parser.cpp \
 	src/gTeX/textTarget.cpp \
 
 GTEX_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(GTEX_SRC)))

@@ -1,14 +1,18 @@
 #pragma once
 #include "../prattle/lexor.hpp"
 
+namespace prattle {
+class node;
+} // namespace prattle
+
 using namespace prattle;
 using namespace prattle::lex;
 
 class scanStrategies {
 private:
-   tokenTable m_cmn;
-   tokenTable m_topLevel;
-   tokenTable m_entity;
+   lexemeTable m_cmn;
+   lexemeTable m_topLevel;
+   lexemeTable m_entity;
 
 public:
    static scanStrategies& get();
@@ -22,7 +26,7 @@ private:
 
 class lexor : public lexorBase {
 public:
-   enum tokens {
+   enum {
       kComment = lexorBase::kFirstDerivedToken,
       kEntity,
       kLBrace,
@@ -34,5 +38,5 @@ public:
 
    explicit lexor(iLexorInput& src);
 
-   tokens getToken() const { return (tokens)_getToken(); }
+   void setup(node& n);
 };
