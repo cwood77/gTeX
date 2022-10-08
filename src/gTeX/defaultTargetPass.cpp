@@ -14,4 +14,4 @@ public:
    }
 };
 
-autoPassInfo<defaultTargetPass> gDefTgtPass("cfg",0);
+cdwExportPass(defaultTargetPass,"cfg",0);

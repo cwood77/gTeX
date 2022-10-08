@@ -14,17 +14,16 @@ public:
    }
 };
 
-autoPassInfo<textTargetDefaultOptionPass> txtDefOptPass("cfg:target",0);
+cdwExportPass(textTargetDefaultOptionPass,"cfg:target",0);
 
 class textTarget : public iTarget {
 public:
    virtual void configure(config& c) {}
-   virtual std::string getPredecessorTarget() { return "middle"; }
+   virtual std::string getPredecessorTarget() { return "middleTarget"; }
    virtual void adjustPasses(passCatalog& c, passSchedule& s)
    {
-      extern const char *kTextPrintPassName;
-      s.append(c.demand(kTextPrintPassName));
+      s.append(c.demand("textPrintPass"));
    }
 };
 
-autoTargetInfo<textTarget> gTextTgt("text");
+cdwExportTarget(textTarget);

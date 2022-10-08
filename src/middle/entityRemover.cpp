@@ -32,5 +32,4 @@ public:
    }
 };
 
-autoPassInfo<entityRemovalPass> gEntityRemovalPass("",-1);
-const char *kEntityRemovalPassName = typeid(entityRemovalPass).name();
+cdwExportPass(entityRemovalPass,"",-1);

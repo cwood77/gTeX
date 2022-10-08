@@ -15,7 +15,7 @@ public:
    {
       fileNode *pRoot = reinterpret_cast<fileNode*>(pIr);
 
-      std::cout << "loading file" << std::endl;
+      std::cout << "  loading file testdata.txt" << std::endl;
       std::unique_ptr<iLexorInput> pIn(fileLoader::load("testdata.txt"));
 
       lexor l(*pIn);
@@ -24,5 +24,4 @@ public:
    }
 };
 
-autoPassInfo<loadPass> gLoadPass("",-1);
-const char *kLoadPassName = typeid(loadPass).name();
+cdwExportPass(loadPass,"",-1);

@@ -9,10 +9,7 @@ namespace {
 
 class myModule : public iModule {
 public:
-   virtual void solicit(std::list<std::string>& depMods)
-   {
-      depMods.push_back("middle.dll");
-   }
+   virtual void solicit(std::list<std::string>& depMods) {}
 
    virtual void collect(passCatalog& p, targetCatalog& t)
    {

@@ -9,9 +9,8 @@ public:
    virtual std::string getPredecessorTarget() { return ""; }
    virtual void adjustPasses(passCatalog& c, passSchedule& s)
    {
-      extern const char *kLoadPassName;
-      s.append(c.demand(kLoadPassName));
+      s.append(c.demand("loadPass"));
    }
 };
 
-autoTargetInfo<frontTarget> gFrontTgt("front");
+cdwExportTarget(frontTarget);
