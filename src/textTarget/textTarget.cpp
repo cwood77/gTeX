@@ -4,18 +4,6 @@
 using namespace prattle;
 using namespace prattle::pass;
 
-class defaultTargetPass : public iPass {
-public:
-   virtual void run(config& c, void *pIr)
-   {
-      auto& s = c.createOrFetch<stringSetting>("target");
-      if(s.value.empty())
-         s.value = "text";
-   }
-};
-
-autoPassInfo<defaultTargetPass> gDefTgtPass("cfg",0);
-
 class textTargetDefaultOptionPass : public iPass {
 public:
    virtual void run(config& c, void *pIr)
@@ -26,7 +14,7 @@ public:
    }
 };
 
-autoPassInfo<textTargetDefaultOptionPass> txtDefOptPass("cfg",1);
+autoPassInfo<textTargetDefaultOptionPass> txtDefOptPass("cfg:target",0);
 
 class textTarget : public iTarget {
 public:

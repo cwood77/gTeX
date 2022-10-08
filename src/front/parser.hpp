@@ -1,5 +1,5 @@
 #pragma once
-#include "node.hpp"
+#include "../cmn/node.hpp"
 
 class lexor;
 

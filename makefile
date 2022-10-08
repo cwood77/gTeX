@@ -14,11 +14,15 @@ test: debug
 debug: \
 	dirs \
 	$(OUT_DIR)/debug/gTeX.exe \
+	$(OUT_DIR)/debug/front.dll \
+	$(OUT_DIR)/debug/middle.dll \
 	$(OUT_DIR)/debug/textTarget.dll \
 
 all: \
 	debug \
 	$(OUT_DIR)/release/gTeX.exe \
+	$(OUT_DIR)/release/front.dll \
+	$(OUT_DIR)/release/middle.dll \
 	$(OUT_DIR)/release/textTarget.dll \
 
 include prattle/import.mak
@@ -29,13 +33,17 @@ clean:
 
 dirs: $(PRATTLE_IMPORTS)
 	@mkdir -p $(OBJ_DIR)/debug/cmn
+	@mkdir -p $(OBJ_DIR)/debug/front
 	@mkdir -p $(OBJ_DIR)/debug/gTeX
 	@mkdir -p $(OBJ_DIR)/debug/gTeX/pass
+	@mkdir -p $(OBJ_DIR)/debug/middle
 	@mkdir -p $(OBJ_DIR)/debug/prattle
 	@mkdir -p $(OBJ_DIR)/debug/textTarget
 	@mkdir -p $(OBJ_DIR)/release/cmn
+	@mkdir -p $(OBJ_DIR)/release/front
 	@mkdir -p $(OBJ_DIR)/release/gTeX
 	@mkdir -p $(OBJ_DIR)/release/gTeX/pass
+	@mkdir -p $(OBJ_DIR)/release/middle
 	@mkdir -p $(OBJ_DIR)/release/prattle
 	@mkdir -p $(OBJ_DIR)/release/textTarget
 	@mkdir -p $(OUT_DIR)/debug
@@ -47,7 +55,8 @@ dirs: $(PRATTLE_IMPORTS)
 # cmn
 
 CMN_SRC = \
-	$(PRATTLE_SRC)
+	$(PRATTLE_SRC) \
+	src/cmn/node.cpp \
 
 CMN_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(CMN_SRC)))
 
@@ -73,13 +82,8 @@ $(CMN_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 # gTeX
 
 GTEX_SRC = \
-	src/gTeX/lexor.cpp \
+	src/gTeX/defaultTargetPass.cpp \
 	src/gTeX/main.cpp \
-	src/gTeX/middleTarget.cpp \
-	src/gTeX/node.cpp \
-	src/gTeX/parsePass.cpp \
-	src/gTeX/parser.cpp \
-	src/gTeX/pass/entityRemover.cpp \
 
 GTEX_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(GTEX_SRC)))
 
@@ -102,12 +106,70 @@ $(GTEX_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 	@$(COMPILE_CMD) $(RELEASE_CC_FLAGS) $< -o $@
 
 # ----------------------------------------------------------------------
+# front
+
+FRONT_SRC = \
+	src/front/frontTarget.cpp \
+	src/front/lexor.cpp \
+	src/front/module.cpp \
+	src/front/parsePass.cpp \
+	src/front/parser.cpp \
+
+FRONT_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(FRONT_SRC)))
+
+$(OUT_DIR)/debug/front.dll: $(FRONT_DEBUG_OBJ) $(OUT_DIR)/debug/cmn.lib
+	$(info $< --> $@)
+	@$(LINK_CMD) -shared -o $@ $(FRONT_DEBUG_OBJ) $(DEBUG_LNK_FLAGS_POST) -Lbin/out/debug -lcmn
+
+$(FRONT_DEBUG_OBJ): $(OBJ_DIR)/debug/%.o: src/%.cpp
+	$(info $< --> $@)
+	@$(COMPILE_CMD) $(DEBUG_CC_FLAGS) $< -o $@
+
+FRONT_RELEASE_OBJ = $(subst src,$(OBJ_DIR)/release,$(patsubst %.cpp,%.o,$(FRONT_SRC)))
+
+$(OUT_DIR)/release/front.dll: $(FRONT_RELEASE_OBJ) $(OUT_DIR)/release/cmn.lib
+	$(info $< --> $@)
+	@$(LINK_CMD) -shared -o $@ $(FRONT_RELEASE_OBJ) $(RELEASE_LNK_FLAGS_POST) -Lbin/out/release -lcmn
+
+$(FRONT_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
+	$(info $< --> $@)
+	@$(COMPILE_CMD) $(RELEASE_CC_FLAGS) $< -o $@
+
+# ----------------------------------------------------------------------
+# middle
+
+MIDDLE_SRC = \
+	src/middle/entityRemover.cpp \
+	src/middle/middleTarget.cpp \
+	src/middle/module.cpp \
+
+MIDDLE_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(MIDDLE_SRC)))
+
+$(OUT_DIR)/debug/middle.dll: $(MIDDLE_DEBUG_OBJ) $(OUT_DIR)/debug/cmn.lib
+	$(info $< --> $@)
+	@$(LINK_CMD) -shared -o $@ $(MIDDLE_DEBUG_OBJ) $(DEBUG_LNK_FLAGS_POST) -Lbin/out/debug -lcmn
+
+$(MIDDLE_DEBUG_OBJ): $(OBJ_DIR)/debug/%.o: src/%.cpp
+	$(info $< --> $@)
+	@$(COMPILE_CMD) $(DEBUG_CC_FLAGS) $< -o $@
+
+MIDDLE_RELEASE_OBJ = $(subst src,$(OBJ_DIR)/release,$(patsubst %.cpp,%.o,$(MIDDLE_SRC)))
+
+$(OUT_DIR)/release/middle.dll: $(MIDDLE_RELEASE_OBJ) $(OUT_DIR)/release/cmn.lib
+	$(info $< --> $@)
+	@$(LINK_CMD) -shared -o $@ $(MIDDLE_RELEASE_OBJ) $(RELEASE_LNK_FLAGS_POST) -Lbin/out/release -lcmn
+
+$(MIDDLE_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
+	$(info $< --> $@)
+	@$(COMPILE_CMD) $(RELEASE_CC_FLAGS) $< -o $@
+
+# ----------------------------------------------------------------------
 # textTarget
 
 TEXTTARGET_SRC = \
-	src/gTeX/textPrintPass.cpp \
-	src/gTeX/textTarget.cpp \
-	src/textTarget/module.cpp
+	src/textTarget/module.cpp \
+	src/textTarget/textPrintPass.cpp \
+	src/textTarget/textTarget.cpp \
 
 TEXTTARGET_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(TEXTTARGET_SRC)))
 

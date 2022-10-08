@@ -1,7 +1,8 @@
+#include "../cmn/node.hpp"
 #include "../prattle/config.hpp"
 #include "../prattle/module.hpp"
 #include "../prattle/pass.hpp"
-#include "node.hpp"
+#include <iostream>
 #include <memory>
 
 using namespace prattle;
@@ -10,37 +11,43 @@ using namespace prattle::pass;
 
 int main(int,const char*[])
 {
+   std::cout << "gTeX " << __DATE__ << " " << __TIME__ << std::endl;
+
+   // module loader unloads modules on dtor, so put it first. This allows deallocs
+   // (e.g. config's dtor) to use module heaps
+   moduleLoader mLdr;
+
    // setup a config
    config cfg;
 
+   // run some basic passes on the config
    {
-      // run some basic passes on the config
       auto cat = passCatalog::get().getPhase("cfg");
       passSchedule sched;
       passScheduler().schedule(cat,sched);
 
-      passRunChain rc; // this happens twice now? make this easier?
+      passRunChain rc;
       passScheduler().inflate(sched,rc);
-      void *pIr = NULL;
-      passManager().run(cfg,rc,pIr);
+      passManager().run(cfg,rc);
    }
 
    // we should now have a final pass
-   auto targetName = cfg.createOrFetch<stringSetting>("target").value;
+   auto targetName = cfg.demand<stringSetting>("target").value;
 
-   // TODO all
-   {
-      if(targetName.empty())
-         targetName = "text";
-      auto& s = cfg.createOrFetch<stringSetting>("text:out-path");
-      if(s.value.empty())
-         s.value = "testdata.txt-out";
-   }
-
-   // try loading some modules, just in case
-   moduleLoader mLdr;
+   // try loading a module for the target, just in case
    mLdr.tryLoad(targetName + "Target.dll");
    mLdr.collect(passCatalog::get(),targetCatalog::get());
+
+   // run additional passess to configure the targt
+   {
+      auto cat = passCatalog::get().getPhase("cfg:target");
+      passSchedule sched;
+      passScheduler().schedule(cat,sched);
+
+      passRunChain rc;
+      passScheduler().inflate(sched,rc);
+      passManager().run(cfg,rc);
+   }
 
    // run real passses from target chain
    targetChain tc;
@@ -48,7 +55,7 @@ int main(int,const char*[])
    passSchedule sched;
    tc.adjustPasses(passCatalog::get(),sched);
 
-   passRunChain rc; // DUP
+   passRunChain rc;
    passScheduler().inflate(sched,rc);
    std::unique_ptr<fileNode> pRoot(new fileNode());
    passManager().run(cfg,rc,pRoot.get());
@@ -58,6 +65,8 @@ int main(int,const char*[])
    dumpVisitor v;
    pRoot->acceptVisitor(v);
 #endif
+
+   std::cout << "bye" << std::endl;
 
    return 0;
 }

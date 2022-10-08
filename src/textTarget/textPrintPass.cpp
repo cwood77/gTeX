@@ -1,6 +1,6 @@
+#include "../cmn/node.hpp"
 #include "../prattle/config.hpp"
 #include "../prattle/pass.hpp"
-#include "node.hpp"
 #include <fstream>
 #include <iostream>
 

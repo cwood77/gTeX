@@ -1,5 +1,5 @@
-#include "../../prattle/pass.hpp"
-#include "../node.hpp"
+#include "../cmn/node.hpp"
+#include "../prattle/pass.hpp"
 
 using namespace prattle;
 using namespace prattle::pass;
