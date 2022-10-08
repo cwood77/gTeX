@@ -1,9 +1,11 @@
 #include "../prattle/config.hpp"
+#include "../prattle/module.hpp"
 #include "../prattle/pass.hpp"
 #include "node.hpp"
 #include <memory>
 
 using namespace prattle;
+using namespace prattle::module;
 using namespace prattle::pass;
 
 int main(int,const char*[])
@@ -24,8 +26,21 @@ int main(int,const char*[])
    }
 
    // we should now have a final pass
-   //auto targetName = cfg.demand<stringSetting>().value;
-   std::string targetName = cfg.createOrFetch<stringSetting>("target").value;
+   auto targetName = cfg.createOrFetch<stringSetting>("target").value;
+
+   // TODO all
+   {
+      if(targetName.empty())
+         targetName = "text";
+      auto& s = cfg.createOrFetch<stringSetting>("text:out-path");
+      if(s.value.empty())
+         s.value = "testdata.txt-out";
+   }
+
+   // try loading some modules, just in case
+   moduleLoader mLdr;
+   mLdr.tryLoad(targetName + "Target.dll");
+   mLdr.collect(passCatalog::get(),targetCatalog::get());
 
    // run real passses from target chain
    targetChain tc;
