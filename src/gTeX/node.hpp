@@ -82,7 +82,7 @@ public:
 // 1 label formatter
 // table formatter
 // entity formatter
-// 1 entity remover
+// * entity remover
 // paragraph reassembler
 //
 // * printer

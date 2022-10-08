@@ -1,12 +1,5 @@
-#include "../../prattle/config.hpp"
-#include "../../prattle/loader.hpp"
 #include "../../prattle/pass.hpp"
-#include "../lexor.hpp"
 #include "../node.hpp"
-#include "../parser.hpp"
-#include <fstream>
-#include <iostream>
-#include <memory>
 
 using namespace prattle;
 using namespace prattle::pass;
