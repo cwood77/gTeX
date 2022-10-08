@@ -11,6 +11,9 @@ public:
    {
       extern const char *kLoadPassName;
       s.append(c.demand(kLoadPassName));
+
+      extern const char *kEntityRemovalPassName;
+      s.append(c.demand(kEntityRemovalPassName));
    }
 };
 

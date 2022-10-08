@@ -28,9 +28,11 @@ clean:
 dirs: $(PRATTLE_IMPORTS)
 	@mkdir -p $(OBJ_DIR)/debug/cmn
 	@mkdir -p $(OBJ_DIR)/debug/gTeX
+	@mkdir -p $(OBJ_DIR)/debug/gTeX/pass
 	@mkdir -p $(OBJ_DIR)/debug/prattle
 	@mkdir -p $(OBJ_DIR)/release/cmn
 	@mkdir -p $(OBJ_DIR)/release/gTeX
+	@mkdir -p $(OBJ_DIR)/release/gTeX/pass
 	@mkdir -p $(OBJ_DIR)/release/prattle
 	@mkdir -p $(OUT_DIR)/debug
 	@mkdir -p $(OUT_DIR)/release
@@ -73,6 +75,7 @@ GTEX_SRC = \
 	src/gTeX/node.cpp \
 	src/gTeX/parsePass.cpp \
 	src/gTeX/parser.cpp \
+	src/gTeX/pass/entityRemover.cpp \
 	src/gTeX/textPrintPass.cpp \
 	src/gTeX/textTarget.cpp \
 

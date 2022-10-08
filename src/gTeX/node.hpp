@@ -47,7 +47,7 @@ public:
 class gTeXVisitor : public iGTeXVisitor {
 public:
    virtual void visit(node& n) {}
-   virtual void visit(fileNode& n) {}
+   virtual void visit(fileNode& n) { visitChildren(n); }
    virtual void visit(entityNode& n) {}
    virtual void visit(labelNode& n) {}
    virtual void visit(paragraphNode& n) {}
@@ -85,9 +85,10 @@ public:
 // 1 entity remover
 // paragraph reassembler
 //
-// 1 printer
+// * printer
 //
 // 1 what I need first
 // 2 what I need second
 // * done
 //
+

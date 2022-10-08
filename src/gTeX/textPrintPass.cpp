@@ -13,14 +13,9 @@ using namespace prattle::pass;
 
 namespace {
 
-class textPrinter : public gTeXVisitor {
+class visitor : public gTeXVisitor {
 public:
-   explicit textPrinter(std::ostream& o) : m_out(o) {}
-
-   virtual void visit(fileNode& n)
-   {
-      visitChildren(n);
-   }
+   explicit visitor(std::ostream& o) : m_out(o) {}
 
    virtual void visit(paragraphNode& n)
    {
@@ -46,7 +41,7 @@ public:
       if(!out.good())
          throw std::runtime_error("can't open file for output: " + path);
 
-      textPrinter v(out);
+      visitor v(out);
       pRoot->acceptVisitor(v);
    }
 };
