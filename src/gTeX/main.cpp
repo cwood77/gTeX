@@ -39,7 +39,7 @@ int main(int,const char*[])
    targetChain tc;
    targetChainBuilder().build(cfg,ltf,targetName,tc);
 
-   // run additional passess to configure the targt
+   // run additional passess to fill in the config
    {
       auto cat = passCatalog::get().getPhase("cfg:target");
       passSchedule sched;
@@ -50,8 +50,12 @@ int main(int,const char*[])
       passManager().run(cfg,rc);
    }
 
+   std::cout << "completed settings:" << std::endl;
+   cfg.dump(std::cout);
+
    // run real passses from target chain
    passSchedule sched;
+   // TODO move target configure to somewhere here, and out of build
    tc.adjustPasses(passCatalog::get(),sched);
 
    passRunChain rc;
