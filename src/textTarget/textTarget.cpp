@@ -22,6 +22,7 @@ public:
    virtual std::string getPredecessorTarget() { return "middleTarget"; }
    virtual void adjustPasses(passCatalog& c, passSchedule& s)
    {
+      s.append(c.demand("labelFormatterPass"));
       s.append(c.demand("textPrintPass"));
    }
 };

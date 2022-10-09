@@ -167,6 +167,7 @@ $(MIDDLE_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 # textTarget
 
 TEXTTARGET_SRC = \
+	src/textTarget/labelFormatter.cpp \
 	src/textTarget/module.cpp \
 	src/textTarget/textPrintPass.cpp \
 	src/textTarget/textTarget.cpp \

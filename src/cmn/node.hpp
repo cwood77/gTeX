@@ -79,7 +79,7 @@ public:
 // label mover
 //                                          ----- back end
 // jump formatter
-// 1 label formatter
+// * label formatter
 // table formatter
 // entity formatter
 // * entity remover
