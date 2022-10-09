@@ -13,12 +13,16 @@ private:
    lexemeTable m_cmn;
    lexemeTable m_topLevel;
    lexemeTable m_entity;
+   lexemeTable m_paragraphStart;
+   lexemeTable m_paragraphEnd;
 
 public:
    static scanStrategies& get();
 
    standardStrategy topLevel;
    standardStrategy entity;
+   standardStrategy paragraphStart;
+   standardStrategy paragraphEnd;
 
 private:
    scanStrategies();
@@ -31,9 +35,11 @@ public:
       kEntity,
       kLBrace,
       kRBrace,
+      kColon,
       kActions,
       kLabel,
-      kWord
+      kWord,
+      kGoto,
    };
 
    explicit lexor(iLexorInput& src);

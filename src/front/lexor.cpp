@@ -21,6 +21,18 @@ const lexemeTableEntry gEntityTokens[] = {
    { lexemeTableEntry::kPunctuation,  NULL }
 };
 
+const lexemeTableEntry gParagraphStartTokens[] = {
+   { lexemeTableEntry::kPunctuation,  "_$", lexor::kGoto },
+   { lexemeTableEntry::kPunctuation,  "_{", lexor::kEntity },
+   { lexemeTableEntry::kPunctuation,  NULL }
+};
+
+const lexemeTableEntry gParagraphEndTokens[] = {
+   { lexemeTableEntry::kPunctuation,  "}", lexor::kRBrace },
+   { lexemeTableEntry::kPunctuation,  ":", lexor::kColon },
+   { lexemeTableEntry::kPunctuation,  NULL }
+};
+
 } // anonymous namespace
 
 scanStrategies& scanStrategies::get()
@@ -33,8 +45,12 @@ scanStrategies::scanStrategies()
 : m_cmn(gCommonTokens)
 , m_topLevel(gCommonTokens)
 , m_entity(gCommonTokens)
+, m_paragraphStart(gParagraphStartTokens)
+, m_paragraphEnd(gParagraphEndTokens)
 , topLevel(m_topLevel,/*anyWordToken*/lexor::kWord)
 , entity(m_entity,/*anyWordToken*/lexor::kWord)
+, paragraphStart(m_paragraphStart,/*anyWordToken*/lexor::kWord)
+, paragraphEnd(m_paragraphEnd,/*anyWordToken*/lexor::kWord)
 {
    m_topLevel.add(gTopLevelTokens);
    m_entity.add(gEntityTokens);
@@ -47,9 +63,11 @@ lexor::lexor(iLexorInput& src)
    publishToken(kEntity,  "entity");
    publishToken(kLBrace,  "left brace");
    publishToken(kRBrace,  "right brace");
+   publishToken(kColon,   "colon");
    publishToken(kActions, "actions");
    publishToken(kLabel,   "label");
    publishToken(kWord,    "word");
+   publishToken(kGoto,    "goto");
 }
 
 void lexor::setup(node& n)

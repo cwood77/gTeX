@@ -55,3 +55,35 @@ void dumpVisitor::visit(paragraphNode& n)
    autoIndent _i(m_l);
    visitChildren(n);
 }
+
+void dumpVisitor::visit(entityInstanceNode& n)
+{
+   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
+   visitChildren(n);
+}
+
+void dumpVisitor::visit(jumpNode& n)
+{
+   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
+   visitChildren(n);
+}
+
+void dumpVisitor::visit(linkTableNode& n)
+{
+   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
+   visitChildren(n);
+}
+
+void dumpVisitor::visit(tableNode& n)
+{
+   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
+   visitChildren(n);
+}

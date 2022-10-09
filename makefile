@@ -109,6 +109,8 @@ $(GTEX_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 # front
 
 FRONT_SRC = \
+	src/front/contractParagraphPass.cpp \
+	src/front/expandParagraphPass.cpp \
 	src/front/fileEnumPass.cpp \
 	src/front/frontTarget.cpp \
 	src/front/lexor.cpp \

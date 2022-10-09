@@ -10,6 +10,10 @@ class fileNode;
 class entityNode;
 class labelNode;
 class paragraphNode;
+class entityInstanceNode;
+class jumpNode;
+class linkTableNode;
+class tableNode;
 
 class iGTeXVisitor : public iNodeVisitor {
 public:
@@ -19,6 +23,10 @@ public:
    virtual void visit(entityNode& n) = 0;
    virtual void visit(labelNode& n) = 0;
    virtual void visit(paragraphNode& n) = 0;
+   virtual void visit(entityInstanceNode& n) = 0;
+   virtual void visit(jumpNode& n) = 0;
+   virtual void visit(linkTableNode& n) = 0;
+   virtual void visit(tableNode& n) = 0;
 };
 
 class folderNode : public node {
@@ -51,6 +59,22 @@ public:
    cdwImplNode(paragraphNode,iGTeXVisitor);
 };
 
+class entityInstanceNode : public node {
+   cdwImplNode(entityInstanceNode,iGTeXVisitor);
+};
+
+class jumpNode : public node {
+   cdwImplNode(jumpNode,iGTeXVisitor);
+};
+
+class linkTableNode : public node {
+   cdwImplNode(linkTableNode,iGTeXVisitor);
+};
+
+class tableNode : public node {
+   cdwImplNode(tableNode,iGTeXVisitor);
+};
+
 class gTeXVisitor : public iGTeXVisitor {
 public:
    virtual void visit(node& n) {}
@@ -59,6 +83,10 @@ public:
    virtual void visit(entityNode& n) {}
    virtual void visit(labelNode& n) {}
    virtual void visit(paragraphNode& n) {}
+   virtual void visit(entityInstanceNode& n) {}
+   virtual void visit(jumpNode& n) {}
+   virtual void visit(linkTableNode& n) {}
+   virtual void visit(tableNode& n) {}
 };
 
 class dumpVisitor : public iGTeXVisitor {
@@ -71,6 +99,10 @@ public:
    virtual void visit(entityNode& n);
    virtual void visit(labelNode& n);
    virtual void visit(paragraphNode& n);
+   virtual void visit(entityInstanceNode& n);
+   virtual void visit(jumpNode& n);
+   virtual void visit(linkTableNode& n);
+   virtual void visit(tableNode& n);
 
 private:
    log::iLog& m_l;
