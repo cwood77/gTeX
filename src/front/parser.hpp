@@ -4,8 +4,11 @@
 class lexor;
 
 // <file> ::== _entity <entity> <file>
-//           | <label> <paragraph> <file>
-//           | <paragraph> <file>
+//           | <label> <label-paras> <file>
+//           | <paragraph> <file>               TODO is this really ok?
+//
+// <label-paras> ::== <paragraph> <label-paras>
+//                  | e
 //
 class parser {
 public:
@@ -15,6 +18,7 @@ public:
 
 private:
    void parseWords(paragraphNode& n);
+   void parseLabelParas(labelNode& n);
 
    lexor& skipComments(const iScanStrategy& s);
    lexor& skipComments();

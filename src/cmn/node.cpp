@@ -1,42 +1,57 @@
 #include "node.hpp"
 #include <iostream>
 
+using namespace prattle::log;
+
 void dumpVisitor::visit(node& n)
 {
-   std::cout << n.getName() << std::endl;
-   std::cout << std::endl;
+   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
+   visitChildren(n);
+}
+
+void dumpVisitor::visit(folderNode& n)
+{
+   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
    visitChildren(n);
 }
 
 void dumpVisitor::visit(fileNode& n)
 {
-   std::cout << n.getName() << std::endl;
-   std::cout << std::endl;
+   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
    visitChildren(n);
 }
 
 void dumpVisitor::visit(entityNode& n)
 {
-   std::cout << n.getName() << ": " << n.name << std::endl;
-   std::cout << "   actions=";
+   m_l.s().s() << indent(m_l) << n.getName() << ": " << n.name << std::endl;
+   m_l.s().s() << indent(m_l) << "   actions=";
    for(auto a : n.actions)
-      std::cout << a;
-   std::cout << std::endl;
-   std::cout << std::endl;
+      m_l.s().s() << indent(m_l) << a;
+   m_l.s().s() << indent(m_l) << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
    visitChildren(n);
 }
 
 void dumpVisitor::visit(labelNode& n)
 {
-   std::cout << n.getName() << ":" << n.label << std::endl;
-   std::cout << std::endl;
+   m_l.s().s() << indent(m_l) << n.getName() << ":" << n.label << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
    visitChildren(n);
 }
 
 void dumpVisitor::visit(paragraphNode& n)
 {
-   std::cout << n.getName() << std::endl;
-   std::cout << "TEST<" << n.text << ">" << std::endl;
-   std::cout << std::endl;
+   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << "TEST<" << n.text << ">" << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
    visitChildren(n);
 }

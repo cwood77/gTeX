@@ -10,7 +10,7 @@ public:
    {
       auto& s = c.createOrFetch<stringSetting>("text:out-path");
       if(s.value.empty())
-         s.value = "testdata.txt-out";
+         s.value = "out.txt";
    }
 };
 

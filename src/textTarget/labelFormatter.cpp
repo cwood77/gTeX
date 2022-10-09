@@ -17,6 +17,10 @@ public:
       auto *p = new paragraphNode();
       p->text = msg.str();
 
+      // 'flatten' my children under me
+      n.reparentChildren(n.demandParent(),&n);
+
+      // replace myself with a paragraph
       n.replace(*p);
    }
 };
@@ -27,7 +31,7 @@ class labelFormatterPass : public iPass {
 public:
    void run(config& c, void *pIr)
    {
-      fileNode *pRoot = reinterpret_cast<fileNode*>(pIr);
+      auto *pRoot = reinterpret_cast<folderNode*>(pIr);
 
       nodeEditOperation o;
       {

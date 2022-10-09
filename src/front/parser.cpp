@@ -24,6 +24,7 @@ void parser::parseFile(fileNode& f)
       }
       m_l.demandAndEat(lexor::kRBrace,scanStrategies::get().entity);
       skipComments(scanStrategies::get().entity).demandAndEat(lexor::kRBrace);
+      parseFile(f);
    }
    else if(m_l.getToken() == lexor::kLabel)
    {
@@ -33,21 +34,23 @@ void parser::parseFile(fileNode& f)
       skipComments().demand(lexor::kWord);
       n.label = m_l.getLexeme();
       m_l.advance();
+      parseLabelParas(n);
+      parseFile(f);
    }
    else if(m_l.getToken() == lexor::kWord)
    {
       auto& n = f.appendChild<paragraphNode>();
       m_l.setup(n);
       parseWords(n);
+      parseFile(f);
    }
    else if(m_l.getToken() == lexor::kEOI)
       return;
    else
       m_l.expected({ lexor::kEntity, lexor::kComment, lexor::kWord });
-
-   parseFile(f);
 }
 
+// decide which words belong to this paragraph
 void parser::parseWords(paragraphNode& n)
 {
    std::stringstream stream;
@@ -69,6 +72,19 @@ void parser::parseWords(paragraphNode& n)
    }
 
    n.text = stream.str();
+}
+
+// attach all subsequent paragraphs to this label
+void parser::parseLabelParas(labelNode& l)
+{
+   if(m_l.getToken() != lexor::kWord)
+      return;
+
+   auto& n = l.appendChild<paragraphNode>();
+   m_l.setup(n);
+   parseWords(n);
+
+   parseLabelParas(l);
 }
 
 lexor& parser::skipComments(const iScanStrategy& s)

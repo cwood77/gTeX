@@ -2,4 +2,4 @@
 *.swp
 /src/prattle/
 
-testdata.txt-out
+out.txt

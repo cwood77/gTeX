@@ -1,9 +1,11 @@
 #pragma once
+#include "../prattle/log.hpp"
 #include "../prattle/node.hpp"
 #include <vector>
 
 using namespace prattle;
 
+class folderNode;
 class fileNode;
 class entityNode;
 class labelNode;
@@ -12,10 +14,15 @@ class paragraphNode;
 class iGTeXVisitor : public iNodeVisitor {
 public:
    virtual void visit(node& n) = 0;
+   virtual void visit(folderNode& n) = 0;
    virtual void visit(fileNode& n) = 0;
    virtual void visit(entityNode& n) = 0;
    virtual void visit(labelNode& n) = 0;
    virtual void visit(paragraphNode& n) = 0;
+};
+
+class folderNode : public node {
+   cdwImplNode(folderNode,iGTeXVisitor);
 };
 
 class fileNode : public node {
@@ -47,6 +54,7 @@ public:
 class gTeXVisitor : public iGTeXVisitor {
 public:
    virtual void visit(node& n) {}
+   virtual void visit(folderNode& n) { visitChildren(n); }
    virtual void visit(fileNode& n) { visitChildren(n); }
    virtual void visit(entityNode& n) {}
    virtual void visit(labelNode& n) {}
@@ -55,35 +63,41 @@ public:
 
 class dumpVisitor : public iGTeXVisitor {
 public:
+   explicit dumpVisitor(log::iLog& l) : m_l(l) {}
+
    virtual void visit(node& n);
+   virtual void visit(folderNode& n);
    virtual void visit(fileNode& n);
    virtual void visit(entityNode& n);
    virtual void visit(labelNode& n);
    virtual void visit(paragraphNode& n);
+
+private:
+   log::iLog& m_l;
 };
 
 // TODO the complete list of imaginable transforms
 //
 //                                          ----- front end
-// 2 file finder
+// * file finder
 // * file loader
 //                                          ----- middle end
-// paragraph disassembler
+// 1 paragraph disassembler
 //  - location jumps
 //  - entities
 // entity/table generator
-// linker
+// 1 linker
 // DOT printer
 //                                          ----- 2nd middle end
-// label randomizer
-// label mover
+// 1 label randomizer
+// 1 label mover
 //                                          ----- back end
-// jump formatter
+// 1 jump formatter
 // * label formatter
 // table formatter
 // entity formatter
 // * entity remover
-// paragraph reassembler
+// 1 paragraph reassembler
 //
 // * printer
 //

@@ -9,19 +9,32 @@
 using namespace prattle;
 using namespace prattle::pass;
 
-class loadPass : public iPass {
+namespace {
+
+class visitor : public gTeXVisitor {
 public:
-   void run(config& c, void *pIr)
+   virtual void visit(fileNode& n)
    {
-      fileNode *pRoot = reinterpret_cast<fileNode*>(pIr);
+      std::cout << "  loading file " << n.filePath  << std::endl;
 
-      std::cout << "  loading file testdata.txt" << std::endl;
-      std::unique_ptr<iLexorInput> pIn(fileLoader::load("testdata.txt"));
-
+      std::unique_ptr<iLexorInput> pIn(fileLoader::load(n.filePath));
       lexor l(*pIn);
       parser p(l);
-      p.parseFile(*pRoot);
+      p.parseFile(n);
    }
 };
 
-cdwExportPass(loadPass,"",-1);
+} // anonymous namespace
+
+class parsePass : public iPass {
+public:
+   void run(config& c, void *pIr)
+   {
+      auto *pRoot = reinterpret_cast<folderNode*>(pIr);
+
+      visitor v;
+      pRoot->acceptVisitor(v);
+   }
+};
+
+cdwExportPass(parsePass,"",-1);

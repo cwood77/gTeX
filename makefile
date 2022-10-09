@@ -9,7 +9,7 @@ RELEASE_LNK_FLAGS_POST = -static-libgcc -static-libstdc++ -static
 
 test: debug
 	@bin/out/debug/gTeX.exe
-	@cmd.exe /c "fc testdata.txt-out testdata.txt-out-expected"
+	@cmd.exe /c "fc out.txt testdata.txt-out-expected"
 
 debug: \
 	dirs \
@@ -109,6 +109,7 @@ $(GTEX_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 # front
 
 FRONT_SRC = \
+	src/front/fileEnumPass.cpp \
 	src/front/frontTarget.cpp \
 	src/front/lexor.cpp \
 	src/front/module.cpp \

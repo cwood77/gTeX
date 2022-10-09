@@ -29,7 +29,7 @@ class textPrintPass : public iPass {
 public:
    void run(config& c, void *pIr)
    {
-      fileNode *pRoot = reinterpret_cast<fileNode*>(pIr);
+      auto *pRoot = reinterpret_cast<folderNode*>(pIr);
 
       auto path = c.demand<stringSetting>("text:out-path").value;
       std::cout << "  writing to " << path << std::endl;

@@ -1,5 +1,6 @@
 #include "../cmn/node.hpp"
 #include "../prattle/config.hpp"
+#include "../prattle/log.hpp"
 #include "../prattle/module.hpp"
 #include "../prattle/pass.hpp"
 #include <iostream>
@@ -17,59 +18,70 @@ int main(int,const char*[])
    // (e.g. config's dtor) to use module heaps
    moduleLoader mLdr;
 
-   // setup a config
-   config cfg;
-
-   // run some basic passes on the config
+   try
    {
-      auto cat = passCatalog::get().getPhase("cfg");
+      // setup a config
+      config cfg;
+
+      // run some basic passes on the config
+      {
+         auto cat = passCatalog::get().getPhase("cfg");
+         passSchedule sched;
+         passScheduler().schedule(cat,sched);
+
+         passRunChain rc;
+         passScheduler().inflate(sched,rc);
+         passManager().run(cfg,rc);
+      }
+
+      // we should now have a final pass
+      auto targetName = cfg.demand<stringSetting>("target").value + "Target";
+
+      // load the target chain, pulling in modules as necessary
+      loadingTargetFactory ltf(passCatalog::get(),targetCatalog::get(),mLdr);
+      targetChain tc;
+      targetChainBuilder().build(cfg,ltf,targetName,tc);
+
+      // run additional passess to fill in the config
+      {
+         auto cat = passCatalog::get().getPhase("cfg:target");
+         passSchedule sched;
+         passScheduler().schedule(cat,sched);
+
+         passRunChain rc;
+         passScheduler().inflate(sched,rc);
+         passManager().run(cfg,rc);
+      }
+
+      std::cout << "completed settings:" << std::endl;
+      cfg.dump(std::cout);
+
+      // run real passses from target chain
       passSchedule sched;
-      passScheduler().schedule(cat,sched);
+      // TODO move target configure to somewhere here, and out of build
+      tc.adjustPasses(passCatalog::get(),sched);
 
       passRunChain rc;
       passScheduler().inflate(sched,rc);
-      passManager().run(cfg,rc);
-   }
+      std::unique_ptr<folderNode> pRoot(new folderNode());
+      passManager().run(cfg,rc,pRoot.get());
 
-   // we should now have a final pass
-   auto targetName = cfg.demand<stringSetting>("target").value + "Target";
-
-   // load the target chain, pulling in modules as necessary
-   loadingTargetFactory ltf(passCatalog::get(),targetCatalog::get(),mLdr);
-   targetChain tc;
-   targetChainBuilder().build(cfg,ltf,targetName,tc);
-
-   // run additional passess to fill in the config
-   {
-      auto cat = passCatalog::get().getPhase("cfg:target");
-      passSchedule sched;
-      passScheduler().schedule(cat,sched);
-
-      passRunChain rc;
-      passScheduler().inflate(sched,rc);
-      passManager().run(cfg,rc);
-   }
-
-   std::cout << "completed settings:" << std::endl;
-   cfg.dump(std::cout);
-
-   // run real passses from target chain
-   passSchedule sched;
-   // TODO move target configure to somewhere here, and out of build
-   tc.adjustPasses(passCatalog::get(),sched);
-
-   passRunChain rc;
-   passScheduler().inflate(sched,rc);
-   std::unique_ptr<fileNode> pRoot(new fileNode());
-   passManager().run(cfg,rc,pRoot.get());
-
-#if 0
-   // diag dump
-   dumpVisitor v;
-   pRoot->acceptVisitor(v);
+#if 1
+      {
+         // diag dump
+         log::streamLogAdapter sink(std::cout);
+         dumpVisitor v(sink);
+         pRoot->acceptVisitor(v);
+      }
 #endif
+   }
+   catch(std::exception& x)
+   {
+      std::cerr << "ERROR: " << x.what() << std::endl;
+      std::cout << "aborting" << std::endl;
+      return -2;
+   }
 
    std::cout << "bye" << std::endl;
-
    return 0;
 }

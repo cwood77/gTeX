@@ -20,7 +20,7 @@ class entityRemovalPass : public iPass {
 public:
    void run(config& c, void *pIr)
    {
-      fileNode *pRoot = reinterpret_cast<fileNode*>(pIr);
+      auto *pRoot = reinterpret_cast<folderNode*>(pIr);
 
       nodeEditOperation o;
       {
