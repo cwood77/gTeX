@@ -85,9 +85,11 @@ public:
 };
 
 // need label -> refer so I can number/randomize labels
-// this would also verify that each refer has a label, but NOT that each label has a refer
 class linkTableNode : public node {
 public:
+   void getAllLabels(std::map<std::string,labelNode*>& names);
+   void renameLabels(std::map<labelNode*,std::string>& names);
+
    std::map<labelNode*,std::set<jumpNode*> > l2j;
    std::map<labelNode*,std::set<entityInstanceNode*> > l2ei;
 
@@ -145,13 +147,12 @@ private:
 // * paragraph disassembler
 //  - location jumps
 //  - entities
+// * linker
 // entity/table generator
-// 2 linker
 // DOT printer
 //                                          ----- 2nd middle end
 // 3 label randomizer
 // 3 label mover
-// 2 unlinker
 //                                          ----- back end
 // * jump formatter
 // * label formatter

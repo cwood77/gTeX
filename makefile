@@ -143,6 +143,7 @@ $(FRONT_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 
 MIDDLE_SRC = \
 	src/middle/entityRemover.cpp \
+	src/middle/linkerPass.cpp \
 	src/middle/middleTarget.cpp \
 	src/middle/module.cpp \
 

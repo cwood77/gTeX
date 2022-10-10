@@ -18,6 +18,7 @@ int main(int,const char*[])
    // (e.g. config's dtor) to use module heaps
    moduleLoader mLdr;
 
+   std::unique_ptr<folderNode> pRoot(new folderNode());
    try
    {
       // setup a config
@@ -63,7 +64,6 @@ int main(int,const char*[])
 
       passRunChain rc;
       passScheduler().inflate(sched,rc);
-      std::unique_ptr<folderNode> pRoot(new folderNode());
       passManager().run(cfg,rc,pRoot.get());
 
 #if 1
@@ -78,6 +78,14 @@ int main(int,const char*[])
    catch(std::exception& x)
    {
       std::cerr << "ERROR: " << x.what() << std::endl;
+
+      std::cerr << "AST at time of error:" << std::endl;
+      {
+         log::streamLogAdapter sink(std::cerr);
+         dumpVisitor v(sink);
+         pRoot->acceptVisitor(v);
+      }
+
       std::cout << "aborting" << std::endl;
       return -2;
    }

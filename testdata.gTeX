@@ -22,6 +22,9 @@ There's a dude _{char :dude }.
 
 He says "sup, bro".
 
+_:RIGHT
+Other things happen
+
 _#You may rob dude [go to _$FIGHT], beg from dude [go to _$BEG], or simply ignore
 _#him and move on.
 
