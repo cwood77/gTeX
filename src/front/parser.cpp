@@ -71,7 +71,7 @@ void parser::expandParagraph(paragraphNode& p)
          .advance(scanStrategies::get().paragraphStart);
 
       m_l.demand(lexor::kWord);
-      auto id = m_l.getLexeme();
+      n.id = m_l.getLexeme();
       skipComments(scanStrategies::get().paragraphStart)
          .advance(scanStrategies::get().paragraphStart);
       expandParagraph(p);
@@ -84,13 +84,13 @@ void parser::expandParagraph(paragraphNode& p)
          .advance(scanStrategies::get().paragraphEnd);
 
       m_l.demand(lexor::kWord);
-      auto id1 = m_l.getLexeme();
+      n.type = m_l.getLexeme();
       skipComments(scanStrategies::get().paragraphEnd)
          .advance(scanStrategies::get().paragraphEnd);
       m_l.demandAndEat(lexor::kColon,scanStrategies::get().paragraphEnd);
 
       m_l.demand(lexor::kWord);
-      auto id2 = m_l.getLexeme();
+      n.id = m_l.getLexeme();
       skipComments(scanStrategies::get().paragraphEnd)
          .advance(scanStrategies::get().paragraphEnd);
       m_l.demandAndEat(lexor::kRBrace,scanStrategies::get().paragraphStart);

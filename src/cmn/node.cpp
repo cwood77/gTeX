@@ -58,7 +58,7 @@ void dumpVisitor::visit(paragraphNode& n)
 
 void dumpVisitor::visit(entityInstanceNode& n)
 {
-   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << n.getName() << ":{" << n.type << ":" << n.id << "}" << std::endl;
    m_l.s().s() << indent(m_l) << std::endl;
    autoIndent _i(m_l);
    visitChildren(n);
@@ -66,7 +66,7 @@ void dumpVisitor::visit(entityInstanceNode& n)
 
 void dumpVisitor::visit(jumpNode& n)
 {
-   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << n.getName() << ":" << n.id << std::endl;
    m_l.s().s() << indent(m_l) << std::endl;
    autoIndent _i(m_l);
    visitChildren(n);

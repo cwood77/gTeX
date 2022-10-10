@@ -60,10 +60,17 @@ public:
 };
 
 class entityInstanceNode : public node {
+public:
+   std::string type;
+   std::string id;
+
    cdwImplNode(entityInstanceNode,iGTeXVisitor);
 };
 
 class jumpNode : public node {
+public:
+   std::string id;
+
    cdwImplNode(jumpNode,iGTeXVisitor);
 };
 
@@ -114,22 +121,23 @@ private:
 // * file finder
 // * file loader
 //                                          ----- middle end
-// 1 paragraph disassembler
+// * paragraph disassembler
 //  - location jumps
 //  - entities
 // entity/table generator
-// 1 linker
+// 2 linker
 // DOT printer
 //                                          ----- 2nd middle end
-// 1 label randomizer
-// 1 label mover
+// 3 label randomizer
+// 3 label mover
+// 2 unlinker
 //                                          ----- back end
-// 1 jump formatter
+// * jump formatter
 // * label formatter
 // table formatter
-// entity formatter
+// 1 entity formatter
 // * entity remover
-// 1 paragraph reassembler
+// * paragraph reassembler
 //
 // * printer
 //
