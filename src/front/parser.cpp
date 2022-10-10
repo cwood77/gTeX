@@ -32,7 +32,7 @@ void parser::parseFile(fileNode& f)
       m_l.setup(n);
       m_l.advance();
       skipComments().demand(lexor::kWord);
-      n.label = m_l.getLexeme();
+      n.label = m_l.getLexeme(); // TODO finish parsing entity instance stuff
       m_l.advance();
       parseLabelParas(n);
       parseFile(f);

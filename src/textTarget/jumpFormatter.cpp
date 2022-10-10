@@ -1,6 +1,5 @@
 #include "../cmn/node.hpp"
 #include "../prattle/pass.hpp"
-#include <sstream>
 
 using namespace prattle;
 using namespace prattle::pass;

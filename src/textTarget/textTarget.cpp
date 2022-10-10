@@ -23,6 +23,7 @@ public:
    virtual void adjustPasses(passCatalog& c, passSchedule& s)
    {
       s.append(c.demand("jumpFormatterPass"));
+      s.append(c.demand("entityInstanceFormatterPass"));
       s.append(c.demand("contractParagraphPass"));
       s.append(c.demand("labelFormatterPass"));
       s.append(c.demand("textPrintPass"));

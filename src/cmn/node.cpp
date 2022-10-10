@@ -3,6 +3,17 @@
 
 using namespace prattle::log;
 
+std::string labelNode::id()
+{
+   std::string ans = label;
+   if(!action.empty())
+   {
+      ans += "->";
+      ans += action;
+   }
+   return ans;
+}
+
 void dumpVisitor::visit(node& n)
 {
    m_l.s().s() << indent(m_l) << n.getName() << std::endl;

@@ -171,6 +171,7 @@ $(MIDDLE_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 
 TEXTTARGET_SRC = \
 	src/textTarget/jumpFormatter.cpp \
+	src/textTarget/entityInstanceFormatter.cpp \
 	src/textTarget/labelFormatter.cpp \
 	src/textTarget/module.cpp \
 	src/textTarget/textPrintPass.cpp \

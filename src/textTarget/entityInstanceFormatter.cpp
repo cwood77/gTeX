@@ -11,23 +11,28 @@ class visitor : public gTeXVisitor {
 public:
    virtual void visit(labelNode& n)
    {
-      std::stringstream msg;
-      msg << "--- " << n.id() << " ----------------------------------------";
+      visitChildren(n);
+   }
+
+   virtual void visit(paragraphNode& n)
+   {
+      visitChildren(n);
+   }
+
+   virtual void visit(entityInstanceNode& n)
+   {
+      std::stringstream text;
+      text << "(" <<  n.id << ")";
 
       auto *p = new paragraphNode();
-      p->text = msg.str();
-
-      // 'flatten' my children under me
-      n.reparentChildren(n.demandParent(),&n);
-
-      // replace myself with a paragraph
+      p->text = text.str();
       n.replace(*p);
    }
 };
 
 } // anonymous namespace
 
-class labelFormatterPass : public iPass {
+class entityInstanceFormatterPass : public iPass {
 public:
    void run(config& c, void *pIr)
    {
@@ -43,4 +48,4 @@ public:
    }
 };
 
-cdwExportPass(labelFormatterPass,"",-1);
+cdwExportPass(entityInstanceFormatterPass,"",-1);

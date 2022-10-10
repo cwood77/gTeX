@@ -1,6 +1,8 @@
 #pragma once
 #include "../prattle/log.hpp"
 #include "../prattle/node.hpp"
+#include <map>
+#include <set>
 #include <vector>
 
 using namespace prattle;
@@ -45,9 +47,17 @@ public:
    cdwImplNode(entityNode,iGTeXVisitor);
 };
 
+// could be a entity label or a jump label
+// i.e.
+//      _$LEFT
+//        --or--
+//      _$Bartender->rob
+//
 class labelNode : public node {
 public:
-   std::string label;
+   std::string label;  // only the first part if entity label
+   std::string action; // empty if not an entity label
+   std::string id();   // calculate the whole id
 
    cdwImplNode(labelNode,iGTeXVisitor);
 };
@@ -62,23 +72,34 @@ public:
 class entityInstanceNode : public node {
 public:
    std::string type;
-   std::string id;
+   std::string id; // gets edited by linker
 
    cdwImplNode(entityInstanceNode,iGTeXVisitor);
 };
 
 class jumpNode : public node {
 public:
-   std::string id;
+   std::string id; // gets edited by linker
 
    cdwImplNode(jumpNode,iGTeXVisitor);
 };
 
+// need label -> refer so I can number/randomize labels
+// this would also verify that each refer has a label, but NOT that each label has a refer
 class linkTableNode : public node {
+public:
+   std::map<labelNode*,std::set<jumpNode*> > l2j;
+   std::map<labelNode*,std::set<entityInstanceNode*> > l2ei;
+
    cdwImplNode(linkTableNode,iGTeXVisitor);
 };
 
 class tableNode : public node {
+public:
+   std::string entityType;
+   std::string action;
+   std::map<std::string,std::string> operandsToLabels;
+
    cdwImplNode(tableNode,iGTeXVisitor);
 };
 
@@ -135,7 +156,7 @@ private:
 // * jump formatter
 // * label formatter
 // table formatter
-// 1 entity formatter
+// * entity formatter
 // * entity remover
 // * paragraph reassembler
 //
