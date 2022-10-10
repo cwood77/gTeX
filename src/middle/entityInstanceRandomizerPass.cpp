@@ -15,19 +15,27 @@ public:
       std::vector<entityInstanceNode*> insts;
       pRoot->searchDown<entityInstanceNode>([](auto&){return true;},insts); // TODO LAME
 
+      // find all tables
+      std::vector<tableNode*> tables;
+      pRoot->searchDown<tableNode>([](auto&){return true;},tables); // TODO LAME
+
       // generate a bank of numeric names reproducibly randomly sorted
       nameBank bank(insts.size());
       auto nit = bank.randomIterator();
 
       for(auto it=insts.begin();it!=insts.end();++it,nit.next())
       {
-         // update any label referencing this entityInstance
-         std::vector<labelNode*> refs;
-         pRoot->searchDown<labelNode>(
-            [&](auto& c){ return !c.action.empty() && c.label == (*it)->id; },
-            refs);
-         for(auto *pLabel : refs)
-            pLabel->label = bank.get(nit);
+         for(auto tit=tables.begin();tit!=tables.end();++tit)
+         {
+            // for every table, update any references to the new ID
+            auto oit = (*tit)->operandsToLabels.find((*it)->id);
+            if(oit!=(*tit)->operandsToLabels.end())
+            {
+               auto copy = oit->second;
+               (*tit)->operandsToLabels.erase(oit);
+               (*tit)->operandsToLabels[bank.get(nit)] = copy;
+            }
+         }
 
          // update the entityInstance itself
          (*it)->id = bank.get(nit);

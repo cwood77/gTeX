@@ -9,8 +9,8 @@ public:
    virtual std::string getPredecessorTarget() { return "frontTarget"; }
    virtual void adjustPasses(passCatalog& c, passSchedule& s)
    {
-      s.append(c.demand("entityInstanceRandomizerPass"));
       s.append(c.demand("entityTableGeneratorPass"));
+      s.append(c.demand("entityInstanceRandomizerPass"));
       s.append(c.demand("linkerPass"));
       s.append(c.demand("entityRemovalPass"));
       s.append(c.demand("labelRandomizerPass"));
