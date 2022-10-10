@@ -141,31 +141,25 @@ private:
 // TODO the complete list of imaginable transforms
 //
 //                                          ----- front end
-// * file finder
-// * file loader
+// * fileEnumPass
+// * parsePass
+// * expandParagraphPass
 //                                          ----- middle end
-// * paragraph disassembler
-//  - location jumps
-//  - entities
-// * linker
+// 1 entity table generator
+// * linkerPass
+// * entityRemovalPass
 // DOT printer
-//                                          ----- 2nd middle end
-// * label randomizer
+// * labelRandomizerPass
 // label mover
-// entityInstance randomizer ?
-// 1 entity/table generator
 //                                          ----- back end
-// * jump formatter
-// * label formatter
+// * jumpFormatterPass
+// * entityInstanceFormatterPass
+// * contractParagraphPass [actuall in front DLL]
+// * labelFormatterPass
 // 1 table formatter
-// * entity formatter
-// * entity remover
-// * paragraph reassembler
-//
-// * printer
+// * textPrintPass
 //
 // 1 what I need first
 // 2 what I need second
 // * done
 //
-
