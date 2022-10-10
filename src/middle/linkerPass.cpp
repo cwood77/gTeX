@@ -57,12 +57,19 @@ public:
       m_jumps[n.id].insert(&n);
    }
 
+   virtual void visit(tableNode& n)
+   {
+      for(auto it=n.operandsToLabels.begin();it!=n.operandsToLabels.end();++it)
+         m_tables[it->second].insert(&n);
+   }
+
    void buildTable(labelFinder& f, linkTableNode& t)
    {
       auto unusedLabels = f.table;
 
-      buildTable(m_eis,  f,unusedLabels,t.l2ei, /*required*/false);
-      buildTable(m_jumps,f,unusedLabels,t.l2j,  /*required*/true);
+      buildTable(m_eis,    f,unusedLabels, t.l2ei, /*required*/false);
+      buildTable(m_jumps,  f,unusedLabels, t.l2j,  /*required*/true);
+      buildTable(m_tables, f,unusedLabels, t.l2t,  /*required*/true);
 
       if(unusedLabels.size())
       {
@@ -98,6 +105,7 @@ private:
 
    std::map<std::string,std::set<entityInstanceNode*> > m_eis;
    std::map<std::string,std::set<jumpNode*> > m_jumps;
+   std::map<std::string,std::set<tableNode*> > m_tables;
 };
 
 } // anonymous namespace
