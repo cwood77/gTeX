@@ -124,6 +124,7 @@ void dumpVisitor::visit(linkTableNode& n)
 void dumpVisitor::visit(tableNode& n)
 {
    m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << n.action << "; " << n.operandsToLabels.size() << " entries" << std::endl;
    m_l.s().s() << indent(m_l) << std::endl;
    autoIndent _i(m_l);
    visitChildren(n);

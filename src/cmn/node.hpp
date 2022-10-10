@@ -150,6 +150,7 @@ private:
 // * entityRemovalPass
 // DOT printer
 // * labelRandomizerPass
+// unlinker
 // label mover
 //                                          ----- back end
 // * jumpFormatterPass
