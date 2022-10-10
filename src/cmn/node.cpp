@@ -14,6 +14,36 @@ std::string labelNode::id()
    return ans;
 }
 
+void linkTableNode::getAllLabels(std::map<std::string,labelNode*>& names)
+{
+   for(auto it=l2j.begin();it!=l2j.end();++it)
+      names[it->first->id()] = it->first;
+   for(auto it=l2ei.begin();it!=l2ei.end();++it)
+      names[it->first->id()] = it->first;
+}
+
+void linkTableNode::renameLabels(std::map<labelNode*,std::string>& names)
+{
+   for(auto it=names.begin();it!=names.end();++it)
+   {
+      // update jumps
+      auto& jumps = l2j[it->first];
+      for(jumpNode *pJ : jumps)
+         pJ->id = it->second;
+
+      // update entityInstances
+      auto& eis = l2ei[it->first];
+      for(entityInstanceNode *pEi : eis)
+         pEi->id = it->second;
+
+      // update the label itself
+      it->first->label = it->second;
+      it->first->action = "";
+
+      // no need to update the linkTable itself as it's name agnostic
+   }
+}
+
 void dumpVisitor::visit(node& n)
 {
    m_l.s().s() << indent(m_l) << n.getName() << std::endl;

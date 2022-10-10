@@ -10,6 +10,7 @@ public:
    virtual void adjustPasses(passCatalog& c, passSchedule& s)
    {
       s.append(c.demand("linkerPass"));
+      s.append(c.demand("labelRandomizerPass"));
       s.append(c.demand("entityRemovalPass"));
    }
 };

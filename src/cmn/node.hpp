@@ -151,8 +151,9 @@ private:
 // entity/table generator
 // DOT printer
 //                                          ----- 2nd middle end
-// 3 label randomizer
+// * label randomizer
 // 3 label mover
+// entityInstance randomizer ?
 //                                          ----- back end
 // * jump formatter
 // * label formatter
