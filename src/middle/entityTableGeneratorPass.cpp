@@ -52,7 +52,7 @@ public:
 
       // find all the entities
       std::vector<entityNode*> entities;
-      pRoot->searchDown<entityNode>([](auto&){ return true; },entities); // TODO lame!
+      pRoot->searchDown<entityNode>([](auto&){return true;},entities); // TODO lame!
 
       // create a table for each entity action
       for(entityNode *pE : entities)

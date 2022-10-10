@@ -91,7 +91,6 @@ public:
    void renameLabels(std::map<labelNode*,std::string>& names);
 
    std::map<labelNode*,std::set<jumpNode*> > l2j;
-   std::map<labelNode*,std::set<entityInstanceNode*> > l2ei;
    std::map<labelNode*,std::set<tableNode*> > l2t;
 
    cdwImplNode(linkTableNode,iGTeXVisitor);
@@ -146,7 +145,8 @@ private:
 // * parsePass
 // * expandParagraphPass
 //                                          ----- middle end
-// 1 entity table generator
+// 1 entityInstanceRandomizerPass
+// 1 entityTableGeneratorPass
 // * linkerPass
 // * entityRemovalPass
 // DOT printer

@@ -29,28 +29,8 @@ public:
 
 class refFinder : public gTeXVisitor {
 public:
-   virtual void visit(labelNode& n)
-   {
-      visitChildren(n);
-   }
-
-   virtual void visit(paragraphNode& n)
-   {
-      visitChildren(n);
-   }
-
-   virtual void visit(entityInstanceNode& n)
-   {
-      auto& entity = n.getRoot()
-         .demandDown<entityNode>([&](auto& c){ return c.name == n.type; });
-
-      for(auto& action : entity.actions)
-      {
-         std::stringstream name;
-         name << n.id << "->" << action;
-         m_eis[name.str()].insert(&n);
-      }
-   }
+   virtual void visit(labelNode& n) { visitChildren(n); }
+   virtual void visit(paragraphNode& n) { visitChildren(n); }
 
    virtual void visit(jumpNode& n)
    {
@@ -67,7 +47,6 @@ public:
    {
       auto unusedLabels = f.table;
 
-      buildTable(m_eis,    f,unusedLabels, t.l2ei, /*required*/false);
       buildTable(m_jumps,  f,unusedLabels, t.l2j,  /*required*/true);
       buildTable(m_tables, f,unusedLabels, t.l2t,  /*required*/true);
 
@@ -103,7 +82,6 @@ private:
       }
    }
 
-   std::map<std::string,std::set<entityInstanceNode*> > m_eis;
    std::map<std::string,std::set<jumpNode*> > m_jumps;
    std::map<std::string,std::set<tableNode*> > m_tables;
 };

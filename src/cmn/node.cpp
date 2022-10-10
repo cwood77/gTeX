@@ -18,8 +18,6 @@ void linkTableNode::getAllLabels(std::map<std::string,labelNode*>& names)
 {
    for(auto it=l2j.begin();it!=l2j.end();++it)
       names[it->first->id()] = it->first;
-   for(auto it=l2ei.begin();it!=l2ei.end();++it)
-      names[it->first->id()] = it->first;
    for(auto it=l2t.begin();it!=l2t.end();++it)
       names[it->first->id()] = it->first;
 }
@@ -33,17 +31,16 @@ void linkTableNode::renameLabels(std::map<labelNode*,std::string>& names)
       for(jumpNode *pJ : jumps)
          pJ->id = it->second;
 
-      // update entityInstances
-      auto& eis = l2ei[it->first];
-      for(entityInstanceNode *pEi : eis)
-         pEi->id = it->second;
-
       // update tables
       auto& ts = l2t[it->first];
       for(tableNode *pTable : ts)
       {
-         pTable->operandsToLabels.erase(it->first->label);
-         pTable->operandsToLabels[it->second] = it->second; // TODO how can this be right?
+         for(auto jit=pTable->operandsToLabels.begin();
+            jit!=pTable->operandsToLabels.end();++jit)
+         {
+            if(jit->second == it->first->label)
+               jit->second = it->second;
+         }
       }
 
       // update the label itself

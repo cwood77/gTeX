@@ -143,6 +143,7 @@ $(FRONT_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 # middle
 
 MIDDLE_SRC = \
+	src/middle/entityInstanceRandomizerPass.cpp \
 	src/middle/entityRemover.cpp \
 	src/middle/entityTableGeneratorPass.cpp \
 	src/middle/labelRandomizerPass.cpp \
