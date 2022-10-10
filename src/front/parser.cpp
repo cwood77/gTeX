@@ -1,5 +1,6 @@
 #include "lexor.hpp"
 #include "parser.hpp"
+#include <cstring>
 #include <sstream>
 
 void parser::parseFile(fileNode& f)
@@ -31,8 +32,16 @@ void parser::parseFile(fileNode& f)
       auto& n = f.appendChild<labelNode>();
       m_l.setup(n);
       m_l.advance();
+
       skipComments().demand(lexor::kWord);
-      n.label = m_l.getLexeme(); // TODO finish parsing entity instance stuff
+      n.label = m_l.getLexeme();
+      const char *pArrow = ::strstr(n.label.c_str(),"->");
+      if(pArrow)
+      {
+         n.action = pArrow+2;
+         n.label = std::string(n.label.c_str(),pArrow-n.label.c_str());
+      }
+
       m_l.advance();
       parseLabelParas(n);
       parseFile(f);

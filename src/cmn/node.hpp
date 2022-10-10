@@ -148,16 +148,16 @@ private:
 //  - location jumps
 //  - entities
 // * linker
-// entity/table generator
 // DOT printer
 //                                          ----- 2nd middle end
 // * label randomizer
-// 3 label mover
+// label mover
 // entityInstance randomizer ?
+// 1 entity/table generator
 //                                          ----- back end
 // * jump formatter
 // * label formatter
-// table formatter
+// 1 table formatter
 // * entity formatter
 // * entity remover
 // * paragraph reassembler

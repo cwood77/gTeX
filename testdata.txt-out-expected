@@ -1,16 +1,20 @@
 There's a crossroads.
 
-If you go left, go to 1
+If you go left, go to 2
 
-If you go right, go to 2
+If you go right, go to 3
 
---- 1 ----------------------------------------
+--- 2 ----------------------------------------
 
-There's a dude (dude) .
+There's a dude (1) .
 
 He says "sup, bro".
 
---- 2 ----------------------------------------
+--- 1 ----------------------------------------
+
+"Bruh, what a thing to happen!"
+
+--- 3 ----------------------------------------
 
 Other things happen
 

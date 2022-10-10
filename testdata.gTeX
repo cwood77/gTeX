@@ -22,6 +22,9 @@ There's a dude _{char :dude }.
 
 He says "sup, bro".
 
+_:dude->rob
+"Bruh, what a thing to happen!"
+
 _:RIGHT
 Other things happen
 

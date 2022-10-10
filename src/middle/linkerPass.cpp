@@ -41,7 +41,15 @@ public:
 
    virtual void visit(entityInstanceNode& n)
    {
-      m_eis[n.id].insert(&n);
+      auto& entity = n.getRoot()
+         .demandDown<entityNode>([&](auto& c){ return c.name == n.type; });
+
+      for(auto& action : entity.actions)
+      {
+         std::stringstream name;
+         name << n.id << "->" << action;
+         m_eis[name.str()].insert(&n);
+      }
    }
 
    virtual void visit(jumpNode& n)

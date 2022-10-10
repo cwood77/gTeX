@@ -73,7 +73,7 @@ void dumpVisitor::visit(entityNode& n)
    m_l.s().s() << indent(m_l) << n.getName() << ": " << n.name << std::endl;
    m_l.s().s() << indent(m_l) << "   actions=";
    for(auto a : n.actions)
-      m_l.s().s() << indent(m_l) << a;
+      m_l.s().s() << " " << a;
    m_l.s().s() << indent(m_l) << std::endl;
    m_l.s().s() << indent(m_l) << std::endl;
    autoIndent _i(m_l);
@@ -82,7 +82,7 @@ void dumpVisitor::visit(entityNode& n)
 
 void dumpVisitor::visit(labelNode& n)
 {
-   m_l.s().s() << indent(m_l) << n.getName() << ":" << n.label << std::endl;
+   m_l.s().s() << indent(m_l) << n.getName() << ":" << n.id() << std::endl;
    m_l.s().s() << indent(m_l) << std::endl;
    autoIndent _i(m_l);
    visitChildren(n);
