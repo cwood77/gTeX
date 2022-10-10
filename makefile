@@ -56,6 +56,7 @@ dirs: $(PRATTLE_IMPORTS)
 
 CMN_SRC = \
 	$(PRATTLE_SRC) \
+	src/cmn/nameBank.cpp \
 	src/cmn/node.cpp \
 
 CMN_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(CMN_SRC)))
