@@ -46,13 +46,13 @@ private:
 
 class entityTableGeneratorPass : public iPass {
 public:
-   void run(config& c, void *pIr)
+   void run(config& c, passLinks&, void *pIr)
    {
       auto *pRoot = reinterpret_cast<folderNode*>(pIr);
 
       // find all the entities
       std::vector<entityNode*> entities;
-      pRoot->searchDown<entityNode>([](auto&){return true;},entities); // TODO lame!
+      pRoot->searchDown<entityNode>(entities);
 
       // create a table for each entity action
       for(entityNode *pE : entities)

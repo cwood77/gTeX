@@ -7,17 +7,17 @@ using namespace prattle::pass;
 
 class entityInstanceRandomizerPass : public iPass {
 public:
-   void run(config& c, void *pIr)
+   void run(config& c, passLinks&, void *pIr)
    {
       auto *pRoot = reinterpret_cast<folderNode*>(pIr);
 
       // find all entityInstances of any type
       std::vector<entityInstanceNode*> insts;
-      pRoot->searchDown<entityInstanceNode>([](auto&){return true;},insts); // TODO LAME
+      pRoot->searchDown<entityInstanceNode>(insts);
 
       // find all tables
       std::vector<tableNode*> tables;
-      pRoot->searchDown<tableNode>([](auto&){return true;},tables); // TODO LAME
+      pRoot->searchDown<tableNode>(tables);
 
       // generate a bank of numeric names reproducibly randomly sorted
       nameBank bank(insts.size());

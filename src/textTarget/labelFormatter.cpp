@@ -37,7 +37,7 @@ public:
 
 class labelFormatterPass : public iPass {
 public:
-   void run(config& c, void *pIr)
+   void run(config& c, passLinks&, void *pIr)
    {
       auto *pRoot = reinterpret_cast<folderNode*>(pIr);
 

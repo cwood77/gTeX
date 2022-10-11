@@ -60,7 +60,7 @@ int main(int,const char*[])
       // run real passses from target chain
       passSchedule sched;
       // TODO move target configure to somewhere here, and out of build
-      tc.adjustPasses(passCatalog::get(),sched);
+      tc.adjustPasses(mLdr,passCatalog::get(),sched);
 
       passRunChain rc;
       passScheduler().inflate(sched,rc);

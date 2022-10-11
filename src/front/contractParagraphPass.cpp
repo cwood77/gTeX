@@ -24,7 +24,7 @@ public:
    {
       // reconstruct the paragraph
       std::vector<paragraphNode*> words;
-      n.searchDown<paragraphNode>([&](auto& p){return &p!=&n;},words);
+      n.searchDown<paragraphNode>(words,[&](auto& p){return &p!=&n;});
       std::stringstream stream;
       bool first = true;
       for(auto *pWord : words)
@@ -48,7 +48,7 @@ public:
 
 class contractParagraphPass : public iPass {
 public:
-   void run(config& c, void *pIr)
+   void run(config& c, passLinks&, void *pIr)
    {
       auto *pRoot = reinterpret_cast<folderNode*>(pIr);
 

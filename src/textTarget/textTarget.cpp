@@ -6,7 +6,7 @@ using namespace prattle::pass;
 
 class textTargetDefaultOptionPass : public iPass {
 public:
-   virtual void run(config& c, void *pIr)
+   virtual void run(config& c, passLinks&, void *pIr)
    {
       auto& s = c.createOrFetch<stringSetting>("text:out-path");
       if(s.value.empty())
@@ -20,7 +20,7 @@ class textTarget : public iTarget {
 public:
    virtual void configure(config& c) {}
    virtual std::string getPredecessorTarget() { return "middleTarget"; }
-   virtual void adjustPasses(passCatalog& c, passSchedule& s)
+   virtual void adjustPasses(module::moduleLoader&, passCatalog& c, passSchedule& s)
    {
       s.append(c.demand("jumpFormatterPass"));
       s.append(c.demand("entityInstanceFormatterPass"));

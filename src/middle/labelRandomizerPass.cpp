@@ -8,7 +8,7 @@ using namespace prattle::pass;
 
 class labelRandomizerPass : public iPass {
 public:
-   void run(config& c, void *pIr)
+   void run(config& c, passLinks&, void *pIr)
    {
       auto *pRoot = reinterpret_cast<folderNode*>(pIr);
       auto& links = pRoot->demandDown<linkTableNode>();
