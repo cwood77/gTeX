@@ -11,7 +11,7 @@ public:
    {
       auto *pRoot = reinterpret_cast<folderNode*>(pIr);
 
-      // find all entityInstances, of any type
+      // find all entityInstances of any type
       std::vector<entityInstanceNode*> insts;
       pRoot->searchDown<entityInstanceNode>([](auto&){return true;},insts); // TODO LAME
 
