@@ -66,7 +66,7 @@ int main(int,const char*[])
       passScheduler().inflate(sched,rc);
       passManager().run(cfg,rc,pRoot.get());
 
-#if 1
+#if 0
       {
          // diag dump
          log::streamLogAdapter sink(std::cout);

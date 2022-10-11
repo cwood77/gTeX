@@ -162,8 +162,8 @@ private:
 // * jumpFormatterPass
 // * entityInstanceFormatterPass
 // * contractParagraphPass [actually in front DLL]
-// 1 paragraphWordCounter [actually in misc DLL]
-// 2 wordCounterReportWriter [actually in misc DLL]
+// * paragraphWordCountingPass [actually in misc DLL]
+// * wordCountReporterPass [actually in misc DLL]
 // * labelFormatterPass
 // table formatter
 // * textPrintPass

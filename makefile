@@ -15,6 +15,7 @@ debug: \
 	dirs \
 	$(OUT_DIR)/debug/gTeX.exe \
 	$(OUT_DIR)/debug/frontTarget.dll \
+	$(OUT_DIR)/debug/misc.dll \
 	$(OUT_DIR)/debug/middleTarget.dll \
 	$(OUT_DIR)/debug/textTarget.dll \
 
@@ -22,6 +23,7 @@ all: \
 	debug \
 	$(OUT_DIR)/release/gTeX.exe \
 	$(OUT_DIR)/release/frontTarget.dll \
+	$(OUT_DIR)/release/misc.dll \
 	$(OUT_DIR)/release/middleTarget.dll \
 	$(OUT_DIR)/release/textTarget.dll \
 
@@ -37,6 +39,7 @@ dirs: $(PRATTLE_IMPORTS)
 	@mkdir -p $(OBJ_DIR)/debug/gTeX
 	@mkdir -p $(OBJ_DIR)/debug/gTeX/pass
 	@mkdir -p $(OBJ_DIR)/debug/middle
+	@mkdir -p $(OBJ_DIR)/debug/misc
 	@mkdir -p $(OBJ_DIR)/debug/prattle
 	@mkdir -p $(OBJ_DIR)/debug/textTarget
 	@mkdir -p $(OBJ_DIR)/release/cmn
@@ -44,6 +47,7 @@ dirs: $(PRATTLE_IMPORTS)
 	@mkdir -p $(OBJ_DIR)/release/gTeX
 	@mkdir -p $(OBJ_DIR)/release/gTeX/pass
 	@mkdir -p $(OBJ_DIR)/release/middle
+	@mkdir -p $(OBJ_DIR)/release/misc
 	@mkdir -p $(OBJ_DIR)/release/prattle
 	@mkdir -p $(OBJ_DIR)/release/textTarget
 	@mkdir -p $(OUT_DIR)/debug
@@ -136,6 +140,35 @@ $(OUT_DIR)/release/frontTarget.dll: $(FRONT_RELEASE_OBJ) $(OUT_DIR)/release/cmn.
 	@$(LINK_CMD) -shared -o $@ $(FRONT_RELEASE_OBJ) $(RELEASE_LNK_FLAGS_POST) -Lbin/out/release -lcmn
 
 $(FRONT_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
+	$(info $< --> $@)
+	@$(COMPILE_CMD) $(RELEASE_CC_FLAGS) $< -o $@
+
+# ----------------------------------------------------------------------
+# misc
+
+MISC_SRC = \
+	src/misc/module.cpp \
+	src/misc/paragraphWordCountingPass.cpp \
+	src/misc/wordCountReporterPass.cpp \
+	src/misc/wordCountRollupPass.cpp \
+
+MISC_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(MISC_SRC)))
+
+$(OUT_DIR)/debug/misc.dll: $(MISC_DEBUG_OBJ) $(OUT_DIR)/debug/cmn.lib
+	$(info $< --> $@)
+	@$(LINK_CMD) -shared -o $@ $(MISC_DEBUG_OBJ) $(DEBUG_LNK_FLAGS_POST) -Lbin/out/debug -lcmn
+
+$(MISC_DEBUG_OBJ): $(OBJ_DIR)/debug/%.o: src/%.cpp
+	$(info $< --> $@)
+	@$(COMPILE_CMD) $(DEBUG_CC_FLAGS) $< -o $@
+
+MISC_RELEASE_OBJ = $(subst src,$(OBJ_DIR)/release,$(patsubst %.cpp,%.o,$(MISC_SRC)))
+
+$(OUT_DIR)/release/misc.dll: $(MISC_RELEASE_OBJ) $(OUT_DIR)/release/cmn.lib
+	$(info $< --> $@)
+	@$(LINK_CMD) -shared -o $@ $(MISC_RELEASE_OBJ) $(RELEASE_LNK_FLAGS_POST) -Lbin/out/release -lcmn
+
+$(MISC_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 	$(info $< --> $@)
 	@$(COMPILE_CMD) $(RELEASE_CC_FLAGS) $< -o $@
 
