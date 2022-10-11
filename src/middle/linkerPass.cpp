@@ -37,6 +37,19 @@ public:
       m_jumps[n.id].insert(&n);
    }
 
+   virtual void visit(entityInstanceNode& n)
+   {
+      auto& entity = n.getRoot()
+         .demandDown<entityNode>([&](auto& c){ return c.name == n.type; });
+
+      for(auto& action : entity.actions)
+      {
+         std::stringstream name;
+         name << n.id << "->" << action;
+         m_eis[name.str()].insert(&n);
+      }
+   }
+
    virtual void visit(tableNode& n)
    {
       for(auto it=n.operandsToLabels.begin();it!=n.operandsToLabels.end();++it)
@@ -47,6 +60,7 @@ public:
    {
       auto unusedLabels = f.table;
 
+      buildTable(m_eis,    f,unusedLabels, t.l2ei, /*required*/false);
       buildTable(m_jumps,  f,unusedLabels, t.l2j,  /*required*/true);
       buildTable(m_tables, f,unusedLabels, t.l2t,  /*required*/true);
 
@@ -82,6 +96,7 @@ private:
       }
    }
 
+   std::map<std::string,std::set<entityInstanceNode*> > m_eis;
    std::map<std::string,std::set<jumpNode*> > m_jumps;
    std::map<std::string,std::set<tableNode*> > m_tables;
 };

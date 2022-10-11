@@ -18,6 +18,8 @@ void linkTableNode::getAllLabels(std::map<std::string,labelNode*>& names)
 {
    for(auto it=l2j.begin();it!=l2j.end();++it)
       names[it->first->id()] = it->first;
+   for(auto it=l2ei.begin();it!=l2ei.end();++it)
+      names[it->first->id()] = it->first;
    for(auto it=l2t.begin();it!=l2t.end();++it)
       names[it->first->id()] = it->first;
 }
@@ -38,7 +40,7 @@ void linkTableNode::renameLabels(std::map<labelNode*,std::string>& names)
          for(auto jit=pTable->operandsToLabels.begin();
             jit!=pTable->operandsToLabels.end();++jit)
          {
-            if(jit->second == it->first->label)
+            if(jit->second == it->first->id())
                jit->second = it->second;
          }
       }
@@ -132,6 +134,11 @@ void dumpVisitor::visit(tableNode& n)
 {
    m_l.s().s() << indent(m_l) << n.getName() << std::endl;
    m_l.s().s() << indent(m_l) << n.action << "; " << n.operandsToLabels.size() << " entries" << std::endl;
+   {
+      autoIndent _i(m_l);
+      for(auto it=n.operandsToLabels.begin();it!=n.operandsToLabels.end();++it)
+         m_l.s().s() << indent(m_l) << it->first << " -> " << it->second << std::endl;
+   }
    m_l.s().s() << indent(m_l) << std::endl;
    autoIndent _i(m_l);
    visitChildren(n);

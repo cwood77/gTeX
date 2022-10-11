@@ -91,6 +91,7 @@ public:
    void renameLabels(std::map<labelNode*,std::string>& names);
 
    std::map<labelNode*,std::set<jumpNode*> > l2j;
+   std::map<labelNode*,std::set<entityInstanceNode*> > l2ei;
    std::map<labelNode*,std::set<tableNode*> > l2t;
 
    cdwImplNode(linkTableNode,iGTeXVisitor);
