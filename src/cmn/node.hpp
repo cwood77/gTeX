@@ -141,9 +141,13 @@ private:
 
 // TODO the complete list of imaginable transforms
 //
+// environsReader
+// targetFilter
+// configReader
 //                                          ----- front end
 // * fileEnumPass
 // * parsePass
+// conditionalEvaluator
 // * expandParagraphPass
 //                                          ----- middle end
 // * entityTableGeneratorPass
@@ -153,16 +157,19 @@ private:
 // DOT printer
 // * labelRandomizerPass
 // * unlinker
-// 3 label mover
+// label mover
 //                                          ----- back end
 // * jumpFormatterPass
 // * entityInstanceFormatterPass
-// * contractParagraphPass [actuall in front DLL]
+// * contractParagraphPass [actually in front DLL]
+// 1 paragraphWordCounter [actually in misc DLL]
+// 2 wordCounterReportWriter [actually in misc DLL]
 // * labelFormatterPass
-// 2 table formatter
+// table formatter
 // * textPrintPass
 //
 // 1 what I need first
 // 2 what I need second
 // * done
+//
 //
