@@ -11,17 +11,25 @@ class visitor : public gTeXVisitor {
 public:
    virtual void visit(labelNode& n)
    {
-      std::stringstream msg;
-      msg << "--- " << n.id() << " ----------------------------------------";
-
-      auto *p = new paragraphNode();
-      p->text = msg.str();
-
       // 'flatten' my children under me
       n.reparentChildren(n.demandParent(),&n);
 
-      // replace myself with a paragraph
-      n.replace(*p);
+      if(n.id() == "0")
+      {
+         // the 'start' label gets no formatting
+         n.Delete();
+      }
+      else
+      {
+         std::stringstream msg;
+         msg << "--- " << n.id() << " ----------------------------------------";
+
+         auto *p = new paragraphNode();
+         p->text = msg.str();
+
+         // replace myself with a paragraph
+         n.replace(*p);
+      }
    }
 };
 

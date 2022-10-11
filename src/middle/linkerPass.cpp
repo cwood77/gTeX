@@ -59,10 +59,11 @@ public:
    void buildTable(labelFinder& f, linkTableNode& t)
    {
       auto unusedLabels = f.table;
+      unusedLabels.erase("START");
 
-      buildTable(m_eis,    f,unusedLabels, t.l2ei, /*required*/false);
-      buildTable(m_jumps,  f,unusedLabels, t.l2j,  /*required*/true);
-      buildTable(m_tables, f,unusedLabels, t.l2t,  /*required*/true);
+      buildTable(m_eis,    f, unusedLabels, t.l2ei, /*required*/false);
+      buildTable(m_jumps,  f, unusedLabels, t.l2j,  /*required*/true);
+      buildTable(m_tables, f, unusedLabels, t.l2t,  /*required*/true);
 
       if(unusedLabels.size())
       {

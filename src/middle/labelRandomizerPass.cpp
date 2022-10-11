@@ -1,6 +1,7 @@
 #include "../cmn/nameBank.hpp"
 #include "../cmn/node.hpp"
 #include "../prattle/pass.hpp"
+#include <stdexcept>
 
 using namespace prattle;
 using namespace prattle::pass;
@@ -25,6 +26,12 @@ public:
       for(auto it=oldNames.begin();it!=oldNames.end();++it,nit.next())
          newNames[it->second] = bank.get(nit);
       links.renameLabels(newNames);
+
+      // rename the START label
+      auto *pStart = pRoot->findDown<labelNode>([](auto& c){ return c.id() == "START"; });
+      if(!pStart)
+         throw std::runtime_error("there must be a START label");
+      pStart->label = "0";
    }
 };
 

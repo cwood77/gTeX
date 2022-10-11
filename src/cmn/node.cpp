@@ -125,6 +125,31 @@ void dumpVisitor::visit(jumpNode& n)
 void dumpVisitor::visit(linkTableNode& n)
 {
    m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+
+   m_l.s().s() << indent(m_l) << "jumps {" << std::endl;
+   {
+      autoIndent _i(m_l);
+      for(auto it=n.l2j.begin();it!=n.l2j.end();++it)
+         m_l.s().s() << indent(m_l) << it->first->id() << std::endl;
+   }
+   m_l.s().s() << indent(m_l) << "}" << std::endl;
+
+   m_l.s().s() << indent(m_l) << "entityInstances {" << std::endl;
+   {
+      autoIndent _i(m_l);
+      for(auto it=n.l2ei.begin();it!=n.l2ei.end();++it)
+         m_l.s().s() << indent(m_l) << it->first->id() << std::endl;
+   }
+   m_l.s().s() << indent(m_l) << "}" << std::endl;
+
+   m_l.s().s() << indent(m_l) << "tables {" << std::endl;
+   {
+      autoIndent _i(m_l);
+      for(auto it=n.l2t.begin();it!=n.l2t.end();++it)
+         m_l.s().s() << indent(m_l) << it->first->id() << std::endl;
+   }
+   m_l.s().s() << indent(m_l) << "}" << std::endl;
+
    m_l.s().s() << indent(m_l) << std::endl;
    autoIndent _i(m_l);
    visitChildren(n);

@@ -12,6 +12,8 @@ _entity item {
    }
 }
 
+_:START
+
 There's a crossroads.
 
 If you go left, go to _$LEFT

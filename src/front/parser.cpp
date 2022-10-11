@@ -46,17 +46,10 @@ void parser::parseFile(fileNode& f)
       parseLabelParas(n);
       parseFile(f);
    }
-   else if(m_l.getToken() == lexor::kWord)
-   {
-      auto& n = f.appendChild<paragraphNode>();
-      m_l.setup(n);
-      parseWords(n);
-      parseFile(f);
-   }
    else if(m_l.getToken() == lexor::kEOI)
       return;
    else
-      m_l.expected({ lexor::kEntity, lexor::kComment, lexor::kWord });
+      m_l.expected({ lexor::kEntity, lexor::kComment });
 }
 
 void parser::expandParagraph(paragraphNode& p)
