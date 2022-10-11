@@ -146,20 +146,20 @@ private:
 // * parsePass
 // * expandParagraphPass
 //                                          ----- middle end
-// 1 entityInstanceRandomizerPass
-// 1 entityTableGeneratorPass
+// * entityTableGeneratorPass
+// * entityInstanceRandomizerPass
 // * linkerPass
 // * entityRemovalPass
 // DOT printer
 // * labelRandomizerPass
-// unlinker
-// label mover
+// * unlinker
+// 3 label mover
 //                                          ----- back end
 // * jumpFormatterPass
 // * entityInstanceFormatterPass
 // * contractParagraphPass [actuall in front DLL]
 // * labelFormatterPass
-// 1 table formatter
+// 2 table formatter
 // * textPrintPass
 //
 // 1 what I need first

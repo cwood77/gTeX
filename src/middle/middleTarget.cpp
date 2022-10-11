@@ -14,6 +14,7 @@ public:
       s.append(c.demand("linkerPass"));
       s.append(c.demand("entityRemovalPass"));
       s.append(c.demand("labelRandomizerPass"));
+      s.append(c.demand("unlinkerPass"));
    }
 };
 

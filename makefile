@@ -150,6 +150,7 @@ MIDDLE_SRC = \
 	src/middle/linkerPass.cpp \
 	src/middle/middleTarget.cpp \
 	src/middle/module.cpp \
+	src/middle/unlinkerPass.cpp \
 
 MIDDLE_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(MIDDLE_SRC)))
 
