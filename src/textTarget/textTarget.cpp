@@ -39,7 +39,7 @@ public:
       //if(auto *pLogPath = m_pCfg->fetch<stringSetting>("wcnt:log-path")) // TODO HACK
       if(!m_pCfg->createOrFetch<stringSetting>("wcnt:log-path").value.empty())
       {
-         mLdr.tryLoad("misc");
+         mLdr.tryLoad("misc.dll");
          mLdr.collect(c,targetCatalog::get()); // TODO HACK
          s.append(c.demand("paragraphWordCountingPass"));
          s.append(c.demand("wordCountRollupPass"));

@@ -24,6 +24,9 @@ int main(int,const char*[])
       // setup a config
       config cfg;
 
+      mLdr.tryLoad("config.dll");
+      mLdr.collect(passCatalog::get(),targetCatalog::get());
+
       // run some basic passes on the config
       {
          auto cat = passCatalog::get().getPhase("cfg");

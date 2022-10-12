@@ -141,9 +141,9 @@ private:
 
 // TODO the complete list of imaginable transforms
 //
-// environsReader
-// targetFilter
-// configReader
+// 1 environsReader
+// 1 targetFilter
+// 1 configReader
 //                                          ----- front end
 // * fileEnumPass
 // * parsePass
@@ -163,7 +163,7 @@ private:
 // * entityInstanceFormatterPass
 // * contractParagraphPass [actually in front DLL]
 // * paragraphWordCountingPass [actually in misc DLL]
-// * wordCountReporterPass [actually in misc DLL]
+// 2 wordCountReporterPass [actually in misc DLL]
 // * labelFormatterPass
 // table formatter
 // * textPrintPass

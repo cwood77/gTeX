@@ -22,4 +22,4 @@ public:
    }
 };
 
-cdwExportPass(defaultTargetPass,"cfg",0);
+cdwExportPass(defaultTargetPass,"cfg",100);

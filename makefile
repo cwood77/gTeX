@@ -14,6 +14,7 @@ test: debug
 debug: \
 	dirs \
 	$(OUT_DIR)/debug/gTeX.exe \
+	$(OUT_DIR)/debug/config.dll \
 	$(OUT_DIR)/debug/frontTarget.dll \
 	$(OUT_DIR)/debug/misc.dll \
 	$(OUT_DIR)/debug/middleTarget.dll \
@@ -22,6 +23,7 @@ debug: \
 all: \
 	debug \
 	$(OUT_DIR)/release/gTeX.exe \
+	$(OUT_DIR)/release/config.dll \
 	$(OUT_DIR)/release/frontTarget.dll \
 	$(OUT_DIR)/release/misc.dll \
 	$(OUT_DIR)/release/middleTarget.dll \
@@ -35,6 +37,7 @@ clean:
 
 dirs: $(PRATTLE_IMPORTS)
 	@mkdir -p $(OBJ_DIR)/debug/cmn
+	@mkdir -p $(OBJ_DIR)/debug/config
 	@mkdir -p $(OBJ_DIR)/debug/front
 	@mkdir -p $(OBJ_DIR)/debug/gTeX
 	@mkdir -p $(OBJ_DIR)/debug/gTeX/pass
@@ -43,6 +46,7 @@ dirs: $(PRATTLE_IMPORTS)
 	@mkdir -p $(OBJ_DIR)/debug/prattle
 	@mkdir -p $(OBJ_DIR)/debug/textTarget
 	@mkdir -p $(OBJ_DIR)/release/cmn
+	@mkdir -p $(OBJ_DIR)/release/config
 	@mkdir -p $(OBJ_DIR)/release/front
 	@mkdir -p $(OBJ_DIR)/release/gTeX
 	@mkdir -p $(OBJ_DIR)/release/gTeX/pass
@@ -107,6 +111,37 @@ $(OUT_DIR)/release/gTeX.exe: $(GTEX_RELEASE_OBJ) $(OUT_DIR)/release/cmn.lib
 	@$(LINK_CMD) -o $@ $(GTEX_RELEASE_OBJ) $(RELEASE_LNK_FLAGS_POST) -Lbin/out/release -lcmn
 
 $(GTEX_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
+	$(info $< --> $@)
+	@$(COMPILE_CMD) $(RELEASE_CC_FLAGS) $< -o $@
+
+# ----------------------------------------------------------------------
+# config
+
+CONFIG_SRC = \
+	src/config/exec.cpp \
+	src/config/lexor.cpp \
+	src/config/loadEnvironsPass.cpp \
+	src/config/module.cpp \
+	src/config/node.cpp \
+	src/config/parser.cpp \
+
+CONFIG_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(CONFIG_SRC)))
+
+$(OUT_DIR)/debug/config.dll: $(CONFIG_DEBUG_OBJ) $(OUT_DIR)/debug/cmn.lib
+	$(info $< --> $@)
+	@$(LINK_CMD) -shared -o $@ $(CONFIG_DEBUG_OBJ) $(DEBUG_LNK_FLAGS_POST) -Lbin/out/debug -lcmn
+
+$(CONFIG_DEBUG_OBJ): $(OBJ_DIR)/debug/%.o: src/%.cpp
+	$(info $< --> $@)
+	@$(COMPILE_CMD) $(DEBUG_CC_FLAGS) $< -o $@
+
+CONFIG_RELEASE_OBJ = $(subst src,$(OBJ_DIR)/release,$(patsubst %.cpp,%.o,$(CONFIG_SRC)))
+
+$(OUT_DIR)/release/config.dll: $(CONFIG_RELEASE_OBJ) $(OUT_DIR)/release/cmn.lib
+	$(info $< --> $@)
+	@$(LINK_CMD) -shared -o $@ $(CONFIG_RELEASE_OBJ) $(RELEASE_LNK_FLAGS_POST) -Lbin/out/release -lcmn
+
+$(CONFIG_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 	$(info $< --> $@)
 	@$(COMPILE_CMD) $(RELEASE_CC_FLAGS) $< -o $@
 
