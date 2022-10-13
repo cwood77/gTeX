@@ -1,1 +1,3 @@
-config-targets := [ text ]
+#config-targets := [ text ]
+configs := [ debug ]
+targets := [ text ]

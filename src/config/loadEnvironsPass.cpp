@@ -47,3 +47,23 @@ protected:
 };
 
 cdwExportPass(loadConfigPass,"cfg",0);
+
+class configTargetElaborationPass : public iPass {
+public:
+   void run(config& c, passLinks&, void *pIr)
+   {
+      if(c.fetch<stringArraySetting>("config-targets"))
+         return;
+
+      auto& cts = c.createOrFetch<stringArraySetting>("config-targets");
+
+      auto& configs = c.demand<stringArraySetting>("configs");
+      auto& targets = c.demand<stringArraySetting>("targets");
+
+      for(auto& c : configs.value)
+         for(auto& t : targets.value)
+            cts.value.push_back(c + "/" + t);
+   }
+};
+
+cdwExportPass(configTargetElaborationPass,"env",1);
