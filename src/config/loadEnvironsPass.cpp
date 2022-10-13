@@ -23,8 +23,8 @@ public:
       p.parseFile(root);
 
       streamLogAdapter Log(std::cout);
-      cfgDumpVisitor v(Log);
-      root.acceptVisitor(v);
+      //cfgDumpVisitor v(Log);
+      //root.acceptVisitor(v);
 
       execVisitor exec(c);
       root.acceptVisitor(exec);
@@ -39,11 +39,11 @@ protected:
    virtual const char *getFileName() const { return "environs"; }
 };
 
-cdwExportPass(loadEnvironsPass,"cfg",0);
+cdwExportPass(loadEnvironsPass,"env",0);
 
 class loadConfigPass : public cfgFileParsePass {
 protected:
    virtual const char *getFileName() const { return "config"; }
 };
 
-cdwExportPass(loadConfigPass,"cfg",1);
+cdwExportPass(loadConfigPass,"cfg",0);

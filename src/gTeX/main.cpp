@@ -22,60 +22,80 @@ int main(int,const char*[])
    try
    {
       // setup a config
-      config cfg;
+      config gCfg;
 
       incrementalModuleLoader imLdr(passCatalog::get(),targetCatalog::get(),mLdr);
       imLdr.tryLoad("config.dll");
 
       // run some basic passes on the config
       {
-         auto cat = passCatalog::get().getPhase("cfg");
+         auto cat = passCatalog::get().getPhase("env");
          passSchedule sched;
          passScheduler().schedule(cat,sched);
 
          passRunChain rc;
          passScheduler().inflate(sched,rc);
-         passManager().run(cfg,rc);
+         passManager().run(gCfg,rc);
       }
 
-      // we should now have a final pass
-      auto targetName = cfg.demand<stringSetting>("target").value + "Target";
-
-      // load the target chain, pulling in modules as necessary
-      loadingTargetFactory ltf(targetCatalog::get(),imLdr);
-      targetChain tc;
-      targetChainBuilder().build(cfg,ltf,targetName,tc);
-
-      // run additional passess to fill in the config
+      auto& configs = gCfg.demand<stringArraySetting>("config-targets").value;
+      for(auto it=configs.begin();it!=configs.end();++it)
       {
-         auto cat = passCatalog::get().getPhase("cfg:target");
+         std::cout << "---- running config-target " << *it << " ----" << std::endl;
+
+         config cfg;
+         gCfg.cloneInto(cfg);
+
+         // run some basic passes on the config
+         {
+            auto cat = passCatalog::get().getPhase("cfg");
+            passSchedule sched;
+            passScheduler().schedule(cat,sched);
+
+            passRunChain rc;
+            passScheduler().inflate(sched,rc);
+            passManager().run(cfg,rc);
+         }
+
+         // we should now have a final pass
+         auto targetName = cfg.demand<stringSetting>("target").value + "Target";
+
+         // load the target chain, pulling in modules as necessary
+         loadingTargetFactory ltf(targetCatalog::get(),imLdr);
+         targetChain tc;
+         targetChainBuilder().build(cfg,ltf,targetName,tc);
+
+         // run additional passess to fill in the config
+         {
+            auto cat = passCatalog::get().getPhase("cfg:target");
+            passSchedule sched;
+            passScheduler().schedule(cat,sched);
+
+            passRunChain rc;
+            passScheduler().inflate(sched,rc);
+            passManager().run(cfg,rc);
+         }
+
+         std::cout << "completed settings:" << std::endl;
+         cfg.dump(std::cout);
+
+         // run real passses from target chain
          passSchedule sched;
-         passScheduler().schedule(cat,sched);
+         tc.adjustPasses(imLdr,passCatalog::get(),sched);
 
          passRunChain rc;
          passScheduler().inflate(sched,rc);
-         passManager().run(cfg,rc);
-      }
-
-      std::cout << "completed settings:" << std::endl;
-      cfg.dump(std::cout);
-
-      // run real passses from target chain
-      passSchedule sched;
-      tc.adjustPasses(imLdr,passCatalog::get(),sched);
-
-      passRunChain rc;
-      passScheduler().inflate(sched,rc);
-      passManager().run(cfg,rc,pRoot.get());
+         passManager().run(cfg,rc,pRoot.get());
 
 #if 0
-      {
-         // diag dump
-         log::streamLogAdapter sink(std::cout);
-         dumpVisitor v(sink);
-         pRoot->acceptVisitor(v);
-      }
+         {
+            // diag dump
+            log::streamLogAdapter sink(std::cout);
+            dumpVisitor v(sink);
+            pRoot->acceptVisitor(v);
+         }
 #endif
+      }
    }
    catch(std::exception& x)
    {

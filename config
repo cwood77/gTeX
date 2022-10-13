@@ -1,8 +1,0 @@
-# bleh
-
-if foo != thingee
-{
-   thingg := otherThing
-
-   if thingg == otherThing { foo := bat }
-}
