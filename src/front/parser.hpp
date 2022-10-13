@@ -5,7 +5,6 @@ class lexor;
 
 // <file> ::== _entity <entity> <file>
 //           | <label> <label-paras> <file>
-//           | <paragraph> <file>               TODO is this really ok?
 // <label-paras> ::== <paragraph> <label-paras>
 //                  | e
 //

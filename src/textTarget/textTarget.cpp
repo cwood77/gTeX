@@ -9,16 +9,8 @@ class textTargetDefaultOptionPass : public iPass {
 public:
    virtual void run(config& c, passLinks&, void *pIr)
    {
-      {
-         auto& s = c.createOrFetch<stringSetting>("text:out-path");
-         if(s.value.empty())
-            s.value = "out.txt";
-      }
-      {
-         auto& s = c.createOrFetch<stringSetting>("wcnt:log-path");
-         if(s.value.empty())
-            s.value = "wordcount-log.txt";
-      }
+      c.createOrFetch<stringSetting>("text:out-path",[](auto&s){ s.value="out.txt"; });
+      c.createOrFetch<stringSetting>("wcnt:log-path",[](auto&s){ s.value="wordcount-log.txt"; });
    }
 };
 
@@ -30,17 +22,15 @@ public:
 
    virtual void configure(config& c) { m_pCfg = &c; }
    virtual std::string getPredecessorTarget() { return "middleTarget"; }
-   virtual void adjustPasses(module::moduleLoader& mLdr, passCatalog& c, passSchedule& s)
+   virtual void adjustPasses(module::incrementalModuleLoader& mLdr, passCatalog& c, passSchedule& s)
    {
       s.append(c.demand("jumpFormatterPass"));
       s.append(c.demand("entityInstanceFormatterPass"));
       s.append(c.demand("contractParagraphPass"));
 
-      //if(auto *pLogPath = m_pCfg->fetch<stringSetting>("wcnt:log-path")) // TODO HACK
-      if(!m_pCfg->createOrFetch<stringSetting>("wcnt:log-path").value.empty())
+      if(m_pCfg->fetch<stringSetting>("wcnt:log-path"))
       {
          mLdr.tryLoad("misc.dll");
-         mLdr.collect(c,targetCatalog::get()); // TODO HACK
          s.append(c.demand("paragraphWordCountingPass"));
          s.append(c.demand("wordCountRollupPass"));
          s.append(c.demand("wordCountReporterPass"));

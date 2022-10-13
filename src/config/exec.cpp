@@ -26,6 +26,7 @@ void setVisitor::visit(strLitNode& n)
 
 void setVisitor::visit(arrayLitNode& n)
 {
+   m_c.createOrFetch<stringArraySetting>(m_name).value = n.vals;
 }
 
 void equVisitor::visit(strLitNode& n)
@@ -35,4 +36,5 @@ void equVisitor::visit(strLitNode& n)
 
 void equVisitor::visit(arrayLitNode& n)
 {
+   equ = (m_c.demand<stringArraySetting>(m_name).value == n.vals);
 }

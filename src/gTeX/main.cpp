@@ -24,8 +24,8 @@ int main(int,const char*[])
       // setup a config
       config cfg;
 
-      mLdr.tryLoad("config.dll");
-      mLdr.collect(passCatalog::get(),targetCatalog::get());
+      incrementalModuleLoader imLdr(passCatalog::get(),targetCatalog::get(),mLdr);
+      imLdr.tryLoad("config.dll");
 
       // run some basic passes on the config
       {
@@ -42,7 +42,7 @@ int main(int,const char*[])
       auto targetName = cfg.demand<stringSetting>("target").value + "Target";
 
       // load the target chain, pulling in modules as necessary
-      loadingTargetFactory ltf(passCatalog::get(),targetCatalog::get(),mLdr);
+      loadingTargetFactory ltf(targetCatalog::get(),imLdr);
       targetChain tc;
       targetChainBuilder().build(cfg,ltf,targetName,tc);
 
@@ -62,8 +62,7 @@ int main(int,const char*[])
 
       // run real passses from target chain
       passSchedule sched;
-      // TODO move target configure to somewhere here, and out of build
-      tc.adjustPasses(mLdr,passCatalog::get(),sched);
+      tc.adjustPasses(imLdr,passCatalog::get(),sched);
 
       passRunChain rc;
       passScheduler().inflate(sched,rc);

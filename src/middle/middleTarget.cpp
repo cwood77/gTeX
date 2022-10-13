@@ -7,7 +7,7 @@ class middleTarget : public iTarget {
 public:
    virtual void configure(config& c) {}
    virtual std::string getPredecessorTarget() { return "frontTarget"; }
-   virtual void adjustPasses(module::moduleLoader&, passCatalog& c, passSchedule& s)
+   virtual void adjustPasses(module::incrementalModuleLoader&, passCatalog& c, passSchedule& s)
    {
       s.append(c.demand("entityTableGeneratorPass"));
       s.append(c.demand("entityInstanceRandomizerPass"));
