@@ -94,6 +94,7 @@ $(CMN_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 
 GTEX_SRC = \
 	src/gTeX/defaultTargetPass.cpp \
+	src/gTeX/engine.cpp \
 	src/gTeX/main.cpp \
 
 GTEX_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(GTEX_SRC)))
