@@ -186,6 +186,7 @@ $(FRONT_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 
 MISC_SRC = \
 	src/misc/module.cpp \
+	src/misc/overallWordCountingPass.cpp \
 	src/misc/paragraphWordCountingPass.cpp \
 	src/misc/wordCountReport.cpp \
 	src/misc/wordCountReporterPass.cpp \

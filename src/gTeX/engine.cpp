@@ -47,6 +47,7 @@ void engine::handleConfigTarget(config& gCfg, const std::string& configTarget)
 
    passRunChain rc;
    passScheduler().inflate(sched,rc);
+   passScheduler().decompose(m_pCat,rc);
    std::unique_ptr<folderNode> pRoot(new folderNode());
    try
    {
@@ -89,5 +90,6 @@ void engine::runPassPhaseOnConfig(const std::string& phase, config& c)
 
    passRunChain rc;
    passScheduler().inflate(sched,rc);
+   passScheduler().decompose(m_pCat,rc);
    passManager().run(c,rc);
 }

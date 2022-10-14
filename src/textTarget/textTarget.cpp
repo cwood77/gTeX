@@ -30,9 +30,7 @@ public:
       if(m_pCfg->fetch<stringSetting>("wcnt:log-path"))
       {
          mLdr.tryLoad("misc.dll");
-         s.append(c.demand("paragraphWordCountingPass"));
-         s.append(c.demand("wordCountRollupPass"));
-         s.append(c.demand("wordCountReporterPass"));
+         s.append(c.demand("overallWordCountingPass"));
       }
 
       s.append(c.demand("labelFormatterPass"));
