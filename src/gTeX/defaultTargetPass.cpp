@@ -8,7 +8,6 @@ class defaultTargetPass : public iPass {
 public:
    virtual void run(config& c, passLinks&, void *pIr)
    {
-      c.createOrFetch<stringSetting>("target",[](auto& s){ s.value = "text"; });
       c.createOrFetch<stringSetting>("in",[](auto& s){ s.value="."; });
    }
 };

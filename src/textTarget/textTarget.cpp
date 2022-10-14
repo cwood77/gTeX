@@ -9,8 +9,7 @@ class textTargetDefaultOptionPass : public iPass {
 public:
    virtual void run(config& c, passLinks&, void *pIr)
    {
-      c.createOrFetch<stringSetting>("text:out-path",[](auto&s){ s.value="out.txt"; });
-      c.createOrFetch<stringSetting>("wcnt:log-path",[](auto&s){ s.value="wordcount-log.txt"; });
+      //c.createOrFetch<stringSetting>("text:out-path",[](auto&s){ s.value="out.txt"; });
    }
 };
 

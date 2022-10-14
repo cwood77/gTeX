@@ -21,13 +21,11 @@ int main(int,const char*[])
    std::unique_ptr<folderNode> pRoot(new folderNode());
    try
    {
-      // setup a config
-      config gCfg;
-
       incrementalModuleLoader imLdr(passCatalog::get(),targetCatalog::get(),mLdr);
       imLdr.tryLoad("config.dll");
 
-      // run some basic passes on the config
+      // load the environs
+      config gCfg;
       {
          auto cat = passCatalog::get().getPhase("env");
          passSchedule sched;
@@ -43,10 +41,21 @@ int main(int,const char*[])
       {
          std::cout << "---- running config-target " << *it << " ----" << std::endl;
 
+         pRoot.reset(new folderNode());
          config cfg;
          gCfg.cloneInto(cfg);
 
-         // run some basic passes on the config
+         // indicate which config-target is running
+         {
+            cfg.createOrFetch<stringSetting>("config-target").value = *it;
+            const char *pSlash = ::strstr(it->c_str(),"/");
+            std::string activeCfg(it->c_str(),pSlash-it->c_str());
+            std::string activeTgt(pSlash+1);
+            cfg.createOrFetch<stringSetting>("config").value = activeCfg;
+            cfg.createOrFetch<stringSetting>("target").value = activeTgt;
+         }
+
+         // load the config
          {
             auto cat = passCatalog::get().getPhase("cfg");
             passSchedule sched;

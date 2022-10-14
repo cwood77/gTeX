@@ -1,0 +1,3 @@
+text:out-path := out.txt
+
+# wcnt:log-path := wordcount-log.txt
