@@ -1,3 +1,4 @@
 text:out-path := out.txt
 
 if config == release { wcnt:log-path := wordcount-log.txt }
+if config == release { wcnt:nanowrimo := [ 10 31 ] }

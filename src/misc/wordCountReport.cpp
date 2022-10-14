@@ -2,8 +2,22 @@
 
 namespace wcnt {
 
+int today::day() const
+{
+   struct tm *pLt = ::localtime(&now);
+   return pLt->tm_mday;
+}
+
 int today::month() const
 {
+   struct tm *pLt = ::localtime(&now);
+   return pLt->tm_mon+1;
+}
+
+int today::year() const
+{
+   struct tm *pLt = ::localtime(&now);
+   return pLt->tm_year+1900;
 }
 
 bool dateSummaryTable::tryEatLine(const std::string& line)
@@ -51,7 +65,7 @@ bool monthlyStats::tryEatLine(const std::string& line)
 {
    if(!m_reading)
    {
-      if(line == "monthly goals")
+      if(line == "NaNoWriMo stats")
       {
          m_reading = true;
          return true;
@@ -72,17 +86,30 @@ bool monthlyStats::tryEatLine(const std::string& line)
 
 void monthlyStats::write(std::ostream& o) const
 {
-   if(month == 0)
-      return; // disabled
+   if(month != today().month())
+      return; // inactive
 
-   //if(today().month == 
+   auto daysLeft = daysInMonth - today().day() + 1;
+   o << "NaNoWriMo stats" << std::endl;
+   o << "monthly goal: " << monthlyGoal << std::endl;
+   o << "days left: " << daysLeft << std::endl;
+   o << "words left: " << wordsLeft << std::endl;
+   o << "words/day left: " << (((double)wordsLeft) / daysLeft) << std::endl;
+   o << "days written: " << m_daysWritten << "/" << (today().day()-1) << std::endl;
+   o << std::endl;
+}
 
-   // NaNoWriMo stats
-   // monthly goal: 30000
-   // days left in November: 30
-   // words left: 30000
-   // words left / day left: 1000
-   // days written: 0/0
+void monthlyStats::updateFrom(const dateSummaryTable& d)
+{
+   today t;
+   m_daysWritten = 0;
+   for(auto di=1;di<daysInMonth;di++)
+   {
+      std::stringstream dName;
+      dName << t.month() << "/" << di << "/" << t.year();
+      if(d.total.find(dName.str())!=d.total.end())
+         m_daysWritten++;
+   }
 }
 
 bool historicalLog::tryEatLine(const std::string& line)

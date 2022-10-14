@@ -12,7 +12,9 @@ class today {
 public:
    today() : now(::time(NULL)) {}
 
+   int day() const;
    int month() const;
+   int year() const;
 
    time_t now;
 };
@@ -45,10 +47,16 @@ public:
 
    size_t monthlyGoal;
    int month;
+   int daysInMonth;
+
+   size_t wordsLeft;
+
    void updateFrom(const dateSummaryTable& d);
 
 private:
    bool m_reading;
+
+   size_t m_daysWritten;
 };
 
 class historicalLog : public iReportSection {

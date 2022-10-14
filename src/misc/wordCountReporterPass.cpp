@@ -88,6 +88,15 @@ public:
 
       // update the monthly goals
       {
+         nanowrimo.month = 0;
+         if(auto *pM = c.fetch<stringArraySetting>("wcnt:nanowrimo"))
+         {
+            nanowrimo.monthlyGoal = 50000;
+            ::sscanf(pM->value[0].c_str(),"%d",&nanowrimo.month);
+            ::sscanf(pM->value[1].c_str(),"%d",&nanowrimo.daysInMonth);
+            nanowrimo.wordsLeft = nanowrimo.monthlyGoal - (*pRoot)[attr];
+            nanowrimo.updateFrom(byDate);
+         }
       }
 
       // update the historical log
