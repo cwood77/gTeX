@@ -1,4 +1,5 @@
 #include "../cmn/node.hpp"
+#include "../cmn/output.hpp"
 #include "../prattle/config.hpp"
 #include "../prattle/pass.hpp"
 #include <fstream>
@@ -31,7 +32,7 @@ public:
    {
       auto *pRoot = reinterpret_cast<folderNode*>(pIr);
 
-      auto path = c.demand<stringSetting>("text:out-path").value;
+      auto path = output(c).ensurePath("out.txt");
       std::cout << "  writing to " << path << std::endl;
       std::ofstream out(path.c_str());
       if(!out.good())

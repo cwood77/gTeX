@@ -2,5 +2,5 @@
 *.swp
 /src/prattle/
 
-out.txt
+/out/
 wordcount-log.txt

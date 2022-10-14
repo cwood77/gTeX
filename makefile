@@ -9,7 +9,8 @@ RELEASE_LNK_FLAGS_POST = -static-libgcc -static-libstdc++ -static
 
 test: debug
 	@bin/out/debug/gTeX.exe
-	@cmd.exe /c "fc out.txt testdata.txt-out-expected"
+	@cmd.exe /c "fc out\debug\text\out.txt testdata.txt-out-expected"
+	@cmd.exe /c "fc out\release\text\out.txt testdata.txt-out-expected"
 
 debug: \
 	dirs \
@@ -66,6 +67,7 @@ CMN_SRC = \
 	$(PRATTLE_SRC) \
 	src/cmn/nameBank.cpp \
 	src/cmn/node.cpp \
+	src/cmn/output.cpp \
 
 CMN_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(CMN_SRC)))
 

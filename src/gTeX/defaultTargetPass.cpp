@@ -9,6 +9,7 @@ public:
    virtual void run(config& c, passLinks&, void *pIr)
    {
       c.createOrFetch<stringSetting>("in",[](auto& s){ s.value="."; });
+      c.createOrFetch<stringSetting>("out",[](auto& s){ s.value="out"; });
    }
 };
 
