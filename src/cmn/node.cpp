@@ -3,7 +3,7 @@
 
 using namespace prattle::log;
 
-std::string labelNode::id()
+std::string labelNode::id() const
 {
    std::string ans = label;
    if(!action.empty())

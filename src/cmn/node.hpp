@@ -55,9 +55,9 @@ public:
 //
 class labelNode : public node {
 public:
-   std::string label;  // only the first part if entity label
-   std::string action; // empty if not an entity label
-   std::string id();   // calculate the whole id
+   std::string label;      // only the first part if entity label
+   std::string action;     // empty if not an entity label
+   std::string id() const; // calculate the whole id
 
    cdwImplNode(labelNode,iGTeXVisitor);
 };
@@ -141,9 +141,10 @@ private:
 
 // TODO the complete list of imaginable transforms
 //
-// 1 environsReader
-// 1 targetFilter
-// 1 configReader
+//                                          ----- config
+// * loadEnvironsPass
+// * configTargetElaborationPass
+// * loadConfigPass
 //                                          ----- front end
 // * fileEnumPass
 // * parsePass
@@ -163,7 +164,7 @@ private:
 // * entityInstanceFormatterPass
 // * contractParagraphPass [actually in front DLL]
 // * paragraphWordCountingPass [actually in misc DLL]
-// 2 wordCountReporterPass [actually in misc DLL]
+// * wordCountReporterPass [actually in misc DLL]
 // * labelFormatterPass
 // table formatter
 // * textPrintPass
