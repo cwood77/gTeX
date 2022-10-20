@@ -11,6 +11,7 @@ public:
    {
       s.append(c.demand("fileEnumPass"));
       s.append(c.demand("parsePass"));
+      s.append(c.demand("conditionalEvaluatorPass"));
       s.append(c.demand("expandParagraphPass"));
    }
 };

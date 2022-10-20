@@ -43,7 +43,7 @@ void parser::parseFile(fileNode& f)
       }
 
       m_l.advance();
-      parseLabelParas(n);
+      parseParaSet(n);
       parseFile(f);
    }
    else if(m_l.getToken() == lexor::kEOI)
@@ -132,16 +132,40 @@ void parser::parseWords(paragraphNode& n)
 }
 
 // attach all subsequent paragraphs to this label
-void parser::parseLabelParas(labelNode& l)
+void parser::parseParaSet(node& l)
 {
-   if(m_l.getToken() != lexor::kWord)
+   if(m_l.getToken() == lexor::kWord)
+   {
+      auto& n = l.appendChild<paragraphNode>();
+      m_l.setup(n);
+      parseWords(n);
+
+      parseParaSet(l);
+   }
+   else if(m_l.getToken() == lexor::kIf)
+   {
+      auto& If = l.appendChild<ifNode>();
+      m_l.setup(If);
+      m_l.advance(scanStrategies::get().ifNode);
+
+      if(m_l.getToken() == lexor::kBang)
+      {
+         If.isFalse = true;
+         m_l.advance();
+      }
+
+      m_l.demand(lexor::kWord);
+      If.varName = m_l.getLexeme();
+      m_l.advance();
+
+      parseParaSet(If);
+
+      m_l.demandAndEat(lexor::kEndIf);
+
+      parseParaSet(l);
+   }
+   else
       return;
-
-   auto& n = l.appendChild<paragraphNode>();
-   m_l.setup(n);
-   parseWords(n);
-
-   parseLabelParas(l);
 }
 
 lexor& parser::skipComments(const iScanStrategy& s)

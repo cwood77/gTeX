@@ -4,8 +4,9 @@
 class lexor;
 
 // <file> ::== _entity <entity> <file>
-//           | <label> <label-paras> <file>
-// <label-paras> ::== <paragraph> <label-paras>
+//           | <label> <para-set> <file>
+// <para-set> ::== <words-on-same-line> <para-set>
+//                  | 'if' 'varName' '{' <para-set> '}'
 //                  | e
 //
 // <exploded-paragraph> ::== <word> <goto> <entity> <word>
@@ -19,7 +20,7 @@ public:
 
 private:
    void parseWords(paragraphNode& n);
-   void parseLabelParas(labelNode& n);
+   void parseParaSet(node& n);
 
    lexor& skipComments(const iScanStrategy& s);
    lexor& skipComments();

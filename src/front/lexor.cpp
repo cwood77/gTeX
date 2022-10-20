@@ -11,6 +11,13 @@ const lexemeTableEntry gCommonTokens[] = {
 const lexemeTableEntry gTopLevelTokens[] = {
    { lexemeTableEntry::kAlphanumeric, "_entity", lexor::kEntity },
    { lexemeTableEntry::kPunctuation,  "_:",      lexor::kLabel  },
+   { lexemeTableEntry::kAlphanumeric,  "_if",    lexor::kIf     },
+   { lexemeTableEntry::kAlphanumeric,  "_endif", lexor::kEndIf  },
+   { lexemeTableEntry::kPunctuation,  NULL }
+};
+
+const lexemeTableEntry gIfTokens[] = {
+   { lexemeTableEntry::kPunctuation,  "!",       lexor::kBang    },
    { lexemeTableEntry::kPunctuation,  NULL }
 };
 
@@ -45,15 +52,18 @@ scanStrategies::scanStrategies()
 : m_cmn(gCommonTokens)
 , m_topLevel(gCommonTokens)
 , m_entity(gCommonTokens)
+, m_ifNode(gCommonTokens)
 , m_paragraphStart(gParagraphStartTokens)
 , m_paragraphEnd(gParagraphEndTokens)
 , topLevel(m_topLevel,/*anyWordToken*/lexor::kWord)
 , entity(m_entity,/*anyWordToken*/lexor::kWord)
+, ifNode(m_ifNode,/*anyWordToken*/lexor::kWord)
 , paragraphStart(m_paragraphStart,/*anyWordToken*/lexor::kWord)
 , paragraphEnd(m_paragraphEnd,/*anyWordToken*/lexor::kWord)
 {
    m_topLevel.add(gTopLevelTokens);
    m_entity.add(gEntityTokens);
+   m_ifNode.add(gIfTokens);
 }
 
 lexor::lexor(iLexorInput& src)
@@ -68,6 +78,9 @@ lexor::lexor(iLexorInput& src)
    publishToken(kLabel,   "label");
    publishToken(kWord,    "word");
    publishToken(kGoto,    "goto");
+   publishToken(kIf,      "if");
+   publishToken(kEndIf,   "end if");
+   publishToken(kBang,    "exclamation point");
 }
 
 void lexor::setup(node& n)

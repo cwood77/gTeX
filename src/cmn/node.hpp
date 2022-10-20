@@ -10,6 +10,7 @@ using namespace prattle;
 class folderNode;
 class fileNode;
 class entityNode;
+class ifNode;
 class labelNode;
 class paragraphNode;
 class entityInstanceNode;
@@ -23,6 +24,7 @@ public:
    virtual void visit(folderNode& n) = 0;
    virtual void visit(fileNode& n) = 0;
    virtual void visit(entityNode& n) = 0;
+   virtual void visit(ifNode& n) = 0;
    virtual void visit(labelNode& n) = 0;
    virtual void visit(paragraphNode& n) = 0;
    virtual void visit(entityInstanceNode& n) = 0;
@@ -45,6 +47,16 @@ public:
    std::vector<std::string> actions;
 
    cdwImplNode(entityNode,iGTeXVisitor);
+};
+
+class ifNode : public node {
+public:
+   ifNode() : isFalse(false) {}
+
+   std::string varName;
+   bool isFalse;
+
+   cdwImplNode(ifNode,iGTeXVisitor);
 };
 
 // could be a entity label or a jump label
@@ -112,6 +124,7 @@ public:
    virtual void visit(folderNode& n) { visitChildren(n); }
    virtual void visit(fileNode& n) { visitChildren(n); }
    virtual void visit(entityNode& n) {}
+   virtual void visit(ifNode& n) {}
    virtual void visit(labelNode& n) {}
    virtual void visit(paragraphNode& n) {}
    virtual void visit(entityInstanceNode& n) {}
@@ -128,6 +141,7 @@ public:
    virtual void visit(folderNode& n);
    virtual void visit(fileNode& n);
    virtual void visit(entityNode& n);
+   virtual void visit(ifNode& n);
    virtual void visit(labelNode& n);
    virtual void visit(paragraphNode& n);
    virtual void visit(entityInstanceNode& n);
@@ -148,7 +162,7 @@ private:
 //                                          ----- front end
 // * fileEnumPass
 // * parsePass
-// conditionalEvaluator
+// * conditionalEvaluator
 // * expandParagraphPass
 //                                          ----- middle end
 // * entityTableGeneratorPass
@@ -158,7 +172,7 @@ private:
 // DOT printer
 // * labelRandomizerPass
 // * unlinker
-// label mover
+// * label mover
 //                                          ----- back end
 // * jumpFormatterPass
 // * entityInstanceFormatterPass

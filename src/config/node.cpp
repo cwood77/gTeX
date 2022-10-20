@@ -53,3 +53,11 @@ void cfgDumpVisitor::visit(arrayLitNode& n)
    autoIndent _i(m_l);
    visitChildren(n);
 }
+
+void cfgDumpVisitor::visit(boolLitNode& n)
+{
+   m_l.s().s() << indent(m_l) << n.getName() << ":" << n.val << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
+   visitChildren(n);
+}

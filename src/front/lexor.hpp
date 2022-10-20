@@ -13,6 +13,7 @@ private:
    lexemeTable m_cmn;
    lexemeTable m_topLevel;
    lexemeTable m_entity;
+   lexemeTable m_ifNode;
    lexemeTable m_paragraphStart;
    lexemeTable m_paragraphEnd;
 
@@ -21,6 +22,7 @@ public:
 
    standardStrategy topLevel;
    standardStrategy entity;
+   standardStrategy ifNode;
    standardStrategy paragraphStart;
    standardStrategy paragraphEnd;
 
@@ -40,6 +42,9 @@ public:
       kLabel,
       kWord,
       kGoto,
+      kIf,
+      kEndIf,
+      kBang,
    };
 
    explicit lexor(iLexorInput& src);

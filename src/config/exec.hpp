@@ -13,6 +13,7 @@ public:
    virtual void visit(ifNode& n);
    virtual void visit(strLitNode& n) {}
    virtual void visit(arrayLitNode& n) {}
+   virtual void visit(boolLitNode& n) {}
 
 private:
    config& m_c;
@@ -28,6 +29,7 @@ public:
    virtual void visit(ifNode& n) {}
    virtual void visit(strLitNode& n);
    virtual void visit(arrayLitNode& n);
+   virtual void visit(boolLitNode& n);
 
 private:
    config& m_c;
@@ -44,6 +46,7 @@ public:
    virtual void visit(ifNode& n) { visitChildren(n); }
    virtual void visit(strLitNode& n);
    virtual void visit(arrayLitNode& n);
+   virtual void visit(boolLitNode& n);
 
    bool equ;
 

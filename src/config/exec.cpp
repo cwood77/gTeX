@@ -29,6 +29,11 @@ void setVisitor::visit(arrayLitNode& n)
    m_c.createOrFetch<stringArraySetting>(m_name).value = n.vals;
 }
 
+void setVisitor::visit(boolLitNode& n)
+{
+   m_c.createOrFetch<boolSetting>(m_name).value = n.val;
+}
+
 void equVisitor::visit(strLitNode& n)
 {
    equ = (m_c.demand<stringSetting>(m_name).value == n.val);
@@ -37,4 +42,9 @@ void equVisitor::visit(strLitNode& n)
 void equVisitor::visit(arrayLitNode& n)
 {
    equ = (m_c.demand<stringArraySetting>(m_name).value == n.vals);
+}
+
+void equVisitor::visit(boolLitNode& n)
+{
+   equ = (m_c.demand<boolSetting>(m_name).value == n.val);
 }

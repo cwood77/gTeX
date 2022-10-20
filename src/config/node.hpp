@@ -10,6 +10,7 @@ class setNode;
 class ifNode;
 class strLitNode;
 class arrayLitNode;
+class boolLitNode;
 
 class iCfgNodeVisitor : public iNodeVisitor {
 public:
@@ -19,6 +20,7 @@ public:
    virtual void visit(ifNode& n) = 0;
    virtual void visit(strLitNode& n) = 0;
    virtual void visit(arrayLitNode& n) = 0;
+   virtual void visit(boolLitNode& n) = 0;
 };
 
 class seqNode : public node {
@@ -54,6 +56,13 @@ public:
    cdwImplNode(arrayLitNode,iCfgNodeVisitor);
 };
 
+class boolLitNode : public node {
+public:
+   bool val;
+
+   cdwImplNode(boolLitNode,iCfgNodeVisitor);
+};
+
 class cfgDumpVisitor : public iCfgNodeVisitor {
 public:
    explicit cfgDumpVisitor(log::iLog& l) : m_l(l) {}
@@ -64,6 +73,7 @@ public:
    virtual void visit(ifNode& n);
    virtual void visit(strLitNode& n);
    virtual void visit(arrayLitNode& n);
+   virtual void visit(boolLitNode& n);
 
 private:
    log::iLog& m_l;

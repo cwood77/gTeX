@@ -64,10 +64,21 @@ void parser::parseValue(node& n)
       // scalar
 
       m_l.demand(lexor::kWord);
-      auto& v = n.appendChild<strLitNode>();
-      m_l.setup(v);
-      v.val = m_l.getLexeme();
-      m_l.advance();
+      const bool isBool = (m_l.getLexeme() == "T" || m_l.getLexeme() == "F");
+      if(isBool)
+      {
+         auto& v = n.appendChild<boolLitNode>();
+         m_l.setup(v);
+         v.val = (m_l.getLexeme() == "T");
+         m_l.advance();
+      }
+      else
+      {
+         auto& v = n.appendChild<strLitNode>();
+         m_l.setup(v);
+         v.val = m_l.getLexeme();
+         m_l.advance();
+      }
    }
 }
 
