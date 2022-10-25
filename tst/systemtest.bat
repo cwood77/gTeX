@@ -16,7 +16,8 @@ rem                      dir          exeOut docOut
 call tst\.testcase.bat tst\extraLabel def    none
 
 echo --- extra label
-echo     (TBD)
+rem                      dir            exeOut docOut
+call tst\.testcase.bat tst\missingLabel def    none
 
 echo test done :)
 
