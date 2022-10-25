@@ -6,9 +6,12 @@ using namespace prattle;
 using namespace prattle::module;
 using namespace prattle::pass;
 
-int main(int,const char*[])
+int main(int argc,const char*[])
 {
-   std::cout << "gTeX " << __DATE__ << " " << __TIME__ << std::endl;
+   if(argc>1)
+      std::cout << "gTeX" << std::endl;
+   else
+      std::cout << "gTeX built " << __DATE__ << " " << __TIME__ << std::endl;
 
    // module loader unloads modules on dtor, so put it first. This allows deallocs
    // (e.g. config's dtor) to use module heaps

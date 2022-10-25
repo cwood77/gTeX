@@ -8,9 +8,7 @@ DEBUG_LNK_FLAGS_POST = -ggdb -static-libgcc -static-libstdc++ -static
 RELEASE_LNK_FLAGS_POST = -static-libgcc -static-libstdc++ -static
 
 test: debug
-	@bin/out/debug/gTeX.exe
-	@cmd.exe /c "fc out\debug\text\out.txt testdata.txt-out-expected"
-	@cmd.exe /c "fc out\release\text\out.txt testdata.txt-out-expected"
+	@cmd.exe /c tst\systemtest.bat
 
 debug: \
 	dirs \

@@ -1,6 +1,8 @@
 #include "../cmn/node.hpp"
+#include "../cmn/output.hpp"
 #include "../prattle/log.hpp"
 #include "engine.hpp"
+#include <fstream>
 #include <iostream>
 #include <memory>
 
@@ -59,12 +61,14 @@ void engine::handleConfigTarget(config& gCfg, const std::string& configTarget)
 
       msg << x.what() << std::endl;
 
-      msg << "AST at time of error:" << std::endl;
+      auto path = output(cfg).ensurePath("crash.ast");
       {
-         log::streamLogAdapter sink(msg);
+         std::ofstream oFile(path.c_str());
+         log::streamLogAdapter sink(oFile);
          dumpVisitor v(sink);
          pRoot->acceptVisitor(v);
       }
+      msg << "AST at time of error saved to '" << path << "'" << std::endl;
 
       throw std::runtime_error(msg.str());
    }
