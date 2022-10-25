@@ -16,7 +16,7 @@ _:START
 
 There's a crossroads.
 
-If you go left, go to _$LEFT
+If you go left, go to _$LEFT .
 If you go right, go to _$RIGHT
 
 _:LEFT

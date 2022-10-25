@@ -22,6 +22,7 @@ public:
    {
       auto *p = new paragraphNode();
       p->text = n.id;
+      p->combineWithFollowingPunct = true;
       n.replace(*p);
    }
 };

@@ -26,14 +26,17 @@ public:
       std::vector<paragraphNode*> words;
       n.searchDown<paragraphNode>(words,[&](auto& p){return &p!=&n;});
       std::stringstream stream;
-      bool first = true;
+      paragraphNode *pLast = NULL;
       for(auto *pWord : words)
       {
-         if(first)
-            first = false;
-         else if(!first)
+         const bool isPunct = ::ispunct(pWord->text.c_str()[0]);
+
+         if(pLast && !(isPunct && pLast->combineWithFollowingPunct))
             stream << " ";
+
          stream << pWord->text;
+
+         pLast = pWord;
       }
       n.text = stream.str();
 

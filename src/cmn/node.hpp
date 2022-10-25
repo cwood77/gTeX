@@ -76,7 +76,10 @@ public:
 
 class paragraphNode : public node {
 public:
+   paragraphNode() : combineWithFollowingPunct(false) {}
+
    std::string text;
+   bool combineWithFollowingPunct;
 
    cdwImplNode(paragraphNode,iGTeXVisitor);
 };
