@@ -236,6 +236,12 @@ void fieldCopyingNodeVisitor::visit(paragraphNode& n)
    n.combineWithFollowingPunct = dynamic_cast<paragraphNode&>(m_src).combineWithFollowingPunct;
 }
 
+void fieldCopyingNodeVisitor::visit(varRefNode& n)
+{
+   n.baseName = dynamic_cast<varRefNode&>(m_src).baseName;
+   n.suffix = dynamic_cast<varRefNode&>(m_src).suffix;
+}
+
 void treeCloningVisitor::postClone(node& src)
 {
    pClone->filePath = src.filePath;

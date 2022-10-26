@@ -22,9 +22,15 @@ public:
 
    virtual void visit(paragraphNode& n)
    {
+      if(n.getChildren().size() == 0) return;
+
+      visitChildren(n);
+
       // reconstruct the paragraph
       std::vector<paragraphNode*> words;
-      n.searchDown<paragraphNode>(words,[&](auto& p){return &p!=&n;});
+      n.searchDown<paragraphNode>(words,[&](auto& p){return p.getParent()==&n;});
+      if(words.size() != n.getChildren().size())
+         throw std::runtime_error("some children of paragraphNode aren't paragraphs!");
       std::stringstream stream;
       paragraphNode *pLast = NULL;
       for(auto *pWord : words)
@@ -55,8 +61,13 @@ public:
    {
       auto *pRoot = reinterpret_cast<folderNode*>(pIr);
 
-      visitor v;
-      pRoot->acceptVisitor(v);
+      nodeEditOperation o;
+      {
+         nodeEditCollector c(o);
+         visitor v;
+         pRoot->acceptVisitor(v);
+      }
+      o.commit();
    }
 };
 

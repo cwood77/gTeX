@@ -28,6 +28,11 @@ public:
       parser p(l);
       p.expandParagraph(n);
    }
+
+   virtual void visit(declMacroNode& n)
+   {
+      visitChildren(n);
+   }
 };
 
 } // anonymous namespace

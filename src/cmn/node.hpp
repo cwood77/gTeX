@@ -231,7 +231,7 @@ public:
    virtual void visit(declMacroNode& n) { unimplemented(n); }
    virtual void visit(callMacroNode& n) { unimplemented(n); }
    virtual void visit(varDeclNode& n) { unimplemented(n); }
-   virtual void visit(varRefNode& n) { unimplemented(n); }
+   virtual void visit(varRefNode& n);
 
 private:
    node& m_src;
