@@ -16,6 +16,7 @@ debug: \
 	$(OUT_DIR)/debug/config.dll \
 	$(OUT_DIR)/debug/frontTarget.dll \
 	$(OUT_DIR)/debug/misc.dll \
+	$(OUT_DIR)/debug/graph.dll \
 	$(OUT_DIR)/debug/middleTarget.dll \
 	$(OUT_DIR)/debug/textTarget.dll \
 
@@ -25,6 +26,7 @@ all: \
 	$(OUT_DIR)/release/config.dll \
 	$(OUT_DIR)/release/frontTarget.dll \
 	$(OUT_DIR)/release/misc.dll \
+	$(OUT_DIR)/release/graph.dll \
 	$(OUT_DIR)/release/middleTarget.dll \
 	$(OUT_DIR)/release/textTarget.dll \
 
@@ -40,6 +42,7 @@ dirs: $(PRATTLE_IMPORTS)
 	@mkdir -p $(OBJ_DIR)/debug/front
 	@mkdir -p $(OBJ_DIR)/debug/gTeX
 	@mkdir -p $(OBJ_DIR)/debug/gTeX/pass
+	@mkdir -p $(OBJ_DIR)/debug/graph
 	@mkdir -p $(OBJ_DIR)/debug/middle
 	@mkdir -p $(OBJ_DIR)/debug/misc
 	@mkdir -p $(OBJ_DIR)/debug/prattle
@@ -49,6 +52,7 @@ dirs: $(PRATTLE_IMPORTS)
 	@mkdir -p $(OBJ_DIR)/release/front
 	@mkdir -p $(OBJ_DIR)/release/gTeX
 	@mkdir -p $(OBJ_DIR)/release/gTeX/pass
+	@mkdir -p $(OBJ_DIR)/release/graph
 	@mkdir -p $(OBJ_DIR)/release/middle
 	@mkdir -p $(OBJ_DIR)/release/misc
 	@mkdir -p $(OBJ_DIR)/release/prattle
@@ -209,6 +213,32 @@ $(OUT_DIR)/release/misc.dll: $(MISC_RELEASE_OBJ) $(OUT_DIR)/release/cmn.lib
 	@$(LINK_CMD) -shared -o $@ $(MISC_RELEASE_OBJ) $(RELEASE_LNK_FLAGS_POST) -Lbin/out/release -lcmn
 
 $(MISC_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
+	$(info $< --> $@)
+	@$(COMPILE_CMD) $(RELEASE_CC_FLAGS) $< -o $@
+
+# ----------------------------------------------------------------------
+# graph
+
+GRAPH_SRC = \
+	src/graph/module.cpp \
+
+GRAPH_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(GRAPH_SRC)))
+
+$(OUT_DIR)/debug/graph.dll: $(GRAPH_DEBUG_OBJ) $(OUT_DIR)/debug/cmn.lib
+	$(info $< --> $@)
+	@$(LINK_CMD) -shared -o $@ $(GRAPH_DEBUG_OBJ) $(DEBUG_LNK_FLAGS_POST) -Lbin/out/debug -lcmn
+
+$(GRAPH_DEBUG_OBJ): $(OBJ_DIR)/debug/%.o: src/%.cpp
+	$(info $< --> $@)
+	@$(COMPILE_CMD) $(DEBUG_CC_FLAGS) $< -o $@
+
+GRAPH_RELEASE_OBJ = $(subst src,$(OBJ_DIR)/release,$(patsubst %.cpp,%.o,$(GRAPH_SRC)))
+
+$(OUT_DIR)/release/graph.dll: $(GRAPH_RELEASE_OBJ) $(OUT_DIR)/release/cmn.lib
+	$(info $< --> $@)
+	@$(LINK_CMD) -shared -o $@ $(GRAPH_RELEASE_OBJ) $(RELEASE_LNK_FLAGS_POST) -Lbin/out/release -lcmn
+
+$(GRAPH_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 	$(info $< --> $@)
 	@$(COMPILE_CMD) $(RELEASE_CC_FLAGS) $< -o $@
 

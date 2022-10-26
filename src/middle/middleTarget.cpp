@@ -12,6 +12,8 @@ public:
       s.append(c.demand("evaluateCounterVarPass"));
       s.append(c.demand("ensureNoVarsPass"));
 
+      // DOT printer
+
       s.append(c.demand("outFileCreatorPass"));
 
       s.append(c.demand("entityTableGeneratorPass"));
@@ -23,7 +25,6 @@ public:
 
       s.append(c.demand("linkerPass"));
       s.append(c.demand("entityRemovalPass"));
-      // DOT printer
       s.append(c.demand("labelRandomizerPass"));
       s.append(c.demand("unlinkerPass"));
 
