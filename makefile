@@ -216,9 +216,11 @@ $(MISC_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 # middle
 
 MIDDLE_SRC = \
+	src/middle/ensureNoVarsPass.cpp \
 	src/middle/entityInstanceRandomizerPass.cpp \
 	src/middle/entityRemover.cpp \
 	src/middle/entityTableGeneratorPass.cpp \
+	src/middle/evaluateCounterVarPass.cpp \
 	src/middle/labelMoverPass.cpp \
 	src/middle/labelRandomizerPass.cpp \
 	src/middle/linkerPass.cpp \

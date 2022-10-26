@@ -23,9 +23,9 @@ echo --- macros
 rem                      dir            exeOut docOut
 call tst\.testcase.bat tst\macro        none   def
 
-rem echo --- counterVar
-rem rem                      dir            exeOut docOut
-rem call tst\.testcase.bat tst\counterVar   none   def
+echo --- counterVar
+rem                      dir            exeOut docOut
+call tst\.testcase.bat tst\counterVar   none   def
 
 echo test done :)
 

@@ -2,6 +2,12 @@ _var ending counter
 
 _:START
 
-this is ending _@ending of _@ending.tot
+this is ending _@ending of _@ending.total .
 
-_$UnlistedLabel
+this is ending _@ending of _@ending.total !
+
+go to _$otherLabel .
+
+_:otherLabel
+
+this is ending _@ending of _@ending.total

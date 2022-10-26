@@ -30,6 +30,8 @@ running pass parsePass
 running pass conditionalEvaluatorPass
 running pass expandParagraphPass
 running pass implementMacroPass
+running pass evaluateCounterVarPass
+running pass ensureNoVarsPass
 running pass outFileCreatorPass
 running pass entityTableGeneratorPass
 running pass entityInstanceRandomizerPass

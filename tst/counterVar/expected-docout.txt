@@ -1,6 +1,10 @@
-here is a macro.
+this is ending 1 of 2.
 
-previous text here is a macro.
+this is ending 1 of 2!
 
-here is a macro. after text
+go to 1.
+
+--- 1 ----------------------------------------
+
+this is ending 2 of 2
 

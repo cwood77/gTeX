@@ -9,7 +9,8 @@ public:
    virtual std::string getPredecessorTarget() { return "frontTarget"; }
    virtual void adjustPasses(module::incrementalModuleLoader&, passCatalog& c, passSchedule& s)
    {
-      // evaluateCounterVars
+      s.append(c.demand("evaluateCounterVarPass"));
+      s.append(c.demand("ensureNoVarsPass"));
 
       s.append(c.demand("outFileCreatorPass"));
 
