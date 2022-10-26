@@ -30,8 +30,9 @@ const lexemeTableEntry gEntityTokens[] = {
 };
 
 const lexemeTableEntry gParagraphStartTokens[] = {
-   { lexemeTableEntry::kPunctuation,  "_$", lexor::kGoto },
-   { lexemeTableEntry::kPunctuation,  "_{", lexor::kEntity },
+   { lexemeTableEntry::kPunctuation,  "_$",      lexor::kGoto   },
+   { lexemeTableEntry::kPunctuation,  "_{",      lexor::kEntity },
+   { lexemeTableEntry::kAlphanumeric,  "_call",  lexor::kCall   },
    { lexemeTableEntry::kPunctuation,  NULL }
 };
 

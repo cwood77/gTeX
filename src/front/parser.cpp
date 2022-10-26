@@ -30,11 +30,15 @@ void parser::parseFile(fileNode& f)
    else if(m_l.getToken() == lexor::kMacro)
    {
       auto& m = f.appendChild<declMacroNode>();
+      m_l.setup(m);
       m_l.advance();
 
-      m_l.demand(lexor::kWord); // name
+      // name
+      m_l.demand(lexor::kWord);
+      m.name = m_l.getLexeme();
       m_l.advance(scanStrategies::get().macro);
 
+      // args
       m_l.demand(lexor::kLBrace);
       m_l.advance(scanStrategies::get().macro);
       m_l.demand(lexor::kRBrace);
@@ -113,6 +117,22 @@ void parser::expandParagraph(paragraphNode& p)
       n.id = m_l.getLexeme();
       skipComments(scanStrategies::get().paragraphEnd)
          .advance(scanStrategies::get().paragraphEnd);
+      m_l.demandAndEat(lexor::kRBrace,scanStrategies::get().paragraphStart);
+
+      expandParagraph(p);
+   }
+   else if(m_l.getToken() == lexor::kCall)
+   {
+      auto& c = p.appendChild<callMacroNode>();
+      m_l.setup(c);
+      m_l.advance();
+
+      m_l.demand(lexor::kWord);
+      c.name = m_l.getLexeme();
+      m_l.advance(scanStrategies::get().macro);
+
+      m_l.demand(lexor::kLBrace);
+      m_l.advance(scanStrategies::get().macro);
       m_l.demandAndEat(lexor::kRBrace,scanStrategies::get().paragraphStart);
 
       expandParagraph(p);

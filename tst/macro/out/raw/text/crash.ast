@@ -3,7 +3,7 @@ folderNode
    fileNode
    
       declMacroNode
-      ; 0 args
+      foo; 0 args
       
          paragraphNode
          TEST<here is a macro.>
@@ -14,6 +14,36 @@ folderNode
          TEST<_$JumpToUnknownLabelSoICrashAndCanSeeAst>
          
             jumpNode:JumpToUnknownLabelSoICrashAndCanSeeAst
+            
+         paragraphNode
+         TEST<_call foo {}>
+         
+            callMacroNode
+            foo; 0 args
+            
+         paragraphNode
+         TEST<previous text _call foo {}>
+         
+            paragraphNode
+            TEST<previous>
+            
+            paragraphNode
+            TEST<text>
+            
+            callMacroNode
+            foo; 0 args
+            
+         paragraphNode
+         TEST<_call foo {} after text>
+         
+            callMacroNode
+            foo; 0 args
+            
+            paragraphNode
+            TEST<after>
+            
+            paragraphNode
+            TEST<text>
             
    fileNode
    

@@ -19,9 +19,9 @@ echo --- extra label
 rem                      dir            exeOut docOut
 call tst\.testcase.bat tst\missingLabel def    none
 
-rem echo --- macros
-rem rem                      dir            exeOut docOut
-rem call tst\.testcase.bat tst\macro        none   def
+echo --- macros
+rem                      dir            exeOut docOut
+call tst\.testcase.bat tst\macro        none   def
 
 echo test done :)
 

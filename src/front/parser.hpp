@@ -8,11 +8,10 @@ class lexor;
 //           | <label> <para-set> <file>
 // <para-set> ::== <words-on-same-line> <para-set>
 //                  | 'if' 'varName' '{' <para-set> '}'
-//                  | '_call' <macro-call> <para-set>
 //                  | e
 // <macro-decl> ::== <name> '{' '}' <para-set> '_macro'
 //
-// <exploded-paragraph> ::== <word> <goto> <entity> <word>
+// <exploded-paragraph> ::== <word> <goto> <entity> <call> <word>
 //
 class parser {
 public:
