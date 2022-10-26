@@ -40,11 +40,13 @@ public:
       kEntity,
       kMacro,
       kCall,
+      kVar,
 
       kLBrace,
       kRBrace,
       kColon,
       kBang,
+      kAt,
 
       kActions,
 

@@ -20,6 +20,8 @@ class linkTableNode;
 class tableNode;
 class declMacroNode;
 class callMacroNode;
+class varDeclNode;
+class varRefNode;
 
 class iGTeXVisitor : public iNodeVisitor {
 public:
@@ -36,6 +38,8 @@ public:
    virtual void visit(tableNode& n) = 0;
    virtual void visit(declMacroNode& n) = 0;
    virtual void visit(callMacroNode& n) = 0;
+   virtual void visit(varDeclNode& n) = 0;
+   virtual void visit(varRefNode& n) = 0;
 
 protected:
    template<class T>
@@ -150,6 +154,22 @@ public:
    cdwImplNode(callMacroNode,iGTeXVisitor);
 };
 
+class varDeclNode : public node {
+public:
+   std::string name;
+   std::string type;
+
+   cdwImplNode(varDeclNode,iGTeXVisitor);
+};
+
+class varRefNode : public node {
+public:
+   std::string baseName;
+   std::string suffix;
+
+   cdwImplNode(varRefNode,iGTeXVisitor);
+};
+
 class gTeXVisitor : public iGTeXVisitor {
 public:
    virtual void visit(node& n) {}
@@ -165,6 +185,8 @@ public:
    virtual void visit(tableNode& n) {}
    virtual void visit(declMacroNode& n) {}
    virtual void visit(callMacroNode& n) {}
+   virtual void visit(varDeclNode& n) {}
+   virtual void visit(varRefNode& n) {}
 };
 
 class dumpVisitor : public iGTeXVisitor {
@@ -184,6 +206,8 @@ public:
    virtual void visit(tableNode& n);
    virtual void visit(declMacroNode& n);
    virtual void visit(callMacroNode& n);
+   virtual void visit(varDeclNode& n);
+   virtual void visit(varRefNode& n);
 
 private:
    log::iLog& m_l;
@@ -206,6 +230,8 @@ public:
    virtual void visit(tableNode& n) { unimplemented(n); }
    virtual void visit(declMacroNode& n) { unimplemented(n); }
    virtual void visit(callMacroNode& n) { unimplemented(n); }
+   virtual void visit(varDeclNode& n) { unimplemented(n); }
+   virtual void visit(varRefNode& n) { unimplemented(n); }
 
 private:
    node& m_src;
@@ -228,6 +254,8 @@ public:
    virtual void visit(tableNode& n) { cloneNodeWithDefaultCTor<tableNode>(n); }
    virtual void visit(declMacroNode& n) { cloneNodeWithDefaultCTor<declMacroNode>(n); }
    virtual void visit(callMacroNode& n) { cloneNodeWithDefaultCTor<callMacroNode>(n); }
+   virtual void visit(varDeclNode& n) { cloneNodeWithDefaultCTor<varDeclNode>(n); }
+   virtual void visit(varRefNode& n) { cloneNodeWithDefaultCTor<varRefNode>(n); }
 
 private:
    template<class T>

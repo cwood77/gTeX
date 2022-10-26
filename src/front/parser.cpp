@@ -49,6 +49,22 @@ void parser::parseFile(fileNode& f)
 
       parseFile(f);
    }
+   else if(m_l.getToken() == lexor::kVar)
+   {
+      auto& v = f.appendChild<varDeclNode>();
+      m_l.setup(v);
+      m_l.advance();
+
+      m_l.demand(lexor::kWord);
+      v.name = m_l.getLexeme();
+      m_l.advance();
+
+      m_l.demand(lexor::kWord);
+      v.type = m_l.getLexeme();
+      m_l.advance();
+
+      parseFile(f);
+   }
    else if(m_l.getToken() == lexor::kLabel)
    {
       auto& n = f.appendChild<labelNode>();
@@ -135,6 +151,26 @@ void parser::expandParagraph(paragraphNode& p)
       m_l.advance(scanStrategies::get().macro);
       m_l.demandAndEat(lexor::kRBrace,scanStrategies::get().paragraphStart);
 
+      expandParagraph(p);
+   }
+   else if(m_l.getToken() == lexor::kAt)
+   {
+      auto& r = p.appendChild<varRefNode>();
+      m_l.setup(r);
+      m_l.advance();
+
+      m_l.demand(lexor::kWord);
+      std::string fullName = m_l.getLexeme();
+      const char *pDot = ::strstr(fullName.c_str(),".");
+      if(pDot)
+      {
+         r.suffix = pDot+1;
+         r.baseName = std::string(fullName.c_str(),pDot-fullName.c_str());
+      }
+      else
+         r.baseName = fullName;
+
+      m_l.advance(scanStrategies::get().paragraphStart);
       expandParagraph(p);
    }
    else if(m_l.getToken() == lexor::kEOI)

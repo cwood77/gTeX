@@ -14,6 +14,7 @@ const lexemeTableEntry gTopLevelTokens[] = {
    { lexemeTableEntry::kPunctuation,  "_:",      lexor::kLabel  },
    { lexemeTableEntry::kAlphanumeric,  "_if",    lexor::kIf     },
    { lexemeTableEntry::kAlphanumeric,  "_endif", lexor::kEndIf  },
+   { lexemeTableEntry::kAlphanumeric,  "_var",   lexor::kVar    },
    { lexemeTableEntry::kPunctuation,  NULL }
 };
 
@@ -33,6 +34,7 @@ const lexemeTableEntry gParagraphStartTokens[] = {
    { lexemeTableEntry::kPunctuation,  "_$",      lexor::kGoto   },
    { lexemeTableEntry::kPunctuation,  "_{",      lexor::kEntity },
    { lexemeTableEntry::kAlphanumeric,  "_call",  lexor::kCall   },
+   { lexemeTableEntry::kPunctuation,  "_@",      lexor::kAt     },
    { lexemeTableEntry::kPunctuation,  NULL }
 };
 
@@ -89,11 +91,13 @@ void lexor::publishTokens()
    publishToken(kEntity,  "entity");
    publishToken(kMacro,   "macro declaration");
    publishToken(kCall,    "macro call");
+   publishToken(kVar,     "variable declaration");
 
    publishToken(kLBrace,  "left brace");
    publishToken(kRBrace,  "right brace");
    publishToken(kColon,   "colon");
    publishToken(kBang,    "exclamation point");
+   publishToken(kAt,      "at symbol");
 
    publishToken(kActions, "actions");
 

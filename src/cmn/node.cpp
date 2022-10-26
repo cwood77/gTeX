@@ -212,6 +212,24 @@ void dumpVisitor::visit(callMacroNode& n)
    visitChildren(n);
 }
 
+void dumpVisitor::visit(varDeclNode& n)
+{
+   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << n.name << "/" << n.type << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
+   visitChildren(n);
+}
+
+void dumpVisitor::visit(varRefNode& n)
+{
+   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << n.baseName << "/" << n.suffix << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
+   visitChildren(n);
+}
+
 void fieldCopyingNodeVisitor::visit(paragraphNode& n)
 {
    n.text = dynamic_cast<paragraphNode&>(m_src).text;

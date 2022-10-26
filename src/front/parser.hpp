@@ -5,13 +5,15 @@ class lexor;
 
 // <file> ::== '_entity' <entity> <file>
 //           | '_macro' <macro-decl> <file>
+//           | '_var' <var-decl> <file>
 //           | <label> <para-set> <file>
 // <para-set> ::== <words-on-same-line> <para-set>
 //                  | 'if' 'varName' '{' <para-set> '}'
 //                  | e
 // <macro-decl> ::== <name> '{' '}' <para-set> '_macro'
+// <var-decl> ::== <name> <type>
 //
-// <exploded-paragraph> ::== <word> <goto> <entity> <call> <word>
+// <exploded-paragraph> ::== <word> <goto> <entity> <call> <var-ref> <word>
 //
 class parser {
 public:
