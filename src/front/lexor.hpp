@@ -16,6 +16,7 @@ private:
    lexemeTable m_ifNode;
    lexemeTable m_paragraphStart;
    lexemeTable m_paragraphEnd;
+   lexemeTable m_macro;
 
 public:
    static scanStrategies& get();
@@ -25,6 +26,7 @@ public:
    standardStrategy ifNode;
    standardStrategy paragraphStart;
    standardStrategy paragraphEnd;
+   standardStrategy macro;
 
 private:
    scanStrategies();
@@ -34,20 +36,34 @@ class lexor : public lexorBase {
 public:
    enum {
       kComment = lexorBase::kFirstDerivedToken,
+
       kEntity,
+      kMacro,
+      kCall,
+
       kLBrace,
       kRBrace,
       kColon,
+      kBang,
+
       kActions,
+
       kLabel,
       kWord,
       kGoto,
+
       kIf,
       kEndIf,
-      kBang,
    };
 
-   explicit lexor(iLexorInput& src);
+   explicit lexor(iLexorInput& src)
+   : lexorBase(scanStrategies::get().topLevel,src) { publishTokens(); }
+
+   lexor(const iScanStrategy& defaultStrat, iLexorInput& src)
+   : lexorBase(defaultStrat,src) { publishTokens(); }
 
    void setup(node& n);
+
+private:
+   void publishTokens();
 };

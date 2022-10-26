@@ -27,6 +27,24 @@ void parser::parseFile(fileNode& f)
       skipComments(scanStrategies::get().entity).demandAndEat(lexor::kRBrace);
       parseFile(f);
    }
+   else if(m_l.getToken() == lexor::kMacro)
+   {
+      auto& m = f.appendChild<declMacroNode>();
+      m_l.advance();
+
+      m_l.demand(lexor::kWord); // name
+      m_l.advance(scanStrategies::get().macro);
+
+      m_l.demand(lexor::kLBrace);
+      m_l.advance(scanStrategies::get().macro);
+      m_l.demand(lexor::kRBrace);
+      m_l.advance(scanStrategies::get().macro);
+
+      parseParaSet(m);
+      m_l.demandAndEat(lexor::kMacro);
+
+      parseFile(f);
+   }
    else if(m_l.getToken() == lexor::kLabel)
    {
       auto& n = f.appendChild<labelNode>();

@@ -24,7 +24,7 @@ public:
    virtual void visit(paragraphNode& n)
    {
       memorySource in(n.text.c_str());
-      lexor l(in);
+      lexor l(scanStrategies::get().paragraphStart,in);
       parser p(l);
       p.expandParagraph(n);
    }

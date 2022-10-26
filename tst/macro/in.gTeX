@@ -1,0 +1,4 @@
+_macro foo {} here is a macro. _macro
+
+_:START
+_$JumpToUnknownLabelSoICrashAndCanSeeAst

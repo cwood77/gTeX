@@ -17,6 +17,8 @@ class entityInstanceNode;
 class jumpNode;
 class linkTableNode;
 class tableNode;
+class declMacroNode;
+class callMacroNode;
 
 class iGTeXVisitor : public iNodeVisitor {
 public:
@@ -31,6 +33,8 @@ public:
    virtual void visit(jumpNode& n) = 0;
    virtual void visit(linkTableNode& n) = 0;
    virtual void visit(tableNode& n) = 0;
+   virtual void visit(declMacroNode& n) = 0;
+   virtual void visit(callMacroNode& n) = 0;
 };
 
 class folderNode : public node {
@@ -121,6 +125,23 @@ public:
    cdwImplNode(tableNode,iGTeXVisitor);
 };
 
+class declMacroNode : public node {
+public:
+   std::string name;
+   std::vector<std::string> args;
+   std::string body;
+
+   cdwImplNode(declMacroNode,iGTeXVisitor);
+};
+
+class callMacroNode : public node {
+public:
+   std::string name;
+   std::vector<std::string> args;
+
+   cdwImplNode(callMacroNode,iGTeXVisitor);
+};
+
 class gTeXVisitor : public iGTeXVisitor {
 public:
    virtual void visit(node& n) {}
@@ -134,6 +155,8 @@ public:
    virtual void visit(jumpNode& n) {}
    virtual void visit(linkTableNode& n) {}
    virtual void visit(tableNode& n) {}
+   virtual void visit(declMacroNode& n) {}
+   virtual void visit(callMacroNode& n) {}
 };
 
 class dumpVisitor : public iGTeXVisitor {
@@ -151,6 +174,8 @@ public:
    virtual void visit(jumpNode& n);
    virtual void visit(linkTableNode& n);
    virtual void visit(tableNode& n);
+   virtual void visit(declMacroNode& n);
+   virtual void visit(callMacroNode& n);
 
 private:
    log::iLog& m_l;

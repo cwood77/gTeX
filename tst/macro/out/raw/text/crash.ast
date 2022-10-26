@@ -1,0 +1,27 @@
+folderNode
+
+   fileNode
+   
+      declMacroNode
+      ; 0 args
+      
+         paragraphNode
+         TEST<here is a macro.>
+         
+      labelNode:START
+      
+         paragraphNode
+         TEST<_$JumpToUnknownLabelSoICrashAndCanSeeAst>
+         
+            jumpNode:JumpToUnknownLabelSoICrashAndCanSeeAst
+            
+   fileNode
+   
+   linkTableNode
+   jumps {
+   }
+   entityInstances {
+   }
+   tables {
+   }
+   

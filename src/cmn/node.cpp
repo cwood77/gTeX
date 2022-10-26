@@ -176,3 +176,31 @@ void dumpVisitor::visit(tableNode& n)
    autoIndent _i(m_l);
    visitChildren(n);
 }
+
+void dumpVisitor::visit(declMacroNode& n)
+{
+   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << n.name << "; " << n.args.size() << " args" << std::endl;
+   {
+      autoIndent _i(m_l);
+      for(auto it=n.args.begin();it!=n.args.end();++it)
+         m_l.s().s() << indent(m_l) << *it << std::endl;
+   }
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
+   visitChildren(n);
+}
+
+void dumpVisitor::visit(callMacroNode& n)
+{
+   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << n.name << "; " << n.args.size() << " args" << std::endl;
+   {
+      autoIndent _i(m_l);
+      for(auto it=n.args.begin();it!=n.args.end();++it)
+         m_l.s().s() << indent(m_l) << *it << std::endl;
+   }
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
+   visitChildren(n);
+}
