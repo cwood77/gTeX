@@ -11,7 +11,14 @@ public:
    {
       s.append(c.demand("fileEnumPass"));
       s.append(c.demand("parsePass"));
+
+      // runMacros
+      // [evaluateVars - speculative]
+
       s.append(c.demand("conditionalEvaluatorPass"));
+
+      // expandInplaceLabels
+
       s.append(c.demand("expandParagraphPass"));
    }
 };

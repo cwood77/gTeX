@@ -34,6 +34,7 @@ public:
       }
 
       s.append(c.demand("labelFormatterPass"));
+      // tableFormatter
       s.append(c.demand("textPrintPass"));
    }
 

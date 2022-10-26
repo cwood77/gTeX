@@ -9,12 +9,20 @@ public:
    virtual std::string getPredecessorTarget() { return "frontTarget"; }
    virtual void adjustPasses(module::incrementalModuleLoader&, passCatalog& c, passSchedule& s)
    {
+      // evaluateCounterVars
+
       s.append(c.demand("outFileCreatorPass"));
 
       s.append(c.demand("entityTableGeneratorPass"));
       s.append(c.demand("entityInstanceRandomizerPass"));
+
+      // link for merge
+      // merge
+      // unlink for merge
+
       s.append(c.demand("linkerPass"));
       s.append(c.demand("entityRemovalPass"));
+      // DOT printer
       s.append(c.demand("labelRandomizerPass"));
       s.append(c.demand("unlinkerPass"));
 

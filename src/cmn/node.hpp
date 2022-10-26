@@ -155,39 +155,3 @@ public:
 private:
    log::iLog& m_l;
 };
-
-// TODO the complete list of imaginable transforms
-//
-//                                          ----- config
-// * loadEnvironsPass
-// * configTargetElaborationPass
-// * loadConfigPass
-//                                          ----- front end
-// * fileEnumPass
-// * parsePass
-// * conditionalEvaluator
-// * expandParagraphPass
-//                                          ----- middle end
-// * entityTableGeneratorPass
-// * entityInstanceRandomizerPass
-// * linkerPass
-// * entityRemovalPass
-// DOT printer
-// * labelRandomizerPass
-// * unlinker
-// * label mover
-//                                          ----- back end
-// * jumpFormatterPass
-// * entityInstanceFormatterPass
-// * contractParagraphPass [actually in front DLL]
-// * paragraphWordCountingPass [actually in misc DLL]
-// * wordCountReporterPass [actually in misc DLL]
-// * labelFormatterPass
-// table formatter
-// * textPrintPass
-//
-// 1 what I need first
-// 2 what I need second
-// * done
-//
-//
