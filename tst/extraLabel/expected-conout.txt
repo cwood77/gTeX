@@ -29,6 +29,7 @@ running pass parsePass
   loading file .\in.gTeX
 running pass conditionalEvaluatorPass
 running pass expandParagraphPass
+running pass implementMacroPass
 running pass outFileCreatorPass
 running pass entityTableGeneratorPass
 running pass entityInstanceRandomizerPass

@@ -12,7 +12,6 @@ public:
       s.append(c.demand("fileEnumPass"));
       s.append(c.demand("parsePass"));
 
-      // runMacros
       // [evaluateVars - speculative]
 
       s.append(c.demand("conditionalEvaluatorPass"));
@@ -20,6 +19,8 @@ public:
       // expandInplaceLabels
 
       s.append(c.demand("expandParagraphPass"));
+
+      s.append(c.demand("implementMacroPass"));
    }
 };
 

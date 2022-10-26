@@ -3,6 +3,13 @@
 
 using namespace prattle::log;
 
+void iGTeXVisitor::_unimplemented(const std::string& nodeType) const
+{
+   std::stringstream msg;
+   msg << "visitor " << typeid(*this).name() << " doesn't know how to handle node " << nodeType;
+   throw std::runtime_error(msg.str());
+}
+
 std::string labelNode::id() const
 {
    std::string ans = label;
@@ -203,4 +210,26 @@ void dumpVisitor::visit(callMacroNode& n)
    m_l.s().s() << indent(m_l) << std::endl;
    autoIndent _i(m_l);
    visitChildren(n);
+}
+
+void fieldCopyingNodeVisitor::visit(paragraphNode& n)
+{
+   n.text = dynamic_cast<paragraphNode&>(m_src).text;
+   n.combineWithFollowingPunct = dynamic_cast<paragraphNode&>(m_src).combineWithFollowingPunct;
+}
+
+void treeCloningVisitor::postClone(node& src)
+{
+   pClone->filePath = src.filePath;
+   pClone->lineNumber = src.lineNumber;
+
+   fieldCopyingNodeVisitor copier(src);
+   pClone->acceptVisitor(copier);
+
+   for(auto *pChild : src.getChildren())
+   {
+      treeCloningVisitor childClone;
+      pChild->acceptVisitor(childClone);
+      pClone->appendChild(*childClone.pClone.release());
+   }
 }

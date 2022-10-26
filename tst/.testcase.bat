@@ -30,7 +30,7 @@ if "%3" == "none" goto skipDocCmp
 set expected=%3
 if "%3" == "def" set expected=expected-docout.txt
 rem echo comparing doc output against %expected%
-fc out\raw\txt\out.txt %expected% >nul 2>&1
+fc out\raw\text\out.txt %expected% >nul 2>&1
 if %ERRORLEVEL% NEQ 0 set afterwards=orphan
 :skipDocCmp
 

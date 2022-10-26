@@ -155,6 +155,7 @@ FRONT_SRC = \
 	src/front/expandParagraphPass.cpp \
 	src/front/fileEnumPass.cpp \
 	src/front/frontTarget.cpp \
+	src/front/implementMacroPass.cpp \
 	src/front/lexor.cpp \
 	src/front/module.cpp \
 	src/front/parsePass.cpp \

@@ -2,6 +2,7 @@
 #include "../prattle/log.hpp"
 #include "../prattle/node.hpp"
 #include <map>
+#include <memory>
 #include <set>
 #include <vector>
 
@@ -35,6 +36,13 @@ public:
    virtual void visit(tableNode& n) = 0;
    virtual void visit(declMacroNode& n) = 0;
    virtual void visit(callMacroNode& n) = 0;
+
+protected:
+   template<class T>
+   void unimplemented(T& n) { _unimplemented(typeid(T).name()); }
+
+private:
+   void _unimplemented(const std::string& nodeType) const;
 };
 
 class folderNode : public node {
@@ -179,4 +187,55 @@ public:
 
 private:
    log::iLog& m_l;
+};
+
+class fieldCopyingNodeVisitor : public iGTeXVisitor {
+public:
+   explicit fieldCopyingNodeVisitor(node& src) : m_src(src) {}
+
+   virtual void visit(node& n) {}
+   virtual void visit(folderNode& n) { unimplemented(n); }
+   virtual void visit(fileNode& n) { unimplemented(n); }
+   virtual void visit(entityNode& n) { unimplemented(n); }
+   virtual void visit(ifNode& n) { unimplemented(n); }
+   virtual void visit(labelNode& n) { unimplemented(n); }
+   virtual void visit(paragraphNode& n);
+   virtual void visit(entityInstanceNode& n) { unimplemented(n); }
+   virtual void visit(jumpNode& n) { unimplemented(n); }
+   virtual void visit(linkTableNode& n) { unimplemented(n); }
+   virtual void visit(tableNode& n) { unimplemented(n); }
+   virtual void visit(declMacroNode& n) { unimplemented(n); }
+   virtual void visit(callMacroNode& n) { unimplemented(n); }
+
+private:
+   node& m_src;
+};
+
+class treeCloningVisitor : public iGTeXVisitor {
+public:
+   std::unique_ptr<node> pClone;
+
+   virtual void visit(node& n) { cloneNodeWithDefaultCTor<node>(n); }
+   virtual void visit(folderNode& n) { cloneNodeWithDefaultCTor<folderNode>(n); }
+   virtual void visit(fileNode& n) { cloneNodeWithDefaultCTor<fileNode>(n); }
+   virtual void visit(entityNode& n) { cloneNodeWithDefaultCTor<entityNode>(n); }
+   virtual void visit(ifNode& n) { cloneNodeWithDefaultCTor<ifNode>(n); }
+   virtual void visit(labelNode& n) { cloneNodeWithDefaultCTor<labelNode>(n); }
+   virtual void visit(paragraphNode& n) { cloneNodeWithDefaultCTor<paragraphNode>(n); }
+   virtual void visit(entityInstanceNode& n) { cloneNodeWithDefaultCTor<entityInstanceNode>(n); }
+   virtual void visit(jumpNode& n) { cloneNodeWithDefaultCTor<jumpNode>(n); }
+   virtual void visit(linkTableNode& n) { cloneNodeWithDefaultCTor<linkTableNode>(n); }
+   virtual void visit(tableNode& n) { cloneNodeWithDefaultCTor<tableNode>(n); }
+   virtual void visit(declMacroNode& n) { cloneNodeWithDefaultCTor<declMacroNode>(n); }
+   virtual void visit(callMacroNode& n) { cloneNodeWithDefaultCTor<callMacroNode>(n); }
+
+private:
+   template<class T>
+   void cloneNodeWithDefaultCTor(T& n)
+   {
+      pClone.reset(new T());
+      postClone(n);
+   }
+
+   void postClone(node& src);
 };

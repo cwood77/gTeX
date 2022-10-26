@@ -1,1 +1,6 @@
 here is a macro.
+
+previous text here is a macro.
+
+here is a macro. after text
+
