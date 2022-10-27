@@ -35,6 +35,7 @@ public:
 
       s.append(c.demand("labelFormatterPass"));
       // tableFormatter
+      // [graph] mapFormatterPass
       s.append(c.demand("textPrintPass"));
    }
 

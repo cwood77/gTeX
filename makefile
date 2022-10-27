@@ -220,6 +220,9 @@ $(MISC_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 # graph
 
 GRAPH_SRC = \
+	src/graph/dotPrintPass.cpp \
+	src/graph/graphIrBuilderPass.cpp \
+	src/graph/graphIrProviderPass.cpp \
 	src/graph/module.cpp \
 
 GRAPH_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(GRAPH_SRC)))

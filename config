@@ -4,3 +4,5 @@ if config == release { wcnt:log-path := wordcount-log.txt }
 if config == release { wcnt:nanowrimo := [ 10 31 ] }
 
 bExtra := F
+
+dot:on := T

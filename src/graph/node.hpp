@@ -1,6 +1,7 @@
 #pragma once
-#include "../prattle/log.hpp"
 #include "../cmn/node.hpp"
+#include "../prattle/log.hpp"
+#include <set>
 
 class graphRootNode;
 class graphSubgraphNode;
@@ -27,40 +28,12 @@ public:
 
 class graphVertexNode : public node {
 public:
-   graphVertexNode();
+   graphVertexNode() : pLabel(NULL) {}
 
    labelNode *pLabel;
+   std::string origLblId;
+
+   std::set<jumpNode*> outgoing;
 
    cdwImplNode(graphVertexNode,iGraphNodeVisitor);
-};
-
-class graphBuilder : public iGTeXVisitor {
-public:
-   graphBuilder() : pRoot(new graphRootNode()) {}
-
-   std::unique_ptr<graphRootNode> pRoot;
-
-   virtual void visit(node& n) { visitChildren(n); }
-   virtual void visit(folderNode& n) { visitChildren(n); }
-   virtual void visit(fileNode& n) { visitChildren(n); }
-   virtual void visit(entityNode& n) { visitChildren(n); }
-   virtual void visit(ifNode& n) { visitChildren(n); }
-   virtual void visit(labelNode& n);
-   virtual void visit(paragraphNode& n) { visitChildren(n); }
-   virtual void visit(entityInstanceNode& n) { visitChildren(n); }
-   virtual void visit(jumpNode& n);
-   virtual void visit(linkTableNode& n) { visitChildren(n); }
-   virtual void visit(tableNode& n) { visitChildren(n); }
-   virtual void visit(declMacroNode& n) { visitChildren(n); }
-   virtual void visit(callMacroNode& n) { visitChildren(n); }
-   virtual void visit(varDeclNode& n) { visitChildren(n); }
-   virtual void visit(varRefNode& n) { visitChildren(n); }
-};
-
-class dotWriter : public iGraphNodeVisitor {
-public:
-   explicit dotWriter(log::iLog& l) : m_l(l) {}
-
-private:
-   log::iLog& m_l;
 };

@@ -10,6 +10,9 @@ public:
    {
       c.createOrFetch<stringSetting>("in",[](auto& s){ s.value="."; });
       c.createOrFetch<stringSetting>("out",[](auto& s){ s.value="out"; });
+
+      c.createOrFetch<boolSetting>("dot:on",[](auto& s){ s.value=false; });
+      c.createOrFetch<stringSetting>("dot:out",[](auto& s){ s.value="out"; });
    }
 };
 
