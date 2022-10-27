@@ -8,6 +8,7 @@ public:
    virtual void decompose(passCatalog& c, std::list<iPass*>& updated)
    {
       updated.push_back(c.demand("graphIrBuilderPass").create());
+      updated.push_back(c.demand("graphIrGrouperPass").create());
       delete this;
    }
 

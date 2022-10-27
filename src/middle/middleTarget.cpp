@@ -23,9 +23,6 @@ public:
 
       if(usesDot() || usesMaps())
       {
-         // [graph] graphIrBuilderPass
-         // [graph] graphIrLoweringPass
-         // [graph] graphIrProviderPass <- decomposes               conditional
          mLdr.tryLoad("graph.dll");
          s.append(c.demand("graphIrProviderPass"));
       }
@@ -42,7 +39,6 @@ public:
       s.append(c.demand("labelMoverPass"));
 
       if(usesDot())
-         // [graph] dotPrinterPass                                  conditional
          s.append(c.demand("dotPrintPass"));
 
       if(usesMaps())

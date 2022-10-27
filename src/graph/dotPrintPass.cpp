@@ -28,8 +28,6 @@ public:
       {
          autoIndent _i(m_l);
          m_l.s().s() << indent(m_l) << "node [shape=box]" << std::endl;
-         //m_l.s().s() << indent(m_l) << "start [shape=ellipse]" << std::endl;
-         //m_l.s().s() << indent(m_l) << "end [shape=doublecircle]" << std::endl;
          m_l.s().s() << std::endl;
 
          visitChildren(n);
@@ -48,12 +46,12 @@ public:
 
    virtual void visit(graphSubgraphNode& n)
    {
-      m_l.s().s() << indent(m_l) << "subgraph cluster_ " << (m_clusterCnt++) << " {" << std::endl;
+      m_l.s().s() << indent(m_l) << "subgraph cluster_" << (m_clusterCnt++) << " {" << std::endl;
       m_l.s().s() << std::endl;
 
       {
          autoIndent _i(m_l);
-         m_l.s().s() << indent(m_l) << "label = \"" << n.name << "\"" << std::endl;
+         m_l.s().s() << indent(m_l) << "label = \"" << prepPath(n.name) << "\"" << std::endl;
          m_l.s().s() << std::endl;
 
          visitChildren(n);
@@ -97,6 +95,29 @@ private:
             << dst[m_vertexAliases]
             << std::endl;
       }
+   }
+
+   std::string prepPath(const std::string& p)
+   {
+      std::stringstream stream;
+      bool first = true;
+      const char *pThumb = p.c_str();
+      const char *pStart = pThumb;
+      for(;*pThumb!=0;++pThumb)
+      {
+         if(*pThumb == '\\')
+         {
+            std::string word(pStart,pThumb-pStart);
+            if(!first)
+               stream << word;
+            first = false;
+            pStart = pThumb+1;
+         }
+      }
+      std::string word(pStart,pThumb-pStart);
+      stream << word;
+
+      return stream.str();
    }
 
    log::iLog& m_l;

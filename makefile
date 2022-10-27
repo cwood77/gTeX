@@ -222,6 +222,7 @@ $(MISC_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 GRAPH_SRC = \
 	src/graph/dotPrintPass.cpp \
 	src/graph/graphIrBuilderPass.cpp \
+	src/graph/graphIrGrouperPass.cpp \
 	src/graph/graphIrProviderPass.cpp \
 	src/graph/module.cpp \
 
