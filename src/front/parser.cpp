@@ -84,6 +84,19 @@ void parser::parseFile(fileNode& f)
       parseParaSet(n);
       parseFile(f);
    }
+   else if(m_l.getToken() == lexor::kInlineLabel)
+   {
+      auto& n = f.appendChild<inlineLabelNode>();
+      m_l.setup(n);
+      m_l.advance();
+
+      skipComments().demand(lexor::kWord);
+      n.label = m_l.getLexeme();
+
+      m_l.advance();
+      parseParaSet(n);
+      parseFile(f);
+   }
    else if(m_l.getToken() == lexor::kEOI)
       return;
    else

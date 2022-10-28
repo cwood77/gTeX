@@ -156,6 +156,7 @@ $(CONFIG_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 FRONT_SRC = \
 	src/front/conditionalEvaluatorPass.cpp \
 	src/front/contractParagraphPass.cpp \
+	src/front/expandInlineLabelsPass.cpp \
 	src/front/expandParagraphPass.cpp \
 	src/front/fileEnumPass.cpp \
 	src/front/frontTarget.cpp \

@@ -13,6 +13,7 @@ class fileNode;
 class entityNode;
 class ifNode;
 class labelNode;
+class inlineLabelNode;
 class paragraphNode;
 class entityInstanceNode;
 class jumpNode;
@@ -31,6 +32,7 @@ public:
    virtual void visit(entityNode& n) = 0;
    virtual void visit(ifNode& n) = 0;
    virtual void visit(labelNode& n) = 0;
+   virtual void visit(inlineLabelNode& n) = 0;
    virtual void visit(paragraphNode& n) = 0;
    virtual void visit(entityInstanceNode& n) = 0;
    virtual void visit(jumpNode& n) = 0;
@@ -83,11 +85,22 @@ public:
 //
 class labelNode : public node {
 public:
+   labelNode() : markedForMerge(false) {}
+
    std::string label;      // only the first part if entity label
    std::string action;     // empty if not an entity label
    std::string id() const; // calculate the whole id
 
+   bool markedForMerge;
+
    cdwImplNode(labelNode,iGTeXVisitor);
+};
+
+class inlineLabelNode : public node {
+public:
+   std::string label;
+
+   cdwImplNode(inlineLabelNode,iGTeXVisitor);
 };
 
 class paragraphNode : public node {
@@ -178,6 +191,7 @@ public:
    virtual void visit(entityNode& n) {}
    virtual void visit(ifNode& n) {}
    virtual void visit(labelNode& n) {}
+   virtual void visit(inlineLabelNode& n) {}
    virtual void visit(paragraphNode& n) {}
    virtual void visit(entityInstanceNode& n) {}
    virtual void visit(jumpNode& n) {}
@@ -199,6 +213,7 @@ public:
    virtual void visit(entityNode& n);
    virtual void visit(ifNode& n);
    virtual void visit(labelNode& n);
+   virtual void visit(inlineLabelNode& n);
    virtual void visit(paragraphNode& n);
    virtual void visit(entityInstanceNode& n);
    virtual void visit(jumpNode& n);
@@ -223,6 +238,7 @@ public:
    virtual void visit(entityNode& n) { unimplemented(n); }
    virtual void visit(ifNode& n) { unimplemented(n); }
    virtual void visit(labelNode& n) { unimplemented(n); }
+   virtual void visit(inlineLabelNode& n) { unimplemented(n); }
    virtual void visit(paragraphNode& n);
    virtual void visit(entityInstanceNode& n) { unimplemented(n); }
    virtual void visit(jumpNode& n) { unimplemented(n); }
@@ -247,6 +263,7 @@ public:
    virtual void visit(entityNode& n) { cloneNodeWithDefaultCTor<entityNode>(n); }
    virtual void visit(ifNode& n) { cloneNodeWithDefaultCTor<ifNode>(n); }
    virtual void visit(labelNode& n) { cloneNodeWithDefaultCTor<labelNode>(n); }
+   virtual void visit(inlineLabelNode& n) { cloneNodeWithDefaultCTor<inlineLabelNode>(n); }
    virtual void visit(paragraphNode& n) { cloneNodeWithDefaultCTor<paragraphNode>(n); }
    virtual void visit(entityInstanceNode& n) { cloneNodeWithDefaultCTor<entityInstanceNode>(n); }
    virtual void visit(jumpNode& n) { cloneNodeWithDefaultCTor<jumpNode>(n); }

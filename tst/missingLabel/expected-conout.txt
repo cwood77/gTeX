@@ -30,6 +30,7 @@ running pass fileEnumPass
 running pass parsePass
   loading file .\in.gTeX
 running pass conditionalEvaluatorPass
+running pass expandInlineLabelsPass
 running pass expandParagraphPass
 running pass implementMacroPass
 running pass evaluateCounterVarPass

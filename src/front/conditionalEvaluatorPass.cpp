@@ -22,6 +22,7 @@ public:
    }
 
    virtual void visit(labelNode& n) { visitChildren(n); }
+   virtual void visit(inlineLabelNode& n) { visitChildren(n); }
 
 private:
    config& m_c;

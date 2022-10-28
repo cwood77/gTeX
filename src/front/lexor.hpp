@@ -51,6 +51,7 @@ public:
       kActions,
 
       kLabel,
+      kInlineLabel,
       kWord,
       kGoto,
 

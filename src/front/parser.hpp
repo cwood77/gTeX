@@ -7,6 +7,7 @@ class lexor;
 //           | '_macro' <macro-decl> <file>
 //           | '_var' <var-decl> <file>
 //           | <label> <para-set> <file>
+//           | <inline-label> <para-set> <file>
 // <para-set> ::== <words-on-same-line> <para-set>
 //                  | 'if' 'varName' '{' <para-set> '}'
 //                  | e

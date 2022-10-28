@@ -106,7 +106,15 @@ void dumpVisitor::visit(ifNode& n)
 
 void dumpVisitor::visit(labelNode& n)
 {
-   m_l.s().s() << indent(m_l) << n.getName() << ":" << n.id() << std::endl;
+   m_l.s().s() << indent(m_l) << n.getName() << ":" << n.id() << (n.markedForMerge ? " [MERGE]" : "") << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
+   visitChildren(n);
+}
+
+void dumpVisitor::visit(inlineLabelNode& n)
+{
+   m_l.s().s() << indent(m_l) << n.getName() << ":" << n.label << std::endl;
    m_l.s().s() << indent(m_l) << std::endl;
    autoIndent _i(m_l);
    visitChildren(n);

@@ -9,15 +9,9 @@ using namespace prattle::pass;
 
 namespace {
 
-class visitor : public iGTeXVisitor {
+class visitor : public gTeXVisitor {
 public:
    explicit visitor(graphRootNode& root) : m_root(root) {}
-
-   virtual void visit(node& n) { visitChildren(n); }
-   virtual void visit(folderNode& n) { visitChildren(n); }
-   virtual void visit(fileNode& n) { visitChildren(n); }
-   virtual void visit(entityNode& n) { visitChildren(n); }
-   virtual void visit(ifNode& n) { visitChildren(n); }
 
    virtual void visit(labelNode& n)
    {
@@ -35,20 +29,12 @@ public:
    }
 
    virtual void visit(paragraphNode& n) { visitChildren(n); }
-   virtual void visit(entityInstanceNode& n) { visitChildren(n); }
 
    virtual void visit(jumpNode& n)
    {
       n.demandAncestor<labelNode>()[m_attr]->outgoing.insert(&n);
       visitChildren(n);
    }
-
-   virtual void visit(linkTableNode& n) { visitChildren(n); }
-   virtual void visit(tableNode& n) { visitChildren(n); }
-   virtual void visit(declMacroNode& n) { visitChildren(n); }
-   virtual void visit(callMacroNode& n) { visitChildren(n); }
-   virtual void visit(varDeclNode& n) { visitChildren(n); }
-   virtual void visit(varRefNode& n) { visitChildren(n); }
 
 private:
    graphRootNode& m_root;

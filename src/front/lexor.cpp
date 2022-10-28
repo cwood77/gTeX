@@ -9,12 +9,13 @@ const lexemeTableEntry gCommonTokens[] = {
 };
 
 const lexemeTableEntry gTopLevelTokens[] = {
-   { lexemeTableEntry::kAlphanumeric, "_entity", lexor::kEntity },
-   { lexemeTableEntry::kAlphanumeric, "_macro",  lexor::kMacro  },
-   { lexemeTableEntry::kPunctuation,  "_:",      lexor::kLabel  },
-   { lexemeTableEntry::kAlphanumeric,  "_if",    lexor::kIf     },
-   { lexemeTableEntry::kAlphanumeric,  "_endif", lexor::kEndIf  },
-   { lexemeTableEntry::kAlphanumeric,  "_var",   lexor::kVar    },
+   { lexemeTableEntry::kAlphanumeric, "_entity", lexor::kEntity       },
+   { lexemeTableEntry::kAlphanumeric, "_macro",  lexor::kMacro        },
+   { lexemeTableEntry::kPunctuation,  "_:",      lexor::kLabel        },
+   { lexemeTableEntry::kPunctuation,  "_<",      lexor::kInlineLabel  },
+   { lexemeTableEntry::kAlphanumeric,  "_if",    lexor::kIf           },
+   { lexemeTableEntry::kAlphanumeric,  "_endif", lexor::kEndIf        },
+   { lexemeTableEntry::kAlphanumeric,  "_var",   lexor::kVar          },
    { lexemeTableEntry::kPunctuation,  NULL }
 };
 
@@ -86,25 +87,26 @@ void lexor::setup(node& n)
 
 void lexor::publishTokens()
 {
-   publishToken(kComment, "comment");
+   publishToken(kComment,     "comment");
 
-   publishToken(kEntity,  "entity");
-   publishToken(kMacro,   "macro declaration");
-   publishToken(kCall,    "macro call");
-   publishToken(kVar,     "variable declaration");
+   publishToken(kEntity,      "entity");
+   publishToken(kMacro,       "macro declaration");
+   publishToken(kCall,        "macro call");
+   publishToken(kVar,         "variable declaration");
 
-   publishToken(kLBrace,  "left brace");
-   publishToken(kRBrace,  "right brace");
-   publishToken(kColon,   "colon");
-   publishToken(kBang,    "exclamation point");
-   publishToken(kAt,      "at symbol");
+   publishToken(kLBrace,      "left brace");
+   publishToken(kRBrace,      "right brace");
+   publishToken(kColon,       "colon");
+   publishToken(kBang,        "exclamation point");
+   publishToken(kAt,          "at symbol");
 
-   publishToken(kActions, "actions");
+   publishToken(kActions,     "actions");
 
-   publishToken(kLabel,   "label");
-   publishToken(kWord,    "word");
-   publishToken(kGoto,    "goto");
+   publishToken(kLabel,       "label");
+   publishToken(kInlineLabel, "inline label");
+   publishToken(kWord,        "word");
+   publishToken(kGoto,        "goto");
 
-   publishToken(kIf,      "if");
-   publishToken(kEndIf,   "end if");
+   publishToken(kIf,          "if");
+   publishToken(kEndIf,       "end if");
 }

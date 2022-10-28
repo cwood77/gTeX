@@ -16,7 +16,7 @@ public:
 
       s.append(c.demand("conditionalEvaluatorPass"));
 
-      // expandInplaceLabels
+      s.append(c.demand("expandInlineLabelsPass"));
 
       s.append(c.demand("expandParagraphPass"));
 
