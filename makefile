@@ -224,6 +224,7 @@ GRAPH_SRC = \
 	src/graph/graphIrBuilderPass.cpp \
 	src/graph/graphIrGrouperPass.cpp \
 	src/graph/graphIrProviderPass.cpp \
+	src/graph/mapAccessorPass.cpp \
 	src/graph/module.cpp \
 
 GRAPH_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(GRAPH_SRC)))
