@@ -28,12 +28,15 @@ public:
 
 class graphVertexNode : public node {
 public:
-   graphVertexNode() : pLabel(NULL) {}
+   graphVertexNode() : pLabel(NULL), isMergeLabel(false) {}
 
    labelNode *pLabel;
    std::string origLblId;
+   std::string origLblFile;
+   bool isMergeLabel;
 
    std::set<jumpNode*> outgoing;
+   std::set<std::string> origMergeLblIds;
 
    cdwImplNode(graphVertexNode,iGraphNodeVisitor);
 };

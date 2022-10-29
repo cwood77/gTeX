@@ -29,7 +29,7 @@ public:
 
    virtual void visit(graphVertexNode& n)
    {
-      auto& set = m_verticiesByCategory[n.pLabel->filePath];
+      auto& set = m_verticiesByCategory[n.origLblFile];
       set.insert(&n);
    }
 

@@ -3,6 +3,7 @@
 rem %1 = testcasedir
 rem %2 = expected exe out
 rem %3 = expected doc out
+rem %4 = expected dot out
 
 setlocal
 
@@ -33,6 +34,14 @@ rem echo comparing doc output against %expected%
 fc out\raw\text\out.txt %expected% >nul 2>&1
 if %ERRORLEVEL% NEQ 0 set afterwards=orphan
 :skipDocCmp
+
+if "%4" == "none" goto skipDotCmp
+set expected=%4
+if "%4" == "def" set expected=expected-dotout.dot
+rem echo comparing dot output against %expected%
+fc out\raw\text\out.dot %expected% >nul 2>&1
+if %ERRORLEVEL% NEQ 0 set afterwards=orphan
+:skipDotCmp
 
 goto %afterwards%
 

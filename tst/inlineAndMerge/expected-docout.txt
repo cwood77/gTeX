@@ -1,0 +1,10 @@
+start text
+
+inline text
+
+more text
+
+merge text
+
+again
+

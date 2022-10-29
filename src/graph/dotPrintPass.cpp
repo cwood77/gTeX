@@ -37,7 +37,7 @@ public:
          std::vector<graphVertexNode*> verticies;
          n.searchDown<graphVertexNode>(verticies);
          for(auto *pVertex : verticies)
-            drawEdge(*pVertex);
+            drawEdges(*pVertex);
       }
 
       m_l.s().s() << std::endl;
@@ -76,6 +76,8 @@ public:
 
       if(n.origLblId == "START")
          m_l.s().s() << " shape=ellipse";
+      else if(n.isMergeLabel)
+         m_l.s().s() << " shape=box3d";
 
       m_l.s().s() << "]"
          << std::endl;
@@ -84,15 +86,29 @@ public:
    }
 
 private:
-   void drawEdge(graphVertexNode& n)
+   void drawEdges(graphVertexNode& n)
    {
+      // normal jumps
       for(auto *pJmp : n.outgoing)
       {
          auto& dst = n.getRoot().demandDown<graphVertexNode>(
-            [&](auto&v){ return v.pLabel->id() == pJmp->id; });
+            [&](auto&v){ return !v.isMergeLabel && (v.pLabel->id() == pJmp->id); });
+
          m_l.s().s() << indent(m_l)
             << n[m_vertexAliases] << " -> "
             << dst[m_vertexAliases]
+            << std::endl;
+      }
+
+      // merge jumps
+      for(auto mergeLbl : n.origMergeLblIds)
+      {
+         auto& dst = n.getRoot().demandDown<graphVertexNode>(
+            [&](auto&v){ return v.isMergeLabel && (v.origLblId == mergeLbl); });
+
+         m_l.s().s() << indent(m_l)
+            << n[m_vertexAliases] << " -> "
+            << dst[m_vertexAliases] << " [color=grey]"
             << std::endl;
       }
    }

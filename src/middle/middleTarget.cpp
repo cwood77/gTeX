@@ -27,10 +27,12 @@ public:
          s.append(c.demand("graphIrProviderPass"));
       }
 
-      // link for merge
-      // merge
-      // unlink for merge
+      // merge (with its own linker)
+      s.append(c.demand("linkerPass"));
+      s.append(c.demand("mergeLabelsPass"));
+      s.append(c.demand("unlinkerPass"));
 
+      // randomize (with its own linker)
       s.append(c.demand("linkerPass"));
       s.append(c.demand("entityRemovalPass"));
       s.append(c.demand("labelRandomizerPass"));

@@ -19,9 +19,15 @@ public:
 
       if(!isEntityLabel)
       {
+         std::vector<jumpNode*> jumps;
+         n.getRoot().searchDown<jumpNode>(jumps,[&](auto&j){ return j.id == n.id(); });
+         const bool isMerge = (jumps.size() == 1 && jumps[0]->markedForMerge);
+
          auto& v = m_root.appendChild<graphVertexNode>();
-         v.pLabel = &n;
+         v.pLabel = isMerge ? NULL : &n;
          v.origLblId = n.id();
+         v.origLblFile = n.filePath;
+         v.isMergeLabel = isMerge;
          n[m_attr] = &v;
       }
 
@@ -32,7 +38,11 @@ public:
 
    virtual void visit(jumpNode& n)
    {
-      n.demandAncestor<labelNode>()[m_attr]->outgoing.insert(&n);
+      auto *pVertex = n.demandAncestor<labelNode>()[m_attr];
+      if(n.markedForMerge)
+         pVertex->origMergeLblIds.insert(n.id);
+      else
+         pVertex->outgoing.insert(&n);
       visitChildren(n);
    }
 

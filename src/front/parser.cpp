@@ -129,6 +129,20 @@ void parser::expandParagraph(paragraphNode& p)
          .advance(scanStrategies::get().paragraphStart);
       expandParagraph(p);
    }
+   else if(m_l.getToken() == lexor::kMerge)
+   {
+      auto& n = p.appendChild<jumpNode>();
+      dupSetup(p,n);
+      n.markedForMerge = true;
+      skipComments(scanStrategies::get().paragraphStart)
+         .advance(scanStrategies::get().paragraphStart);
+
+      m_l.demand(lexor::kWord);
+      n.id = m_l.getLexeme();
+      skipComments(scanStrategies::get().paragraphStart)
+         .advance(scanStrategies::get().paragraphStart);
+      expandParagraph(p);
+   }
    else if(m_l.getToken() == lexor::kEntity)
    {
       auto& n = p.appendChild<entityInstanceNode>();

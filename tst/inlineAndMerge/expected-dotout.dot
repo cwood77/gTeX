@@ -1,0 +1,18 @@
+digraph G {
+
+   node [shape=box]
+
+   subgraph cluster_0 {
+
+      label = "in.gTeX"
+
+      n0 [label="START" shape=ellipse]
+      n1 [label="Inline" shape=box3d]
+      n2 [label="labelToMerge" shape=box3d]
+
+   }
+
+   n0 -> n1 [color=grey]
+   n1 -> n2 [color=grey]
+
+}

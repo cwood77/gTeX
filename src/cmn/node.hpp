@@ -85,13 +85,9 @@ public:
 //
 class labelNode : public node {
 public:
-   labelNode() : markedForMerge(false) {}
-
    std::string label;      // only the first part if entity label
    std::string action;     // empty if not an entity label
    std::string id() const; // calculate the whole id
-
-   bool markedForMerge;
 
    cdwImplNode(labelNode,iGTeXVisitor);
 };
@@ -123,7 +119,11 @@ public:
 
 class jumpNode : public node {
 public:
+   jumpNode() : markedForMerge(false) {}
+
    std::string id; // gets edited by linker
+
+   bool markedForMerge;
 
    cdwImplNode(jumpNode,iGTeXVisitor);
 };

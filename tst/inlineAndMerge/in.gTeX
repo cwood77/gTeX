@@ -1,0 +1,14 @@
+_:START
+start text
+
+_-Inline
+inline text
+
+more text
+
+_<labelToMerge
+
+again
+
+_:labelToMerge
+merge text

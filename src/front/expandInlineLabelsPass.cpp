@@ -10,20 +10,25 @@ class visitor : public gTeXVisitor {
 public:
    virtual void visit(inlineLabelNode& n)
    {
-      auto& prevLbl = dynamic_cast<labelNode&>(*n.demandParent().getChildren()
-         [n.demandParent().getIndexOfChild(n)-1]);
+      // the sibling previous to 'n' will receive the merge jump
+      auto& prevSibling = *n.demandParent().getChildren()
+         [n.demandParent().getIndexOfChild(n)-1];
+
+      // create a jump on a new paragraph an a temp tree
       auto *pRoot = new node();
-      auto& j = pRoot->appendChild<jumpNode>();
+      auto& p = pRoot->appendChild<paragraphNode>();
+      dupSetup(n,p);
+      auto& j = p.appendChild<jumpNode>();
       dupSetup(n,j);
       j.id = n.label;
+      j.markedForMerge = true;
 
       auto *pL = new labelNode();
       dupSetup(n,*pL);
       pL->label = n.label;
-      pL->markedForMerge = true;
 
       n.reparentChildren(*pL);
-      j.reparent(prevLbl);
+      p.reparent(prevSibling);
       n.replace(*pL);
       nodeEditCollector::head()->op.defer([=](){ delete pRoot; });
    }
@@ -44,6 +49,7 @@ public:
    {
       auto *pRoot = reinterpret_cast<folderNode*>(pIr);
 
+#if 0
       nodeEditOperation o;
       {
          nodeEditCollector c(o);
@@ -51,6 +57,23 @@ public:
          pRoot->acceptVisitor(v);
       }
       o.commit();
+#endif
+
+      while(true)
+      {
+         std::vector<inlineLabelNode*> nodes;
+         pRoot->searchDown<inlineLabelNode>(nodes);
+         if(nodes.size() == 0) break;
+         auto& n = *nodes[0];
+
+         nodeEditOperation o;
+         {
+            nodeEditCollector c(o);
+            visitor v;
+            n.acceptVisitor(v);
+         }
+         o.commit();
+      }
    }
 };
 

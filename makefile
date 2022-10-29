@@ -260,6 +260,7 @@ MIDDLE_SRC = \
 	src/middle/labelMoverPass.cpp \
 	src/middle/labelRandomizerPass.cpp \
 	src/middle/linkerPass.cpp \
+	src/middle/mergeLabelsPass.cpp \
 	src/middle/middleTarget.cpp \
 	src/middle/module.cpp \
 	src/middle/outFileCreatorPass.cpp \

@@ -14,7 +14,7 @@ class lexor;
 // <macro-decl> ::== <name> '{' '}' <para-set> '_macro'
 // <var-decl> ::== <name> <type>
 //
-// <exploded-paragraph> ::== <word> <goto> <entity> <call> <var-ref> <word>
+// <exploded-paragraph> ::== <word> <goto> <merge> <entity> <call> <var-ref> <word>
 //
 class parser {
 public:

@@ -12,7 +12,7 @@ const lexemeTableEntry gTopLevelTokens[] = {
    { lexemeTableEntry::kAlphanumeric, "_entity", lexor::kEntity       },
    { lexemeTableEntry::kAlphanumeric, "_macro",  lexor::kMacro        },
    { lexemeTableEntry::kPunctuation,  "_:",      lexor::kLabel        },
-   { lexemeTableEntry::kPunctuation,  "_<",      lexor::kInlineLabel  },
+   { lexemeTableEntry::kPunctuation,  "_-",      lexor::kInlineLabel  },
    { lexemeTableEntry::kAlphanumeric,  "_if",    lexor::kIf           },
    { lexemeTableEntry::kAlphanumeric,  "_endif", lexor::kEndIf        },
    { lexemeTableEntry::kAlphanumeric,  "_var",   lexor::kVar          },
@@ -33,6 +33,7 @@ const lexemeTableEntry gEntityTokens[] = {
 
 const lexemeTableEntry gParagraphStartTokens[] = {
    { lexemeTableEntry::kPunctuation,  "_$",      lexor::kGoto   },
+   { lexemeTableEntry::kPunctuation,  "_<",      lexor::kMerge  },
    { lexemeTableEntry::kPunctuation,  "_{",      lexor::kEntity },
    { lexemeTableEntry::kAlphanumeric,  "_call",  lexor::kCall   },
    { lexemeTableEntry::kPunctuation,  "_@",      lexor::kAt     },
@@ -106,6 +107,7 @@ void lexor::publishTokens()
    publishToken(kInlineLabel, "inline label");
    publishToken(kWord,        "word");
    publishToken(kGoto,        "goto");
+   publishToken(kMerge,       "merge goto");
 
    publishToken(kIf,          "if");
    publishToken(kEndIf,       "end if");
