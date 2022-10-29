@@ -34,7 +34,7 @@ public:
       }
 
       s.append(c.demand("labelFormatterPass"));
-      // tableFormatter
+      s.append(c.demand("tableFormatterPass"));
       // [graph] mapFormatterPass
       s.append(c.demand("textPrintPass"));
    }
