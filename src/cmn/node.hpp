@@ -299,3 +299,9 @@ private:
 
    void postClone(node& src);
 };
+
+// TODO: what's left
+// - DOT barfs on attachments
+// - attachment table formatting polish
+// - attachment jump formatting polish
+// - entity instances should be repeatable without bumping the IDs

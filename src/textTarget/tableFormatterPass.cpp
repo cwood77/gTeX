@@ -11,9 +11,21 @@ public:
    virtual void visit(tableNode& n)
    {
       std::stringstream stream;
-      stream << "----------------------------------------------" << std::endl;
-      stream << n.action << " (" << n.entityType << ")" << std::endl;
-      stream << std::endl;
+
+      if(n.entityType.empty())
+      {
+         // attached action
+         stream << n.action << std::endl;
+         stream << std::endl;
+      }
+      else
+      {
+         // normal action
+         stream << "----------------------------------------------" << std::endl;
+         stream << n.action << " (" << n.entityType << ")" << std::endl;
+         stream << std::endl;
+      }
+
       for(auto it=n.operandsToLabels.begin();it!=n.operandsToLabels.end();++it)
          stream << it->first <<  " -> " << it->second << std::endl;
 

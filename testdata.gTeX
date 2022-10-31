@@ -31,7 +31,11 @@ He says "sup, bro".
 _:dude->rob
 "Bruh, what a thing to happen!"
 
-You can now bring up "Bruh" _attach{: Bruh :char } with people.
+You can now bring up "Bruh" _attach{prefix: Bruh :char } with people.
+
+_:dude->Bruh
+
+You ask the dude about Bruh.
 
 _:RIGHT
 Other things happen
