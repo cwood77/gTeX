@@ -5,5 +5,4 @@ if config == release { wcnt:nanowrimo := [ 10 31 ] }
 
 bExtra := F
 
-# TODO - currently broken
-dot:on := F
+dot:on := T

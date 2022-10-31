@@ -303,5 +303,5 @@ private:
 // TODO: what's left
 // ok attachment table formatting polish
 // ok attachment jump formatting polish
-// - DOT barfs on attachments
+// ? DOT barfs on attachments
 // - entity instances should be repeatable without bumping the IDs

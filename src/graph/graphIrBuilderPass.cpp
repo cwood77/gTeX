@@ -9,9 +9,11 @@ using namespace prattle::pass;
 
 namespace {
 
-class visitor : public gTeXVisitor {
+class labelFindingVisitor : public gTeXVisitor {
 public:
-   explicit visitor(graphRootNode& root) : m_root(root) {}
+   explicit labelFindingVisitor(graphRootNode& root) : m_root(root) {}
+
+   attribute<graphVertexNode*> attr;
 
    virtual void visit(labelNode& n)
    {
@@ -19,16 +21,23 @@ public:
 
       if(!isEntityLabel)
       {
-         std::vector<jumpNode*> jumps;
-         n.getRoot().searchDown<jumpNode>(jumps,[&](auto&j){ return j.id == n.id(); });
-         const bool isMerge = (jumps.size() == 1 && jumps[0]->markedForMerge);
+         const bool isAttachedTable =
+            n.getChildren().size() > 0 &&
+            dynamic_cast<tableNode*>(n.getChildren()[0]);
 
-         auto& v = m_root.appendChild<graphVertexNode>();
-         v.pLabel = isMerge ? NULL : &n;
-         v.origLblId = n.id();
-         v.origLblFile = n.filePath;
-         v.isMergeLabel = isMerge;
-         n[m_attr] = &v;
+         if(!isAttachedTable)
+         {
+            std::vector<jumpNode*> jumps;
+            n.getRoot().searchDown<jumpNode>(jumps,[&](auto&j){ return j.id == n.id(); });
+            const bool isMerge = (jumps.size() == 1 && jumps[0]->markedForMerge);
+
+            auto& v = m_root.appendChild<graphVertexNode>();
+            v.pLabel = isMerge ? NULL : &n;
+            v.origLblId = n.id();
+            v.origLblFile = n.filePath;
+            v.isMergeLabel = isMerge;
+            n[attr] = &v;
+         }
       }
 
       visitChildren(n);
@@ -36,19 +45,34 @@ public:
 
    virtual void visit(paragraphNode& n) { visitChildren(n); }
 
+private:
+   graphRootNode& m_root;
+};
+
+class jumpResolvingVisitor : public gTeXVisitor {
+public:
+   jumpResolvingVisitor(graphRootNode& root, attribute<graphVertexNode*>& attr)
+   : m_root(root), m_attr(attr) {}
+
+   virtual void visit(labelNode& n) { visitChildren(n); }
+   virtual void visit(paragraphNode& n) { visitChildren(n); }
+
    virtual void visit(jumpNode& n)
    {
       auto *pVertex = n.demandAncestor<labelNode>()[m_attr];
-      if(n.markedForMerge)
-         pVertex->origMergeLblIds.insert(n.id);
-      else
-         pVertex->outgoing.insert(&n);
+      if(pVertex)
+      {
+         if(n.markedForMerge)
+            pVertex->origMergeLblIds.insert(n.id);
+         else
+            pVertex->outgoing.insert(&n);
+      }
       visitChildren(n);
    }
 
 private:
    graphRootNode& m_root;
-   attribute<graphVertexNode*> m_attr;
+   attribute<graphVertexNode*>& m_attr;
 };
 
 } // anonymous namespace
@@ -59,8 +83,11 @@ public:
    {
       auto *pRoot = reinterpret_cast<folderNode*>(pIr);
 
-      visitor v(m_gRoot);
-      pRoot->acceptVisitor(v);
+      labelFindingVisitor lv(m_gRoot);
+      pRoot->acceptVisitor(lv);
+
+      jumpResolvingVisitor jv(m_gRoot,lv.attr);
+      pRoot->acceptVisitor(jv);
    }
 
    graphRootNode& getGraphIr() { return m_gRoot; }
