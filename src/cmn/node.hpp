@@ -301,7 +301,7 @@ private:
 };
 
 // TODO: what's left
+// ok attachment table formatting polish
 // - DOT barfs on attachments
-// - attachment table formatting polish
 // - attachment jump formatting polish
 // - entity instances should be repeatable without bumping the IDs

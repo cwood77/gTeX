@@ -20,6 +20,12 @@ public:
                t.entityType == pAttach->entityType &&
                t.action == pAttach->action; });
 
+         // amend the table action with the prefix
+         if(!pAttach->actionPrefix.empty())
+            table.action = pAttach->actionPrefix + " " + table.action;
+         // zero-out the entityType on the table
+         table.entityType = "";
+
          // replace attachment with jump
          std::stringstream stream;
          stream << "lbl_" << pAttach->action << "_" << pAttach->entityType;
@@ -34,9 +40,6 @@ public:
          L.reparent(table.demandParent(),&table);
          delete pRoot;
          table.reparent(L);
-
-         // zero-out the entityType on the table
-         table.entityType = "";
       }
 
       //throw std::runtime_error("dump AST after new xfrm");
