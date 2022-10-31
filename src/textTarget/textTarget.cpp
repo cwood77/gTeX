@@ -23,6 +23,7 @@ public:
    virtual std::string getPredecessorTarget() { return "middleTarget"; }
    virtual void adjustPasses(module::incrementalModuleLoader& mLdr, passCatalog& c, passSchedule& s)
    {
+      // pre-count formatter (i.e. everything I want contributing to word count)
       s.append(c.demand("jumpFormatterPass"));
       s.append(c.demand("entityInstanceFormatterPass"));
       s.append(c.demand("contractParagraphPass"));
@@ -33,9 +34,12 @@ public:
          s.append(c.demand("overallWordCountingPass"));
       }
 
+      // post-count formatter (i.e. everything not contributing to word count)
       s.append(c.demand("labelFormatterPass"));
       s.append(c.demand("tableFormatterPass"));
       // [graph] mapFormatterPass
+
+      // the end
       s.append(c.demand("textPrintPass"));
    }
 

@@ -13,7 +13,6 @@ public:
       s.append(c.demand("parsePass"));
 
       // [evaluateVars - speculative]
-
       s.append(c.demand("conditionalEvaluatorPass"));
 
       s.append(c.demand("expandInlineLabelsPass"));

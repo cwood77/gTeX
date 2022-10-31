@@ -1,27 +1,36 @@
 There's a crossroads.
 
-If you go left, go to 2.
+If you go left, go to 3.
 
-If you go right, go to 3
+If you go right, go to 2
 
 --- 1 ----------------------------------------
 
-"Bruh, what a thing to happen!"
+----------------------------------------------
+Bruh ()
+
+
 
 --- 2 ----------------------------------------
+
+Other things happen
+
+--- 3 ----------------------------------------
 
 There's a dude (1).
 
 He says "sup, bro".
 
---- 3 ----------------------------------------
+--- 4 ----------------------------------------
 
-Other things happen
+"Bruh, what a thing to happen!"
+
+You can now bring up "Bruh" 1 with people.
 
 ----------------------------------------------
 rob (char)
 
-1 -> 1
+1 -> 4
 
 
 ----------------------------------------------

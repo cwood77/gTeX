@@ -36,8 +36,10 @@ running pass implementMacroPass
 running pass evaluateCounterVarPass
 running pass ensureNoVarsPass
 running pass outFileCreatorPass
+running pass gatherAndAttachEntityActionPass
 running pass entityTableGeneratorPass
 running pass entityInstanceRandomizerPass
+running pass attachedActionDecompositionPass
 running pass linkerPass
 ERROR: 1 label(s) existed but are unreferenced?
    Unused

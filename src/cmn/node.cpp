@@ -238,6 +238,15 @@ void dumpVisitor::visit(varRefNode& n)
    visitChildren(n);
 }
 
+void dumpVisitor::visit(attachActionNode& n)
+{
+   m_l.s().s() << indent(m_l) << n.getName() << std::endl;
+   m_l.s().s() << indent(m_l) << n.actionPrefix << "/" << n.action << "/" << n.entityType << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
+   visitChildren(n);
+}
+
 void fieldCopyingNodeVisitor::visit(paragraphNode& n)
 {
    n.text = dynamic_cast<paragraphNode&>(m_src).text;

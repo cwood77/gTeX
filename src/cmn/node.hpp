@@ -23,6 +23,7 @@ class declMacroNode;
 class callMacroNode;
 class varDeclNode;
 class varRefNode;
+class attachActionNode;
 
 class iGTeXVisitor : public iNodeVisitor {
 public:
@@ -42,6 +43,7 @@ public:
    virtual void visit(callMacroNode& n) = 0;
    virtual void visit(varDeclNode& n) = 0;
    virtual void visit(varRefNode& n) = 0;
+   virtual void visit(attachActionNode& n) = 0;
 
 protected:
    template<class T>
@@ -183,6 +185,15 @@ public:
    cdwImplNode(varRefNode,iGTeXVisitor);
 };
 
+class attachActionNode : public node {
+public:
+   std::string actionPrefix;
+   std::string action;
+   std::string entityType;
+
+   cdwImplNode(attachActionNode,iGTeXVisitor);
+};
+
 class gTeXVisitor : public iGTeXVisitor {
 public:
    virtual void visit(node& n) {}
@@ -201,6 +212,7 @@ public:
    virtual void visit(callMacroNode& n) {}
    virtual void visit(varDeclNode& n) {}
    virtual void visit(varRefNode& n) {}
+   virtual void visit(attachActionNode& n) {}
 };
 
 class dumpVisitor : public iGTeXVisitor {
@@ -223,6 +235,7 @@ public:
    virtual void visit(callMacroNode& n);
    virtual void visit(varDeclNode& n);
    virtual void visit(varRefNode& n);
+   virtual void visit(attachActionNode& n);
 
 private:
    log::iLog& m_l;
@@ -248,6 +261,7 @@ public:
    virtual void visit(callMacroNode& n) { unimplemented(n); }
    virtual void visit(varDeclNode& n) { unimplemented(n); }
    virtual void visit(varRefNode& n);
+   virtual void visit(attachActionNode& n) { unimplemented(n); }
 
 private:
    node& m_src;
@@ -273,6 +287,7 @@ public:
    virtual void visit(callMacroNode& n) { cloneNodeWithDefaultCTor<callMacroNode>(n); }
    virtual void visit(varDeclNode& n) { cloneNodeWithDefaultCTor<varDeclNode>(n); }
    virtual void visit(varRefNode& n) { cloneNodeWithDefaultCTor<varRefNode>(n); }
+   virtual void visit(attachActionNode& n) { cloneNodeWithDefaultCTor<attachActionNode>(n); }
 
 private:
    template<class T>

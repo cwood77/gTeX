@@ -200,12 +200,57 @@ void parser::expandParagraph(paragraphNode& p)
       m_l.advance(scanStrategies::get().paragraphStart);
       expandParagraph(p);
    }
+   else if(m_l.getToken() == lexor::kAttach)
+   {
+      auto& n = p.appendChild<attachActionNode>();
+      dupSetup(p,n);
+      skipComments(scanStrategies::get().paragraphEnd)
+         .advance(scanStrategies::get().paragraphEnd);
+
+      std::vector<std::string> words;
+      while(true)
+      {
+         if(m_l.getToken() == lexor::kRBrace)
+         {
+            skipComments(scanStrategies::get().paragraphEnd)
+               .advance(scanStrategies::get().paragraphEnd);
+            break;
+         }
+         else if(m_l.getToken() == lexor::kColon)
+         {
+            skipComments(scanStrategies::get().paragraphEnd)
+               .advance(scanStrategies::get().paragraphEnd);
+            continue;
+         }
+
+         m_l.demand(lexor::kWord);
+         words.push_back(m_l.getLexeme());
+         skipComments(scanStrategies::get().paragraphEnd)
+            .advance(scanStrategies::get().paragraphEnd);
+      }
+
+      if(words.size() == 3)
+      {
+         n.actionPrefix = words[0];
+         n.action = words[1];
+         n.entityType = words[2];
+      }
+      else if(words.size() == 2)
+      {
+         n.action = words[0];
+         n.entityType = words[1];
+      }
+      else
+         throw std::runtime_error("wrong number of arguments for attach node");
+
+      expandParagraph(p);
+   }
    else if(m_l.getToken() == lexor::kEOI)
    {
       return;
    }
    else
-      m_l.expected({ lexor::kWord, lexor::kGoto, lexor::kEntity });
+      m_l.expected({ lexor::kWord, lexor::kGoto, lexor::kMerge, lexor::kEntity, lexor::kCall, lexor::kAt, lexor::kAttach, lexor::kEOI });
 }
 
 // decide which words belong to this paragraph

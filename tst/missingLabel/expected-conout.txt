@@ -36,8 +36,10 @@ running pass implementMacroPass
 running pass evaluateCounterVarPass
 running pass ensureNoVarsPass
 running pass outFileCreatorPass
+running pass gatherAndAttachEntityActionPass
 running pass entityTableGeneratorPass
 running pass entityInstanceRandomizerPass
+running pass attachedActionDecompositionPass
 running pass linkerPass
 ERROR: referenced label not found: UnknownLabel
 AST at time of error saved to 'out\raw\text\crash.ast'

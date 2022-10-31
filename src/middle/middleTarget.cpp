@@ -16,10 +16,12 @@ public:
       s.append(c.demand("evaluateCounterVarPass"));
       s.append(c.demand("ensureNoVarsPass"));
 
+      // entity at al. compile
       s.append(c.demand("outFileCreatorPass"));
-
+      s.append(c.demand("gatherAndAttachEntityActionPass"));
       s.append(c.demand("entityTableGeneratorPass"));
       s.append(c.demand("entityInstanceRandomizerPass"));
+      s.append(c.demand("attachedActionDecompositionPass"));
 
       if(usesDot() || usesMaps())
       {

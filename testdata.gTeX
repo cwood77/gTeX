@@ -31,6 +31,8 @@ He says "sup, bro".
 _:dude->rob
 "Bruh, what a thing to happen!"
 
+You can now bring up "Bruh" _attach{: Bruh :char } with people.
+
 _:RIGHT
 Other things happen
 

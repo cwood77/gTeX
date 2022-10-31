@@ -55,6 +55,7 @@ public:
       kWord,
       kGoto,
       kMerge,
+      kAttach,
 
       kIf,
       kEndIf,
