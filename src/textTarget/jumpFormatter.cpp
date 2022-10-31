@@ -20,8 +20,21 @@ public:
 
    virtual void visit(jumpNode& n)
    {
+      std::vector<labelNode*> labels;
+      n.getRoot().searchDown<labelNode>(labels,[&](auto&l){ return l.id() == n.id; });
+      bool isAttachedTableLabel =
+         labels.size() == 1 &&
+         labels[0]->getChildren().size() > 0 &&
+         dynamic_cast<tableNode*>(labels[0]->getChildren()[0]);
+
+      std::stringstream text;
+      if(isAttachedTableLabel)
+         text << "(" <<  n.id << ")";
+      else
+         text << n.id;
+
       auto *p = new paragraphNode();
-      p->text = n.id;
+      p->text = text.str();
       p->combineWithFollowingPunct = true;
       n.replace(*p);
    }
