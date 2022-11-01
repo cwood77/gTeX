@@ -19,31 +19,31 @@ public:
    {
       const bool isEntityLabel = (n.id() != n.label);
 
-      if(!isEntityLabel)
+      if(!isEntityLabel && !isAttachedTable(n))
       {
-         const bool isAttachedTable =
-            n.getChildren().size() > 0 &&
-            dynamic_cast<tableNode*>(n.getChildren()[0]);
+         std::vector<jumpNode*> jumps;
+         n.getRoot().searchDown<jumpNode>(jumps,[&](auto&j){ return j.id == n.id(); });
+         const bool isMerge = (jumps.size() == 1 && jumps[0]->markedForMerge);
 
-         if(!isAttachedTable)
-         {
-            std::vector<jumpNode*> jumps;
-            n.getRoot().searchDown<jumpNode>(jumps,[&](auto&j){ return j.id == n.id(); });
-            const bool isMerge = (jumps.size() == 1 && jumps[0]->markedForMerge);
-
-            auto& v = m_root.appendChild<graphVertexNode>();
-            v.pLabel = isMerge ? NULL : &n;
-            v.origLblId = n.id();
-            v.origLblFile = n.filePath;
-            v.isMergeLabel = isMerge;
-            n[attr] = &v;
-         }
+         auto& v = m_root.appendChild<graphVertexNode>();
+         v.pLabel = isMerge ? NULL : &n;
+         v.origLblId = n.id();
+         v.origLblFile = n.filePath;
+         v.isMergeLabel = isMerge;
+         n[attr] = &v;
       }
 
       visitChildren(n);
    }
 
    virtual void visit(paragraphNode& n) { visitChildren(n); }
+
+   static bool isAttachedTable(labelNode& n)
+   {
+      return
+         n.getChildren().size() > 0 &&
+         dynamic_cast<tableNode*>(n.getChildren()[0]);
+   }
 
 private:
    graphRootNode& m_root;
@@ -62,7 +62,11 @@ public:
       auto *pVertex = n.demandAncestor<labelNode>()[m_attr];
       if(pVertex)
       {
-         if(n.markedForMerge)
+         auto& tgt = n.getRoot().demandDown<labelNode>(
+            [&](auto&l){ return l.id() == n.id; });
+         if(labelFindingVisitor::isAttachedTable(tgt))
+            ; // do not record in DOT
+         else if(n.markedForMerge)
             pVertex->origMergeLblIds.insert(n.id);
          else
             pVertex->outgoing.insert(&n);
