@@ -41,12 +41,19 @@ public:
    {
       auto *pRoot = reinterpret_cast<folderNode*>(pIr);
 
-      nodeEditOperation o;
+      while(true)
       {
-         nodeEditCollector c(o);
-         replaceMacroVisitor v;
-         pRoot->acceptVisitor(v);
+         nodeEditOperation o;
+         {
+            nodeEditCollector c(o);
+            replaceMacroVisitor v;
+            pRoot->acceptVisitor(v);
+         }
+         if(o.commit() == 0)
+            break;
       }
+
+      nodeEditOperation o;
       {
          nodeEditCollector c(o);
          removeMacroDeclsVisitor v;

@@ -246,19 +246,19 @@ public:
    explicit fieldCopyingNodeVisitor(node& src) : m_src(src) {}
 
    virtual void visit(node& n) {}
-   virtual void visit(folderNode& n) { unimplemented(n); }
-   virtual void visit(fileNode& n) { unimplemented(n); }
+   virtual void visit(folderNode& n) { }
+   virtual void visit(fileNode& n) {  }
    virtual void visit(entityNode& n) { unimplemented(n); }
    virtual void visit(ifNode& n) { unimplemented(n); }
    virtual void visit(labelNode& n) { unimplemented(n); }
    virtual void visit(inlineLabelNode& n) { unimplemented(n); }
    virtual void visit(paragraphNode& n);
-   virtual void visit(entityInstanceNode& n) { unimplemented(n); }
-   virtual void visit(jumpNode& n) { unimplemented(n); }
+   virtual void visit(entityInstanceNode& n);
+   virtual void visit(jumpNode& n);
    virtual void visit(linkTableNode& n) { unimplemented(n); }
    virtual void visit(tableNode& n) { unimplemented(n); }
    virtual void visit(declMacroNode& n) { unimplemented(n); }
-   virtual void visit(callMacroNode& n) { unimplemented(n); }
+   virtual void visit(callMacroNode& n);
    virtual void visit(varDeclNode& n) { unimplemented(n); }
    virtual void visit(varRefNode& n);
    virtual void visit(attachActionNode& n) { unimplemented(n); }
@@ -303,5 +303,6 @@ private:
 // TODO: what's left
 // ok attachment table formatting polish
 // ok attachment jump formatting polish
-// ? DOT barfs on attachments
+// ok DOT barfs on attachments
+// - macros can contain jumps, entity instances
 // - entity instances should be repeatable without bumping the IDs

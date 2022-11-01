@@ -253,6 +253,24 @@ void fieldCopyingNodeVisitor::visit(paragraphNode& n)
    n.combineWithFollowingPunct = dynamic_cast<paragraphNode&>(m_src).combineWithFollowingPunct;
 }
 
+void fieldCopyingNodeVisitor::visit(entityInstanceNode& n)
+{
+   n.type = dynamic_cast<entityInstanceNode&>(m_src).type;
+   n.id = dynamic_cast<entityInstanceNode&>(m_src).id;
+}
+
+void fieldCopyingNodeVisitor::visit(jumpNode& n)
+{
+   n.id = dynamic_cast<jumpNode&>(m_src).id;
+   n.markedForMerge = dynamic_cast<jumpNode&>(m_src).markedForMerge;
+}
+
+void fieldCopyingNodeVisitor::visit(callMacroNode& n)
+{
+   n.name = dynamic_cast<callMacroNode&>(m_src).name;
+   n.args = dynamic_cast<callMacroNode&>(m_src).args;
+}
+
 void fieldCopyingNodeVisitor::visit(varRefNode& n)
 {
    n.baseName = dynamic_cast<varRefNode&>(m_src).baseName;

@@ -1,4 +1,5 @@
 _macro foo {} here is a macro. _macro
+_macro bar {} nested - _call foo {} - macro! _macro
 
 _:START
 
@@ -6,4 +7,4 @@ _call foo {}
 
 previous text _call foo {}
 
-_call foo {} after text
+_call bar {} after text
