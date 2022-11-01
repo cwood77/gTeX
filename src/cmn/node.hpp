@@ -299,10 +299,3 @@ private:
 
    void postClone(node& src);
 };
-
-// TODO: what's left
-// ok attachment table formatting polish
-// ok attachment jump formatting polish
-// ok DOT barfs on attachments
-// - macros can contain jumps, entity instances
-// - entity instances should be repeatable without bumping the IDs

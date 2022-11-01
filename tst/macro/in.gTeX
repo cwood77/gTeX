@@ -1,10 +1,23 @@
 _macro foo {} here is a macro. _macro
 _macro bar {} nested - _call foo {} - macro! _macro
+_macro withLink {} turn to _$L _macro
+_macro withEntity {} there a pocketknife _{obj :pocketknife } here _macro
+
+_entity obj {
+   actions {
+   }
+}
 
 _:START
 
 _call foo {}
 
+_:L
+
 previous text _call foo {}
 
 _call bar {} after text
+
+Finally, _call withLink {}
+
+Additionally, _call withEntity {} !
