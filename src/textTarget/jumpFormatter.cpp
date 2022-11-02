@@ -8,30 +8,23 @@ namespace {
 
 class visitor : public gTeXVisitor {
 public:
-   virtual void visit(labelNode& n)
-   {
-      visitChildren(n);
-   }
-
-   virtual void visit(paragraphNode& n)
-   {
-      visitChildren(n);
-   }
+   virtual void visit(labelNode& n) { visitChildren(n); }
+   virtual void visit(paragraphNode& n) { visitChildren(n); }
 
    virtual void visit(jumpNode& n)
    {
       std::vector<labelNode*> labels;
       n.getRoot().searchDown<labelNode>(labels,[&](auto&l){ return l.id() == n.id; });
-      bool isAttachedTableLabel =
-         labels.size() == 1 &&
-         labels[0]->getChildren().size() > 0 &&
-         dynamic_cast<tableNode*>(labels[0]->getChildren()[0]);
 
       std::stringstream text;
-      if(isAttachedTableLabel)
+      if(n.prefix == "()")
          text << "(" <<  n.id << ")";
-      else
+      else if(n.prefix == ")")
+         text << n.id << ")";
+      else if(n.prefix.empty())
          text << n.id;
+      else
+         throw std::runtime_error("unknown jump prefix format: " + n.prefix);
 
       auto *p = new paragraphNode();
       p->text = text.str();

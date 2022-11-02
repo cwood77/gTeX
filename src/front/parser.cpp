@@ -124,9 +124,18 @@ void parser::expandParagraph(paragraphNode& p)
          .advance(scanStrategies::get().paragraphStart);
 
       m_l.demand(lexor::kWord);
-      n.id = m_l.getLexeme();
+      std::string fullName = m_l.getLexeme();
+      const char *pDot = ::strstr(fullName.c_str(),".");
+      if(pDot)
+      {
+         n.prefix = std::string(fullName.c_str(),pDot-fullName.c_str());
+         n.id = pDot+1;
+      }
+      else
+         n.id = fullName;
       skipComments(scanStrategies::get().paragraphStart)
          .advance(scanStrategies::get().paragraphStart);
+
       expandParagraph(p);
    }
    else if(m_l.getToken() == lexor::kMerge)

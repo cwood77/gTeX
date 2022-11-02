@@ -139,7 +139,7 @@ void dumpVisitor::visit(entityInstanceNode& n)
 
 void dumpVisitor::visit(jumpNode& n)
 {
-   m_l.s().s() << indent(m_l) << n.getName() << ":" << n.id << (n.markedForMerge ? " [MERGE]" : "") << std::endl;
+   m_l.s().s() << indent(m_l) << n.getName() << ":" << n.id << "/" << n.prefix << (n.markedForMerge ? " [MERGE]" : "") << std::endl;
    m_l.s().s() << indent(m_l) << std::endl;
    autoIndent _i(m_l);
    visitChildren(n);
@@ -263,6 +263,7 @@ void fieldCopyingNodeVisitor::visit(jumpNode& n)
 {
    n.id = dynamic_cast<jumpNode&>(m_src).id;
    n.markedForMerge = dynamic_cast<jumpNode&>(m_src).markedForMerge;
+   n.prefix = dynamic_cast<jumpNode&>(m_src).prefix;
 }
 
 void fieldCopyingNodeVisitor::visit(callMacroNode& n)

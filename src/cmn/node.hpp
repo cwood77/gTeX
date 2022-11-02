@@ -126,6 +126,7 @@ public:
    std::string id; // gets edited by linker
 
    bool markedForMerge;
+   std::string prefix;
 
    cdwImplNode(jumpNode,iGTeXVisitor);
 };

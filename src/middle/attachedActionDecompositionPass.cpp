@@ -30,6 +30,7 @@ public:
          std::stringstream stream;
          stream << "lbl_" << pAttach->action << "_" << pAttach->entityType;
          auto *pJ = new jumpNode();
+         pJ->prefix = "()";
          pJ->id = stream.str();
          pAttach->replace(*pJ);
 
@@ -41,8 +42,6 @@ public:
          delete pRoot;
          table.reparent(L);
       }
-
-      //throw std::runtime_error("dump AST after new xfrm");
    }
 };
 
