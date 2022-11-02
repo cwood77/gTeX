@@ -1,4 +1,6 @@
 _var ending counter
+_var didThing random<keyword-dummy-names>
+_var didOtherThing random<keyword-dummy-names>
 
 _:START
 
@@ -7,6 +9,8 @@ this is ending _@ending of _@ending.total .
 this is ending _@ending of _@ending.total !
 
 go to _$otherLabel .
+
+If you have _@didThing or _@didOtherThing
 
 _:otherLabel
 

@@ -15,6 +15,7 @@ public:
    {
       // variables
       s.append(c.demand("evaluateCounterVarPass"));
+      s.append(c.demand("evaluateRandomVarPass"));
       s.append(c.demand("ensureNoVarsPass"));
 
       // entity at al. compile

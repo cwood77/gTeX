@@ -34,6 +34,7 @@ running pass expandInlineLabelsPass
 running pass expandParagraphPass
 running pass implementMacroPass
 running pass evaluateCounterVarPass
+running pass evaluateRandomVarPass
 running pass ensureNoVarsPass
 running pass outFileCreatorPass
 running pass gatherAndAttachEntityActionPass

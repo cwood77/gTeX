@@ -4,6 +4,8 @@ this is ending 1 of 2!
 
 go to 1.
 
+If you have bar or baz
+
 --- 1 ----------------------------------------
 
 this is ending 2 of 2

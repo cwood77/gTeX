@@ -19,7 +19,7 @@ private:
 
 class nameBankIter {
 public:
-   explicit nameBankIter(size_t n);
+   explicit nameBankIter(size_t n = 0);
 
    unsigned long get();
 

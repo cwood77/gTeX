@@ -258,6 +258,7 @@ MIDDLE_SRC = \
 	src/middle/entityRemover.cpp \
 	src/middle/entityTableGeneratorPass.cpp \
 	src/middle/evaluateCounterVarPass.cpp \
+	src/middle/evaluateRandomVarPass.cpp \
 	src/middle/gatherAndAttachEntityActionPass.cpp \
 	src/middle/labelMoverPass.cpp \
 	src/middle/labelRandomizerPass.cpp \
