@@ -9,16 +9,20 @@ public:
    virtual std::string getPredecessorTarget() { return ""; }
    virtual void adjustPasses(module::incrementalModuleLoader&, passCatalog& c, passSchedule& s)
    {
+      // parse
       s.append(c.demand("fileEnumPass"));
       s.append(c.demand("parsePass"));
 
-      // [evaluateVars - speculative]
+      // if
       s.append(c.demand("conditionalEvaluatorPass"));
 
+      // inline label decomp
       s.append(c.demand("expandInlineLabelsPass"));
 
+      // explode paras
       s.append(c.demand("expandParagraphPass"));
 
+      // impl macros
       s.append(c.demand("implementMacroPass"));
    }
 };

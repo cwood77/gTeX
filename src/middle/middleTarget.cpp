@@ -13,6 +13,7 @@ public:
    virtual std::string getPredecessorTarget() { return "frontTarget"; }
    virtual void adjustPasses(module::incrementalModuleLoader& mLdr, passCatalog& c, passSchedule& s)
    {
+      // variables
       s.append(c.demand("evaluateCounterVarPass"));
       s.append(c.demand("ensureNoVarsPass"));
 
@@ -23,13 +24,14 @@ public:
       s.append(c.demand("entityInstanceRandomizerPass"));
       s.append(c.demand("attachedActionDecompositionPass"));
 
+      // graph IR gen
       if(usesDot() || usesMaps())
       {
          mLdr.tryLoad("graph.dll");
          s.append(c.demand("graphIrProviderPass"));
       }
 
-      // merge (with its own linker)
+      // jump merges (with its own linker)
       s.append(c.demand("linkerPass"));
       s.append(c.demand("mergeLabelsPass"));
       s.append(c.demand("unlinkerPass"));
@@ -40,11 +42,14 @@ public:
       s.append(c.demand("labelRandomizerPass"));
       s.append(c.demand("unlinkerPass"));
 
+      // restructure doc based on final labels
       s.append(c.demand("labelMoverPass"));
 
+      // DOT gen
       if(usesDot())
          s.append(c.demand("dotPrintPass"));
 
+      // map gen
       if(usesMaps())
          // [graph] mapGeneratorPass * one for each config
          // [graph] mapGeneratorPass *

@@ -23,11 +23,12 @@ public:
    virtual std::string getPredecessorTarget() { return "middleTarget"; }
    virtual void adjustPasses(module::incrementalModuleLoader& mLdr, passCatalog& c, passSchedule& s)
    {
-      // pre-count formatter (i.e. everything I want contributing to word count)
+      // pre-count formatter (i.e. everything contributing to word count)
       s.append(c.demand("jumpFormatterPass"));
       s.append(c.demand("entityInstanceFormatterPass"));
       s.append(c.demand("contractParagraphPass"));
 
+      // word counting
       if(m_pCfg->fetch<stringSetting>("wcnt:log-path"))
       {
          mLdr.tryLoad("misc.dll");

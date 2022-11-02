@@ -4,7 +4,7 @@
 namespace {
 
 const lexemeTableEntry gCommonTokens[] = {
-   { lexemeTableEntry::kPunctuation,  "_#", lexor::kComment },
+   { lexemeTableEntry::kPunctuation,  "_#",      lexor::kComment      },
    { lexemeTableEntry::kPunctuation,  NULL }
 };
 
@@ -13,43 +13,43 @@ const lexemeTableEntry gTopLevelTokens[] = {
    { lexemeTableEntry::kAlphanumeric, "_macro",  lexor::kMacro        },
    { lexemeTableEntry::kPunctuation,  "_:",      lexor::kLabel        },
    { lexemeTableEntry::kPunctuation,  "_-",      lexor::kInlineLabel  },
-   { lexemeTableEntry::kAlphanumeric,  "_if",    lexor::kIf           },
-   { lexemeTableEntry::kAlphanumeric,  "_endif", lexor::kEndIf        },
-   { lexemeTableEntry::kAlphanumeric,  "_var",   lexor::kVar          },
+   { lexemeTableEntry::kAlphanumeric, "_if",     lexor::kIf           },
+   { lexemeTableEntry::kAlphanumeric, "_endif",  lexor::kEndIf        },
+   { lexemeTableEntry::kAlphanumeric, "_var",    lexor::kVar          },
    { lexemeTableEntry::kPunctuation,  NULL }
 };
 
 const lexemeTableEntry gIfTokens[] = {
-   { lexemeTableEntry::kPunctuation,  "!",       lexor::kBang    },
+   { lexemeTableEntry::kPunctuation,  "!",       lexor::kBang         },
    { lexemeTableEntry::kPunctuation,  NULL }
 };
 
 const lexemeTableEntry gEntityTokens[] = {
-   { lexemeTableEntry::kPunctuation,  "{",       lexor::kLBrace  },
-   { lexemeTableEntry::kPunctuation,  "}",       lexor::kRBrace  },
-   { lexemeTableEntry::kAlphanumeric, "actions", lexor::kActions },
+   { lexemeTableEntry::kPunctuation,  "{",       lexor::kLBrace       },
+   { lexemeTableEntry::kPunctuation,  "}",       lexor::kRBrace       },
+   { lexemeTableEntry::kAlphanumeric, "actions", lexor::kActions      },
    { lexemeTableEntry::kPunctuation,  NULL }
 };
 
 const lexemeTableEntry gParagraphStartTokens[] = {
-   { lexemeTableEntry::kPunctuation,  "_$",      lexor::kGoto   },
-   { lexemeTableEntry::kPunctuation,  "_<",      lexor::kMerge  },
-   { lexemeTableEntry::kPunctuation,  "_{",      lexor::kEntity },
-   { lexemeTableEntry::kPunctuation,  "_attach{",lexor::kAttach },
-   { lexemeTableEntry::kAlphanumeric,  "_call",  lexor::kCall   },
-   { lexemeTableEntry::kPunctuation,  "_@",      lexor::kAt     },
+   { lexemeTableEntry::kPunctuation,  "_$",      lexor::kGoto         },
+   { lexemeTableEntry::kPunctuation,  "_<",      lexor::kMerge        },
+   { lexemeTableEntry::kPunctuation,  "_{",      lexor::kEntity       },
+   { lexemeTableEntry::kPunctuation,  "_attach{",lexor::kAttach       },
+   { lexemeTableEntry::kAlphanumeric, "_call",   lexor::kCall         },
+   { lexemeTableEntry::kPunctuation,  "_@",      lexor::kAt           },
    { lexemeTableEntry::kPunctuation,  NULL }
 };
 
 const lexemeTableEntry gParagraphEndTokens[] = {
-   { lexemeTableEntry::kPunctuation,  "}", lexor::kRBrace },
-   { lexemeTableEntry::kPunctuation,  ":", lexor::kColon  },
+   { lexemeTableEntry::kPunctuation,  "}",       lexor::kRBrace       },
+   { lexemeTableEntry::kPunctuation,  ":",       lexor::kColon        },
    { lexemeTableEntry::kPunctuation,  NULL }
 };
 
 const lexemeTableEntry gMacroTokens[] = {
-   { lexemeTableEntry::kPunctuation,  "{", lexor::kLBrace },
-   { lexemeTableEntry::kPunctuation,  "}", lexor::kRBrace },
+   { lexemeTableEntry::kPunctuation,  "{",       lexor::kLBrace       },
+   { lexemeTableEntry::kPunctuation,  "}",       lexor::kRBrace       },
    { lexemeTableEntry::kPunctuation,  NULL }
 };
 
