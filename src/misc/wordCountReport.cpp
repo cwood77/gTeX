@@ -1,4 +1,5 @@
 #include "wordCountReport.hpp"
+#include <iomanip>
 
 namespace wcnt {
 
@@ -95,7 +96,7 @@ void monthlyStats::write(std::ostream& o) const
    o << "days left: " << daysLeft << std::endl;
    o << "words left: " << wordsLeft << std::endl;
    o << "words/day left: " << (((double)wordsLeft) / daysLeft) << std::endl;
-   o << "days written: " << m_daysWritten << "/" << (today().day()-1) << std::endl;
+   o << "days written: " << m_daysWritten << "/" << (today().day()) << std::endl;
    o << std::endl;
 }
 
@@ -106,7 +107,7 @@ void monthlyStats::updateFrom(const dateSummaryTable& d)
    for(auto di=1;di<daysInMonth;di++)
    {
       std::stringstream dName;
-      dName << t.month() << "/" << di << "/" << t.year();
+      dName << t.month() << "/" << std::setfill('0') << std::setw(2) << di << "/" << t.year();
       if(d.total.find(dName.str())!=d.total.end())
          m_daysWritten++;
    }
