@@ -15,9 +15,9 @@ public:
 
 cdwExportPass(textTargetDefaultOptionPass,"cfg:target",0);
 
-class textTarget : public iTarget {
+class textPreTarget : public iTarget {
 public:
-   textTarget() : m_pCfg(NULL) {}
+   textPreTarget() : m_pCfg(NULL) {}
 
    virtual void configure(config& c) { m_pCfg = &c; }
    virtual std::string getPredecessorTarget() { return "middleTarget"; }
@@ -26,7 +26,7 @@ public:
       // pre-count formatter (i.e. everything contributing to word count)
       s.append(c.demand("jumpFormatterPass"));
       s.append(c.demand("entityInstanceFormatterPass"));
-      s.append(c.demand("expandedParagraphStylingPass"));
+      s.append(c.demand(getPassName("expandedParagraphStylingPass")));
       s.append(c.demand("contractParagraphPass"));
 
       // word counting
@@ -38,6 +38,31 @@ public:
 
       // post-count formatter (i.e. everything not contributing to word count)
       s.append(c.demand("labelFormatterPass"));
+   }
+
+private:
+   std::string getPassName(const std::string& baseName)
+   {
+      auto& tgt = m_pCfg->demand<stringSetting>("target");
+      if(tgt.value == "text")
+         return baseName;
+      else
+         return tgt.value + baseName;
+   }
+
+   config *m_pCfg;
+};
+
+cdwExportTarget(textPreTarget);
+
+class textTarget : public iTarget {
+public:
+   textTarget() : m_pCfg(NULL) {}
+
+   virtual void configure(config& c) { m_pCfg = &c; }
+   virtual std::string getPredecessorTarget() { return "textPreTarget"; }
+   virtual void adjustPasses(module::incrementalModuleLoader& mLdr, passCatalog& c, passSchedule& s)
+   {
       s.append(c.demand("tableFormatterPass"));
       // [graph] mapFormatterPass
 

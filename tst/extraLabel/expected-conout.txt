@@ -24,6 +24,7 @@ completed settings:
 }
 gathering passes from target frontTarget
 gathering passes from target middleTarget
+gathering passes from target textPreTarget
 gathering passes from target textTarget
 running pass fileEnumPass
   found file .\in.gTeX

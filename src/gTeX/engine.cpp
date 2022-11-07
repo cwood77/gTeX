@@ -6,6 +6,29 @@
 #include <iostream>
 #include <memory>
 
+class myLoadingTargetFactory : public loadingTargetFactory {
+public:
+   explicit myLoadingTargetFactory(targetCatalog& tCat, incrementalModuleLoader& iml)
+   : loadingTargetFactory(tCat,iml)
+   , m_tCat(tCat), m_imLdr(iml) {}
+
+   virtual pass::iTarget *create(const std::string& name)
+   {
+      // handle idiomatic name
+      if(name == "textPreTarget")
+      {
+         m_imLdr.tryLoad("textTarget.dll");
+         return m_tCat.create(name);
+      }
+      else
+         return loadingTargetFactory::create(name);
+   }
+
+private:
+   pass::targetCatalog& m_tCat;
+   incrementalModuleLoader& m_imLdr;
+};
+
 void engine::run()
 {
    // load the environs file
@@ -33,7 +56,7 @@ void engine::handleConfigTarget(config& gCfg, const std::string& configTarget)
    auto targetName = cfg.demand<stringSetting>("target").value + "Target";
 
    // load the target chain, pulling in modules as necessary
-   loadingTargetFactory ltf(m_tCat,m_mLdr);
+   myLoadingTargetFactory ltf(m_tCat,m_mLdr);
    targetChain tc;
    targetChainBuilder().build(cfg,ltf,targetName,tc);
 
