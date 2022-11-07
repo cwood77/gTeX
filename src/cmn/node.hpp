@@ -300,3 +300,52 @@ private:
 
    void postClone(node& src);
 };
+
+// to support a HTML backend, I also want a general styling mini-language
+// this menas I'd like thinks like varrefs to survive to the back-end target
+//
+// what is done in targetpass?
+// - jump, entityInstance, label, table
+//
+// what does not survive long enought?
+// - entity, varRef(becomes para), attachments(becomes jump)
+//
+// what is this language exactly:
+// - bold, italics
+// - semantics: label*, jump, varRef*, entityInstance, attachment, paragraph first and Nth*
+// - NEW semantic things: chapter title, minirule
+//
+// markdown comparison                                in text
+// - italic = single asterisk AND single underscore   _word_
+// - bold = double asterisk AND double underscore     CAPS
+// - botlic = triple asterisk AND triple underscore   _CAPS_
+//
+// config file mock syntax <- all MVP
+// .:style:label := b
+// html;style:varRef:random := b
+// html:style:para1:indent := F
+// html:style:paraN:indent := T
+// html:style:para:spacing := 0
+//
+// styling element gTeX syntaX
+//
+// for _I_ am lord of Melendev!
+// for _i I _i am lord of Melendev!
+//
+// he says "__Whaaat?__"
+// he says " _i< Whaaa? _i> "
+//
+// So perhaps, here's a plan:
+// 1. Design styling elements to be exploded by paragraph expander
+//    - note that not all style is limited to interparagraph atoms, but
+//      the syntax is limited this way
+//    -> MVP: varRef
+// 2. Inject passes that go through and inject styling on semantic elements early,
+//    before they decay away
+// 3. After formatting, before contraction, run styling passes to modify text
+//    -> expandedParagraphStylingPass
+// 4. After word counting, run semantic styling on non-paragraph elements like labels and
+//    tables
+//    -> coarseStylingPass
+//    -> MVP: label, paragraph1/N, chapterTitle, miniRule
+//
