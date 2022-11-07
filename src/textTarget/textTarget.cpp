@@ -26,6 +26,7 @@ public:
       // pre-count formatter (i.e. everything contributing to word count)
       s.append(c.demand("jumpFormatterPass"));
       s.append(c.demand("entityInstanceFormatterPass"));
+      s.append(c.demand("expandedParagraphStylingPass"));
       s.append(c.demand("contractParagraphPass"));
 
       // word counting

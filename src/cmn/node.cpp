@@ -123,7 +123,15 @@ void dumpVisitor::visit(inlineLabelNode& n)
 void dumpVisitor::visit(paragraphNode& n)
 {
    m_l.s().s() << indent(m_l) << n.getName() << std::endl;
-   m_l.s().s() << indent(m_l) << "TEST<" << n.text << ">" << std::endl;
+   m_l.s().s() << indent(m_l) << "TEXT<" << n.text << ">" << std::endl;
+   m_l.s().s() << indent(m_l) << std::endl;
+   autoIndent _i(m_l);
+   visitChildren(n);
+}
+
+void dumpVisitor::visit(stylingNode& n)
+{
+   m_l.s().s() << indent(m_l) << n.getName() << ":" << n.style << "/" << n.suffix << std::endl;
    m_l.s().s() << indent(m_l) << std::endl;
    autoIndent _i(m_l);
    visitChildren(n);
@@ -251,6 +259,12 @@ void fieldCopyingNodeVisitor::visit(paragraphNode& n)
 {
    n.text = dynamic_cast<paragraphNode&>(m_src).text;
    n.combineWithFollowingPunct = dynamic_cast<paragraphNode&>(m_src).combineWithFollowingPunct;
+}
+
+void fieldCopyingNodeVisitor::visit(stylingNode& n)
+{
+   n.style = dynamic_cast<stylingNode&>(m_src).style;
+   n.suffix = dynamic_cast<stylingNode&>(m_src).suffix;
 }
 
 void fieldCopyingNodeVisitor::visit(entityInstanceNode& n)

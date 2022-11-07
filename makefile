@@ -294,6 +294,7 @@ $(MIDDLE_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 
 TEXTTARGET_SRC = \
 	src/textTarget/entityInstanceFormatter.cpp \
+	src/textTarget/expandedParagraphStylingPass.cpp \
 	src/textTarget/jumpFormatter.cpp \
 	src/textTarget/labelFormatter.cpp \
 	src/textTarget/module.cpp \

@@ -57,6 +57,8 @@ public:
       kMerge,
       kAttach,
 
+      kStyle,
+
       kIf,
       kEndIf,
    };

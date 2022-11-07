@@ -254,6 +254,26 @@ void parser::expandParagraph(paragraphNode& p)
 
       expandParagraph(p);
    }
+   else if(m_l.getToken() == lexor::kStyle)
+   {
+      auto& s = p.appendChild<stylingNode>();
+      m_l.setup(s);
+      m_l.advance();
+
+      m_l.demand(lexor::kWord);
+      std::string fullName = m_l.getLexeme();
+      const char *pDot = ::strstr(fullName.c_str(),".");
+      if(pDot)
+      {
+         s.suffix = pDot+1;
+         s.style = std::string(fullName.c_str(),pDot-fullName.c_str());
+      }
+      else
+         s.style = fullName;
+
+      m_l.advance(scanStrategies::get().paragraphStart);
+      expandParagraph(p);
+   }
    else if(m_l.getToken() == lexor::kEOI)
    {
       return;

@@ -15,6 +15,7 @@ class ifNode;
 class labelNode;
 class inlineLabelNode;
 class paragraphNode;
+class stylingNode;
 class entityInstanceNode;
 class jumpNode;
 class linkTableNode;
@@ -35,6 +36,7 @@ public:
    virtual void visit(labelNode& n) = 0;
    virtual void visit(inlineLabelNode& n) = 0;
    virtual void visit(paragraphNode& n) = 0;
+   virtual void visit(stylingNode& n) = 0;
    virtual void visit(entityInstanceNode& n) = 0;
    virtual void visit(jumpNode& n) = 0;
    virtual void visit(linkTableNode& n) = 0;
@@ -109,6 +111,14 @@ public:
    bool combineWithFollowingPunct;
 
    cdwImplNode(paragraphNode,iGTeXVisitor);
+};
+
+class stylingNode : public node {
+public:
+   std::string style;
+   std::string suffix;
+
+   cdwImplNode(stylingNode,iGTeXVisitor);
 };
 
 class entityInstanceNode : public node {
@@ -205,6 +215,7 @@ public:
    virtual void visit(labelNode& n) {}
    virtual void visit(inlineLabelNode& n) {}
    virtual void visit(paragraphNode& n) {}
+   virtual void visit(stylingNode& n) {}
    virtual void visit(entityInstanceNode& n) {}
    virtual void visit(jumpNode& n) {}
    virtual void visit(linkTableNode& n) {}
@@ -228,6 +239,7 @@ public:
    virtual void visit(labelNode& n);
    virtual void visit(inlineLabelNode& n);
    virtual void visit(paragraphNode& n);
+   virtual void visit(stylingNode& n);
    virtual void visit(entityInstanceNode& n);
    virtual void visit(jumpNode& n);
    virtual void visit(linkTableNode& n);
@@ -254,6 +266,7 @@ public:
    virtual void visit(labelNode& n) { unimplemented(n); }
    virtual void visit(inlineLabelNode& n) { unimplemented(n); }
    virtual void visit(paragraphNode& n);
+   virtual void visit(stylingNode& n);
    virtual void visit(entityInstanceNode& n);
    virtual void visit(jumpNode& n);
    virtual void visit(linkTableNode& n) { unimplemented(n); }
@@ -280,6 +293,7 @@ public:
    virtual void visit(labelNode& n) { cloneNodeWithDefaultCTor<labelNode>(n); }
    virtual void visit(inlineLabelNode& n) { cloneNodeWithDefaultCTor<inlineLabelNode>(n); }
    virtual void visit(paragraphNode& n) { cloneNodeWithDefaultCTor<paragraphNode>(n); }
+   virtual void visit(stylingNode& n) { cloneNodeWithDefaultCTor<stylingNode>(n); }
    virtual void visit(entityInstanceNode& n) { cloneNodeWithDefaultCTor<entityInstanceNode>(n); }
    virtual void visit(jumpNode& n) { cloneNodeWithDefaultCTor<jumpNode>(n); }
    virtual void visit(linkTableNode& n) { cloneNodeWithDefaultCTor<linkTableNode>(n); }
@@ -336,14 +350,15 @@ private:
 // he says " _i< Whaaa? _i> "
 //
 // So perhaps, here's a plan:
-// 1. Design styling elements to be exploded by paragraph expander
+// $. Design styling elements to be exploded by paragraph expander
 //    - note that not all style is limited to interparagraph atoms, but
 //      the syntax is limited this way
-//    -> MVP: varRef
 // 2. Inject passes that go through and inject styling on semantic elements early,
 //    before they decay away
+//    -> MVP: varRef
 // 3. After formatting, before contraction, run styling passes to modify text
 //    -> expandedParagraphStylingPass
+//       done for text
 // 4. After word counting, run semantic styling on non-paragraph elements like labels and
 //    tables
 //    -> coarseStylingPass

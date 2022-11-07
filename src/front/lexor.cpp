@@ -38,6 +38,7 @@ const lexemeTableEntry gParagraphStartTokens[] = {
    { lexemeTableEntry::kPunctuation,  "_attach{",lexor::kAttach       },
    { lexemeTableEntry::kAlphanumeric, "_call",   lexor::kCall         },
    { lexemeTableEntry::kPunctuation,  "_@",      lexor::kAt           },
+   { lexemeTableEntry::kPunctuation,  "_s",      lexor::kStyle        },
    { lexemeTableEntry::kPunctuation,  NULL }
 };
 
@@ -110,6 +111,8 @@ void lexor::publishTokens()
    publishToken(kGoto,        "goto");
    publishToken(kMerge,       "merge goto");
    publishToken(kAttach,      "entity attachment");
+
+   publishToken(kStyle,       "styling directive");
 
    publishToken(kIf,          "if");
    publishToken(kEndIf,       "end if");
