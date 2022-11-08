@@ -13,7 +13,11 @@ public:
    virtual std::string getPredecessorTarget() { return "textPreTarget"; }
    virtual void adjustPasses(module::incrementalModuleLoader& mLdr, passCatalog& c, passSchedule& s)
    {
-      mLdr.tryLoad("textTarget.dll");
+      s.append(c.demand("htmlParagraphPass"));
+      // label pass
+
+      // the end
+      s.append(c.demand("htmlPrintPass"));
    }
 
 private:
