@@ -13,6 +13,8 @@ public:
 
       c.createOrFetch<boolSetting>("dot:on",[](auto& s){ s.value=false; });
       c.createOrFetch<stringSetting>("dot:out",[](auto& s){ s.value="out"; });
+      c.createOrFetch<stringSetting>("dot-s1:out",[](auto& s){ s.value="out1"; });
+      c.createOrFetch<stringSetting>("dot-s2:out",[](auto& s){ s.value="out2"; });
    }
 };
 

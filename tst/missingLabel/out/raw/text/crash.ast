@@ -1,0 +1,57 @@
+folderNode
+
+   fileNode
+   
+      labelNode:START
+      
+         paragraphNode
+         TEXT<Here is some reasonable text>
+         
+            paragraphNode
+            TEXT<Here>
+            
+            paragraphNode
+            TEXT<is>
+            
+            paragraphNode
+            TEXT<some>
+            
+            paragraphNode
+            TEXT<reasonable>
+            
+            paragraphNode
+            TEXT<text>
+            
+         paragraphNode
+         TEXT<Here is a jump to an _$UnknownLabel>
+         
+            paragraphNode
+            TEXT<Here>
+            
+            paragraphNode
+            TEXT<is>
+            
+            paragraphNode
+            TEXT<a>
+            
+            paragraphNode
+            TEXT<jump>
+            
+            paragraphNode
+            TEXT<to>
+            
+            paragraphNode
+            TEXT<an>
+            
+            jumpNode:UnknownLabel/
+            
+   fileNode
+   
+   linkTableNode
+   jumps {
+   }
+   entityInstances {
+   }
+   tables {
+   }
+   

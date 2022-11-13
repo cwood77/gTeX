@@ -2,7 +2,7 @@
 #include "../cmn/output.hpp"
 #include "../prattle/config.hpp"
 #include "../prattle/log.hpp"
-#include "../prattle/pass.hpp"
+#include "dotPrintPass.hpp"
 #include "iGraphIrProviderPass.hpp"
 #include "node.hpp"
 #include <fstream>
@@ -144,21 +144,18 @@ private:
 
 } // anonymous namespace
 
-class dotPrintPass : public iPass {
-public:
-   void run(config& c, passLinks& l, void *)
-   {
-      auto& ir = l.demandLink<iGraphIrProviderPass>().getGraphIr();
+void dotPrintPass::run(config& c, passLinks& l, void *)
+{
+   auto& ir = l.demandLink<iGraphIrProviderPass>().getGraphIr();
 
-      auto outPath = output(c).ensurePath(
-         c.demand<stringSetting>("dot:out").value + ".dot");
-      std::cout << "  writing to " << outPath << std::endl;
+   auto outPath = output(c).ensurePath(
+      c.demand<stringSetting>(outCfgKeyName).value + ".dot");
+   std::cout << "  writing to " << outPath << std::endl;
 
-      std::ofstream fStream(outPath);
-      streamLogAdapter Log(fStream);
-      visitor v(Log);
-      ir.acceptVisitor(v);
-   }
-};
+   std::ofstream fStream(outPath);
+   streamLogAdapter Log(fStream);
+   visitor v(Log);
+   ir.acceptVisitor(v);
+}
 
 cdwExportPass(dotPrintPass,"",-1);

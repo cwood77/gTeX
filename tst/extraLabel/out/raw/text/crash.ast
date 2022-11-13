@@ -1,0 +1,51 @@
+folderNode
+
+   fileNode
+   
+      labelNode:START
+      
+         paragraphNode
+         TEXT<Here is some reasonable text>
+         
+            paragraphNode
+            TEXT<Here>
+            
+            paragraphNode
+            TEXT<is>
+            
+            paragraphNode
+            TEXT<some>
+            
+            paragraphNode
+            TEXT<reasonable>
+            
+            paragraphNode
+            TEXT<text>
+            
+      labelNode:Unused
+      
+         paragraphNode
+         TEXT<Nobody references this label!>
+         
+            paragraphNode
+            TEXT<Nobody>
+            
+            paragraphNode
+            TEXT<references>
+            
+            paragraphNode
+            TEXT<this>
+            
+            paragraphNode
+            TEXT<label!>
+            
+   fileNode
+   
+   linkTableNode
+   jumps {
+   }
+   entityInstances {
+   }
+   tables {
+   }
+   

@@ -48,7 +48,7 @@ public:
 
       // DOT gen
       if(usesDot())
-         s.append(c.demand("dotPrintPass"));
+         s.append(c.demand("overallDotPrintPass"));
 
       // map gen
       if(usesMaps())
