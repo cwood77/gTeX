@@ -15,6 +15,8 @@ completed settings:
   config-targets/N7prattle18stringArraySettingE = [ raw/text ]
   config/N7prattle13stringSettingE = raw
   configs/N7prattle18stringArraySettingE = [ raw ]
+  dot-s1:out/N7prattle13stringSettingE = out1
+  dot-s2:out/N7prattle13stringSettingE = out2
   dot:on/N7prattle11boolSettingE = F
   dot:out/N7prattle13stringSettingE = out
   in/N7prattle13stringSettingE = .
