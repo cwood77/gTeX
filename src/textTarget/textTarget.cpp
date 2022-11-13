@@ -33,7 +33,9 @@ public:
       if(m_pCfg->fetch<stringSetting>("wcnt:log-path"))
       {
          mLdr.tryLoad("misc.dll");
+         s.append(c.demand("histogramProviderPass"));
          s.append(c.demand("overallWordCountingPass"));
+         s.append(c.demand("histogramPrintingPass"));
       }
 
       // post-count formatter (i.e. everything not contributing to word count)

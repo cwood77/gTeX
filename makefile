@@ -194,6 +194,9 @@ $(FRONT_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 # misc
 
 MISC_SRC = \
+	src/misc/histogramPrintingPass.cpp \
+	src/misc/histogramProviderPass.cpp \
+	src/misc/iHistogramProviderPass.cpp \
 	src/misc/module.cpp \
 	src/misc/overallWordCountingPass.cpp \
 	src/misc/paragraphWordCountingPass.cpp \
