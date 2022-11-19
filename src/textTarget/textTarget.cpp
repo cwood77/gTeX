@@ -26,7 +26,8 @@ public:
       // pre-count formatter (i.e. everything contributing to word count)
       s.append(c.demand("jumpFormatterPass"));
       s.append(c.demand("entityInstanceFormatterPass"));
-      s.append(c.demand(getPassName("expandedParagraphStylingPass")));
+      s.append(c.demand(getPassName("FormatProviderPass")));
+      s.append(c.demand(getPassName("expandedParagraphStylingPass","")));
       s.append(c.demand("contractParagraphPass"));
 
       // word counting
@@ -43,11 +44,11 @@ public:
    }
 
 private:
-   std::string getPassName(const std::string& baseName)
+   std::string getPassName(const std::string& baseName, const std::string& textPrefix = "text")
    {
       auto& tgt = m_pCfg->demand<stringSetting>("target");
       if(tgt.value == "text")
-         return baseName;
+         return textPrefix + baseName;
       else
          return tgt.value + baseName;
    }

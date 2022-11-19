@@ -359,8 +359,12 @@ private:
 // 3. After formatting, before contraction, run styling passes to modify text
 //    -> expandedParagraphStylingPass
 //       done for text
+//       ... in work; genericizing
 // 4. After word counting, run semantic styling on non-paragraph elements like labels and
 //    tables
 //    -> coarseStylingPass
-//    -> MVP: label, paragraph1/N, chapterTitle, miniRule
+//       will be HTML only
+//    -> MVP: label, chapterTitle, miniRule
+//
+// where is firstWordInChapter?
 //

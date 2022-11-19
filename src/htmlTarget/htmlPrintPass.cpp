@@ -39,6 +39,7 @@ public:
          throw std::runtime_error("can't open file for output: " + path);
 
       out << "<html><head><style>" << std::endl;
+
       // styling
       out << "p {text-indent: 25px;}" << std::endl;
       out << "p.first {text-indent: 0px;}" << std::endl;

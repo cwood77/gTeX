@@ -269,6 +269,7 @@ MIDDLE_SRC = \
 	src/middle/entityTableGeneratorPass.cpp \
 	src/middle/evaluateCounterVarPass.cpp \
 	src/middle/evaluateRandomVarPass.cpp \
+	src/middle/expandedParagraphStylingPass.cpp \
 	src/middle/gatherAndAttachEntityActionPass.cpp \
 	src/middle/labelMoverPass.cpp \
 	src/middle/labelRandomizerPass.cpp \
@@ -304,11 +305,11 @@ $(MIDDLE_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 
 TEXTTARGET_SRC = \
 	src/textTarget/entityInstanceFormatter.cpp \
-	src/textTarget/expandedParagraphStylingPass.cpp \
 	src/textTarget/jumpFormatter.cpp \
 	src/textTarget/labelFormatter.cpp \
 	src/textTarget/module.cpp \
 	src/textTarget/tableFormatterPass.cpp \
+	src/textTarget/textFormatProviderPass.cpp \
 	src/textTarget/textPrintPass.cpp \
 	src/textTarget/textTarget.cpp \
 
