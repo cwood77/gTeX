@@ -337,10 +337,10 @@ $(TEXTTARGET_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 # htmlTarget
 
 HTMLTARGET_SRC = \
+	src/htmlTarget/htmlFormatProviderPass.cpp \
 	src/htmlTarget/htmlParagraphPass.cpp \
 	src/htmlTarget/htmlPrintPass.cpp \
 	src/htmlTarget/htmlTarget.cpp \
-	src/htmlTarget/htmlexpandedParagraphStylingPass.cpp \
 	src/htmlTarget/module.cpp \
 
 HTMLTARGET_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(HTMLTARGET_SRC)))

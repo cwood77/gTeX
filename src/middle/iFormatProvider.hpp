@@ -6,8 +6,7 @@ public:
    enum fmts {
       kBold,
       kItalic,
-      kHRule,
-      kChapter
+      kHRule
    };
 
    virtual void beginFormat(fmts f, std::ostream& o) = 0;

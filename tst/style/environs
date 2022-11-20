@@ -1,0 +1,2 @@
+configs := [ raw ]
+targets := [ text html ]
