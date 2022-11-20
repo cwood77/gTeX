@@ -10,6 +10,14 @@ public:
    virtual void run(config& c, passLinks&, void *pIr)
    {
       c.createOrFetch<stringSetting>("html:label-fmt",[](auto&s){ s.value="-- {label} --"; });
+      c.createOrFetch<stringSetting>("html:chap-fmt-before",[](auto&s)
+         {
+            s.value="<center><font size='18'>";
+         });
+      c.createOrFetch<stringSetting>("html:chap-fmt-after",[](auto&s)
+         {
+            s.value="</font></center>";
+         });
    }
 };
 

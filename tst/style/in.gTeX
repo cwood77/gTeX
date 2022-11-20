@@ -7,6 +7,8 @@ Here lies some _sb boldface _sb text.
 Go to _$LABEL .
 
 _:LABEL
+_sch Chapter 1: The Beginning _sch
+
 Here lies some _si italic _si text.
 
 But this one requires special " _si.< concatenation _si " !

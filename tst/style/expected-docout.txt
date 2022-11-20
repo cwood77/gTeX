@@ -6,6 +6,8 @@ Go to 1.
 
 --- 1 ----------------------------------------
 
+_Chapter 1: The Beginning_
+
 Here lies some _italic_ text.
 
 But this one requires special "_concatenation_" !

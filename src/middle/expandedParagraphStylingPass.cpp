@@ -41,6 +41,7 @@ private:
       if(txt == "b") return iFormatProvider::kBold;
       if(txt == "i") return iFormatProvider::kItalic;
       if(txt == "hr") return iFormatProvider::kHRule;
+      if(txt == "ch") return iFormatProvider::kChapter;
       throw std::runtime_error("unknown styling syntax: " + txt);
    }
 

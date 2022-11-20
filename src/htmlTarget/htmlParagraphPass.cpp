@@ -22,10 +22,18 @@ public:
          stream << " class=\"first\">";
       else
          stream << ">";
-      m_firstParagraph = false;
 
       stream << n.text << "</p>";
-      n.text = stream.str();
+      if(n.text.length() && n.text.c_str()[0] == '_')
+         // this is a special paragraph that requests no <p></p> tags
+         // (e.g. a chapter heading)
+         n.text = n.text.c_str()+1;
+      else
+      {
+         // wrap it with <p></p>
+         n.text = stream.str();
+         m_firstParagraph = false;
+      }
 
       visitChildren(n);
    }
