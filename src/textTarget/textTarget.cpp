@@ -9,7 +9,7 @@ class textTargetDefaultOptionPass : public iPass {
 public:
    virtual void run(config& c, passLinks&, void *pIr)
    {
-      //c.createOrFetch<stringSetting>("text:out-path",[](auto&s){ s.value="out.txt"; });
+      c.createOrFetch<stringSetting>("lead-in:nWords",[](auto&s){ s.value="5"; });
    }
 };
 
@@ -26,6 +26,7 @@ public:
       // pre-count formatter (i.e. everything contributing to word count)
       s.append(c.demand("jumpFormatterPass"));
       s.append(c.demand("entityInstanceFormatterPass"));
+      s.append(c.demand("leadInPass"));
       s.append(c.demand(getPassName("FormatProviderPass")));
       s.append(c.demand("expandedParagraphStylingPass"));
       s.append(c.demand("contractParagraphPass"));

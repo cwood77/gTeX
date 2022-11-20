@@ -8,7 +8,7 @@ Go to 1.
 
 _Chapter 1: The Beginning_
 
-Here lies some _italic_ text.
+HERE LIES SOME _italic_ text.
 
 But this one requires special "_concatenation_" !
 

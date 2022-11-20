@@ -20,6 +20,7 @@ completed settings:
   dot:on/N7prattle11boolSettingE = F
   dot:out/N7prattle13stringSettingE = out
   in/N7prattle13stringSettingE = .
+  lead-in:nWords/N7prattle13stringSettingE = 5
   out/N7prattle13stringSettingE = out
   target/N7prattle13stringSettingE = text
   targets/N7prattle18stringArraySettingE = [ text ]

@@ -274,6 +274,7 @@ MIDDLE_SRC = \
 	src/middle/gatherAndAttachEntityActionPass.cpp \
 	src/middle/labelMoverPass.cpp \
 	src/middle/labelRandomizerPass.cpp \
+	src/middle/leadInPass.cpp \
 	src/middle/linkerPass.cpp \
 	src/middle/mergeLabelsPass.cpp \
 	src/middle/middleTarget.cpp \
