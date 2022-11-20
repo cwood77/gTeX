@@ -1,3 +1,5 @@
 html:label-fmt := "<br><font size='20'>{label}</font><br><hr><br>"
 
 lead-in:nWords := 3
+
+html:table-header-style := b

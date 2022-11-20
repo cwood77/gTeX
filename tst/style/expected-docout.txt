@@ -2,13 +2,28 @@ Here lies some unformatted text.
 
 Here lies some _boldface_ text.
 
-Go to 1.
+Go to 2.
 
 --- 1 ----------------------------------------
+
+"Whoosh"
+
+--- 2 ----------------------------------------
 
 _Chapter 1: The Beginning_
 
 HERE LIES SOME _italic_ text.
 
 But this one requires special "_concatenation_" !
+
+There's a sword (1).
+
+You can considering "swinging" it (3).
+
+--- 3 ----------------------------------------
+
+swinging
+
+1 -> 1
+
 

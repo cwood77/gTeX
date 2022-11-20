@@ -343,6 +343,7 @@ HTMLTARGET_SRC = \
 	src/htmlTarget/htmlLabelFormatter.cpp \
 	src/htmlTarget/htmlParagraphPass.cpp \
 	src/htmlTarget/htmlPrintPass.cpp \
+	src/htmlTarget/htmlTableFormatterPass.cpp \
 	src/htmlTarget/htmlTarget.cpp \
 	src/htmlTarget/module.cpp \
 

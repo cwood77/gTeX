@@ -18,6 +18,7 @@ public:
          {
             s.value="</font></center>";
          });
+      c.createOrFetch<stringSetting>("html:table-header-style",[](auto&s){ s.value=""; });
    }
 };
 
@@ -31,9 +32,12 @@ public:
    virtual std::string getPredecessorTarget() { return "textPreTarget"; }
    virtual void adjustPasses(module::incrementalModuleLoader& mLdr, passCatalog& c, passSchedule& s)
    {
+      // encase paragraphs in <p></p> tags
       s.append(c.demand("htmlParagraphPass"));
 
+      // post-count formatter (i.e. everything not contributing to word count)
       s.append(c.demand("htmlLabelFormatterPass"));
+      s.append(c.demand("htmlTableFormatterPass"));
 
       // the end
       s.append(c.demand("htmlPrintPass"));

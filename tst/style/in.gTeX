@@ -1,3 +1,5 @@
+_entity char { actions { } }
+
 _:START
 
 Here lies some unformatted text.
@@ -12,3 +14,10 @@ _sch Chapter 1: The Beginning _sch
 Here lies some _si italic _si text.
 
 But this one requires special " _si.< concatenation _si " !
+
+There's a sword _{char :sword }.
+
+You can considering "swinging" it _attach{swinging :char }.
+
+_:sword->swinging
+"Whoosh"

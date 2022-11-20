@@ -36,20 +36,11 @@ public:
    std::list<std::pair<paragraphNode*,std::string> > stylingResidue;
 
 private:
-   iFormatProvider::fmts getFmtCode(const std::string& txt)
-   {
-      if(txt == "b") return iFormatProvider::kBold;
-      if(txt == "i") return iFormatProvider::kItalic;
-      if(txt == "hr") return iFormatProvider::kHRule;
-      if(txt == "ch") return iFormatProvider::kChapter;
-      throw std::runtime_error("unknown styling syntax: " + txt);
-   }
-
    std::string formatStyle(stylingNode& n, bool& isBegin)
    {
       std::stringstream stream;
 
-      auto code = getFmtCode(n.style);
+      auto code = iFormatProvider::getFmtCode(n.style);
       if(m_fStack.size() == 0 || m_fStack.back() != code)
       {
          m_fStack.push_back(code);
