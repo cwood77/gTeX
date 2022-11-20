@@ -2,6 +2,10 @@ Here lies some unformatted text.
 
 Here lies some _boldface_ text.
 
+Go to 1.
+
+--- 1 ----------------------------------------
+
 Here lies some _italic_ text.
 
 But this one requires special "_concatenation_" !

@@ -5,6 +5,16 @@
 using namespace prattle;
 using namespace prattle::pass;
 
+class htmlTargetDefaultOptionPass : public iPass {
+public:
+   virtual void run(config& c, passLinks&, void *pIr)
+   {
+      c.createOrFetch<stringSetting>("html:label-fmt",[](auto&s){ s.value="-- {label} --"; });
+   }
+};
+
+cdwExportPass(htmlTargetDefaultOptionPass,"cfg:target",0);
+
 class htmlTarget : public iTarget {
 public:
    htmlTarget() : m_pCfg(NULL) {}
@@ -14,7 +24,8 @@ public:
    virtual void adjustPasses(module::incrementalModuleLoader& mLdr, passCatalog& c, passSchedule& s)
    {
       s.append(c.demand("htmlParagraphPass"));
-      // label pass
+
+      s.append(c.demand("htmlLabelFormatterPass"));
 
       // the end
       s.append(c.demand("htmlPrintPass"));

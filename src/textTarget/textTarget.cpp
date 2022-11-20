@@ -38,9 +38,6 @@ public:
          s.append(c.demand("overallWordCountingPass"));
          s.append(c.demand("histogramPrintingPass"));
       }
-
-      // post-count formatter (i.e. everything not contributing to word count)
-      s.append(c.demand("labelFormatterPass"));
    }
 
 private:
@@ -63,6 +60,8 @@ public:
    virtual std::string getPredecessorTarget() { return "textPreTarget"; }
    virtual void adjustPasses(module::incrementalModuleLoader& mLdr, passCatalog& c, passSchedule& s)
    {
+      // post-count formatter (i.e. everything not contributing to word count)
+      s.append(c.demand("labelFormatterPass"));
       s.append(c.demand("tableFormatterPass"));
       // [graph] mapFormatterPass
 

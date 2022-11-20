@@ -59,6 +59,20 @@ void parser::parseValue(node& n)
          v.vals.push_back(m_l.getLexeme());
       }
    }
+   else if(m_l.getToken() == lexor::kQuote)
+   {
+      // quoted blob
+
+      auto& v = n.appendChild<strLitNode>();
+      m_l.setup(v);
+
+      m_l.advance(scanStrategies::get().quoted);
+      m_l.demand(lexor::kWord);
+      v.val = m_l.getLexeme();
+
+      m_l.advance();
+      m_l.demandAndEat(lexor::kQuote);
+   }
    else
    {
       // scalar

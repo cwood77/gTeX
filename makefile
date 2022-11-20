@@ -74,6 +74,7 @@ CMN_SRC = \
 	src/cmn/nameBank.cpp \
 	src/cmn/node.cpp \
 	src/cmn/output.cpp \
+	src/cmn/strUtil.cpp \
 
 CMN_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(CMN_SRC)))
 
@@ -338,6 +339,7 @@ $(TEXTTARGET_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 
 HTMLTARGET_SRC = \
 	src/htmlTarget/htmlFormatProviderPass.cpp \
+	src/htmlTarget/htmlLabelFormatter.cpp \
 	src/htmlTarget/htmlParagraphPass.cpp \
 	src/htmlTarget/htmlPrintPass.cpp \
 	src/htmlTarget/htmlTarget.cpp \

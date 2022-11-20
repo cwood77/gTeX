@@ -13,10 +13,22 @@ const lexemeTableEntry gCfgToken[] = {
    { lexemeTableEntry::kPunctuation,  "}",  lexor::kRBrace     },
    { lexemeTableEntry::kPunctuation,  "==", lexor::kEquOp      },
    { lexemeTableEntry::kPunctuation,  "!=", lexor::kNeqOp      },
+   { lexemeTableEntry::kPunctuation,  "\"", lexor::kQuote      },
    { lexemeTableEntry::kPunctuation,  NULL                     }
 };
 
 } // anonymous namespace
+
+void quotedTextScanStrategy::scan(kernel& k) const
+{
+   if(k.token != lexorBase::kUnknown)
+      return;
+
+   const char *pStart = k.pThumb;
+   for(;*k.pThumb!='"'&&*k.pThumb!=0;++k.pThumb);
+   k.token = m_token;
+   k.lexeme = std::string(pStart,k.pThumb-pStart);
+}
 
 scanStrategies& scanStrategies::get()
 {
@@ -27,6 +39,7 @@ scanStrategies& scanStrategies::get()
 scanStrategies::scanStrategies()
 : m_cfg(gCfgToken)
 , cfg(m_cfg,/*anyWordToken*/lexor::kWord)
+, quoted(lexor::kWord)
 {
 }
 
@@ -43,7 +56,7 @@ lexor::lexor(iLexorInput& src)
    publishToken(kRBrace,     "right brace");
    publishToken(kEquOp,      "equ op");
    publishToken(kNeqOp,      "neq op");
-
+   publishToken(kQuote,      "double quote");
 }
 
 void lexor::setup(node& n)

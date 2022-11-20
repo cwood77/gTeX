@@ -4,6 +4,9 @@ Here lies some unformatted text.
 
 Here lies some _sb boldface _sb text.
 
+Go to _$LABEL .
+
+_:LABEL
 Here lies some _si italic _si text.
 
 But this one requires special " _si.< concatenation _si " !
