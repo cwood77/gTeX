@@ -9,7 +9,10 @@ class htmlTargetDefaultOptionPass : public iPass {
 public:
    virtual void run(config& c, passLinks&, void *pIr)
    {
-      c.createOrFetch<stringSetting>("html:label-fmt",[](auto&s){ s.value="-- {label} --"; });
+      c.createOrFetch<stringSetting>("html:label-fmt",[](auto&s)
+         {
+            s.value="<center><font size='16'><b>{label}</b></font></center>";
+         });
       c.createOrFetch<stringSetting>("html:chap-fmt-before",[](auto&s)
          {
             s.value="<center><font size='18'>";

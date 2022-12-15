@@ -8,7 +8,7 @@ DEBUG_LNK_FLAGS_POST = -ggdb -static-libgcc -static-libstdc++ -static
 RELEASE_LNK_FLAGS_POST = -static-libgcc -static-libstdc++ -static
 
 test: debug
-	@cmd.exe /c tst\systemtest.bat
+	@cmd /c tst\systemtest.bat
 
 debug: \
 	dirs \
