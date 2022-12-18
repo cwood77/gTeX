@@ -37,6 +37,8 @@ running pass conditionalEvaluatorPass
 running pass expandInlineLabelsPass
 running pass expandParagraphPass
 running pass implementMacroPass
+running pass stdStyler
+running pass varRefStylingPass
 running pass evaluateCounterVarPass
 running pass evaluateRandomVarPass
 running pass ensureNoVarsPass

@@ -280,7 +280,9 @@ MIDDLE_SRC = \
 	src/middle/middleTarget.cpp \
 	src/middle/module.cpp \
 	src/middle/outFileCreatorPass.cpp \
+	src/middle/stdStyler.cpp \
 	src/middle/unlinkerPass.cpp \
+	src/middle/varRefStylingPass.cpp \
 
 MIDDLE_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(MIDDLE_SRC)))
 

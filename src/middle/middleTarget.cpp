@@ -13,6 +13,10 @@ public:
    virtual std::string getPredecessorTarget() { return "frontTarget"; }
    virtual void adjustPasses(module::incrementalModuleLoader& mLdr, passCatalog& c, passSchedule& s)
    {
+      // styling passes
+      s.append(c.demand("stdStyler"));
+      s.append(c.demand("varRefStylingPass"));
+
       // variables
       s.append(c.demand("evaluateCounterVarPass"));
       s.append(c.demand("evaluateRandomVarPass"));
