@@ -16,6 +16,7 @@ public:
       // styling passes
       s.append(c.demand("stdStyler"));
       s.append(c.demand("varRefStylingPass"));
+      s.append(c.demand("jumpStylingPass"));
 
       // variables
       s.append(c.demand("evaluateCounterVarPass"));

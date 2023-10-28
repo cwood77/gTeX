@@ -20,6 +20,8 @@ public:
 
       if(o == kRndVar)
          name << "rnd-var";
+      else if(o == kJump)
+         name << "jmp";
       else
          throw std::runtime_error("unsupported object type");
 

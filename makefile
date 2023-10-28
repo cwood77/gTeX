@@ -272,6 +272,7 @@ MIDDLE_SRC = \
 	src/middle/evaluateRandomVarPass.cpp \
 	src/middle/expandedParagraphStylingPass.cpp \
 	src/middle/gatherAndAttachEntityActionPass.cpp \
+	src/middle/jumpStylingPass.cpp \
 	src/middle/labelMoverPass.cpp \
 	src/middle/labelRandomizerPass.cpp \
 	src/middle/leadInPass.cpp \
@@ -281,6 +282,7 @@ MIDDLE_SRC = \
 	src/middle/module.cpp \
 	src/middle/outFileCreatorPass.cpp \
 	src/middle/stdStyler.cpp \
+	src/middle/stylingVisitorBase.cpp \
 	src/middle/unlinkerPass.cpp \
 	src/middle/varRefStylingPass.cpp \
 

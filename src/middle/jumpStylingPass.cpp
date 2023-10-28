@@ -15,22 +15,11 @@ public:
    virtual void visit(labelNode& n) { visitChildren(n); }
    virtual void visit(paragraphNode& n) { visitChildren(n); }
 
-   virtual void visit(varRefNode& n)
+   virtual void visit(jumpNode& n)
    {
-      // par        par
-      //   par        par
-      //   varRef     style  **
-      //   par        varRef
-      //              style  **
-      //              par
+      if(n.markedForMerge) return;
 
-      auto& decl = n.getRoot().demandDown<varDeclNode>(
-         [&](auto&d){ return d.name == n.baseName; });
-
-      if(decl.type.length() <= 7 && ::strncmp(decl.type.c_str(),"random<",7)!=0)
-         return;
-
-      auto style = m_styler.getFmt(iStyler::kRndVar);
+      auto style = m_styler.getFmt(iStyler::kJump);
       if(style.empty())
          return;
 
@@ -40,7 +29,7 @@ public:
 
 } // anonymous namespace
 
-class varRefStylingPass : public iPass {
+class jumpStylingPass : public iPass {
 public:
    void run(config&, passLinks& l, void *pIr)
    {
@@ -53,4 +42,4 @@ public:
    }
 };
 
-cdwExportPass(varRefStylingPass,"",-1);
+cdwExportPass(jumpStylingPass,"",-1);

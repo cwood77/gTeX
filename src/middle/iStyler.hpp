@@ -4,7 +4,8 @@
 class iStyler {
 public:
    enum objects {
-      kRndVar
+      kRndVar,
+      kJump
    };
 
    virtual std::string getFmt(objects o) = 0;
