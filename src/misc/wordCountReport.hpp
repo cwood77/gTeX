@@ -1,10 +1,11 @@
 #pragma once
+#include <istream>
 #include <list>
 #include <map>
-#include <string>
-#include <sstream>
 #include <ostream>
-#include <istream>
+#include <sstream>
+#include <string>
+#include <vector>
 
 namespace wcnt {
 
@@ -17,6 +18,9 @@ public:
    int year() const;
 
    time_t now;
+
+   std::string printSortableWithDay(int d) const;
+   std::string printSortable() const { return printSortableWithDay(day()); }
 };
 
 class iReportSection {
@@ -35,12 +39,14 @@ public:
    std::map<std::string,long> total;
 
 private:
+   void computeDeltas(std::vector<long>& d) const;
+
    bool m_reading;
 };
 
 class monthlyStats : public iReportSection {
 public:
-   monthlyStats() : m_reading(false) {}
+   monthlyStats() : month(0), m_reading(false) {}
 
    virtual bool tryEatLine(const std::string& line);
    virtual void write(std::ostream& o) const;
@@ -77,10 +83,6 @@ public:
 
    void load(std::istream& i);
    void save(std::ostream& o);
-
-private:
 };
 
 } // namespace wcnt
-
-std::ostream& operator<<(std::ostream& o, const wcnt::today& t);

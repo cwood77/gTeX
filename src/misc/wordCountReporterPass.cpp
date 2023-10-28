@@ -80,32 +80,24 @@ public:
       }
 
       // update the date summary log
-      {
-         std::stringstream todayStream;
-         todayStream << wcnt::today();
-         byDate.total[todayStream.str()] = (*pRoot)[attr];
-      }
+      byDate.total[wcnt::today().printSortable()] = (*pRoot)[attr];
 
       // update the monthly goals
+      if(auto *pM = c.fetch<stringArraySetting>("wcnt:nanowrimo"))
       {
-         nanowrimo.month = 0;
-         if(auto *pM = c.fetch<stringArraySetting>("wcnt:nanowrimo"))
-         {
-            nanowrimo.monthlyGoal = 50000;
-            ::sscanf(pM->value[0].c_str(),"%d",&nanowrimo.month);
-            ::sscanf(pM->value[1].c_str(),"%d",&nanowrimo.daysInMonth);
-            nanowrimo.wordsLeft = nanowrimo.monthlyGoal - (*pRoot)[attr];
-            nanowrimo.updateFrom(byDate);
-         }
+         nanowrimo.monthlyGoal = 50000;
+         ::sscanf(pM->value[0].c_str(),"%d",&nanowrimo.month);
+         ::sscanf(pM->value[1].c_str(),"%d",&nanowrimo.daysInMonth);
+         nanowrimo.wordsLeft = nanowrimo.monthlyGoal - (*pRoot)[attr];
+         nanowrimo.updateFrom(byDate);
       }
 
       // update the historical log
       {
          streamLogAdapter Log(hLog.addendum());
-         Log.s().s() << wcnt::today() << std::endl;
+         Log.s().s() << wcnt::today().printSortable() << std::endl;
          Log.s().s() << "-- word count totals --" << std::endl;
          {
-            autoIndent _i(Log);
             visitor v(attr,Log);
             pRoot->acceptVisitor(v);
          }

@@ -21,6 +21,19 @@ int today::year() const
    return pLt->tm_year+1900;
 }
 
+std::string today::printSortableWithDay(int d) const
+{
+   std::stringstream text;
+   text
+      << year()
+      << "/"
+      << std::setfill('0') << std::setw(2) << month()
+      << "/"
+      << std::setfill('0') << std::setw(2) << d
+   ;
+   return text.str();
+}
+
 bool dateSummaryTable::tryEatLine(const std::string& line)
 {
    if(!m_reading)
@@ -50,16 +63,31 @@ bool dateSummaryTable::tryEatLine(const std::string& line)
 
 void dateSummaryTable::write(std::ostream& o) const
 {
+   std::vector<long> deltas;
+   computeDeltas(deltas);
+
    o << "by date" << std::endl;
-   long last = 0;
-   for(auto it=total.begin();it!=total.end();++it)
+   auto dit = deltas.begin();
+   for(auto it=total.rbegin();it!=total.rend();++it,++dit)
    {
+      auto delta = *dit;
       o << it->first << " = " << it->second;
-      long delta = it->second - last;
-      last = it->second;
       o << " " << (delta > 0 ? "+" : "") << delta << std::endl;
    }
    o << std::endl;
+}
+
+void dateSummaryTable::computeDeltas(std::vector<long>& d) const
+{
+   d.reserve(total.size());
+
+   long last = 0;
+   for(auto it=total.begin();it!=total.end();++it)
+   {
+      long delta = it->second - last;
+      d.insert(d.begin(),delta);
+      last = it->second;
+   }
 }
 
 bool monthlyStats::tryEatLine(const std::string& line)
@@ -106,9 +134,8 @@ void monthlyStats::updateFrom(const dateSummaryTable& d)
    m_daysWritten = 0;
    for(auto di=1;di<daysInMonth;di++)
    {
-      std::stringstream dName;
-      dName << t.month() << "/" << std::setfill('0') << std::setw(2) << di << "/" << t.year();
-      if(d.total.find(dName.str())!=d.total.end())
+      auto dName = t.printSortableWithDay(di);
+      if(d.total.find(dName)!=d.total.end())
          m_daysWritten++;
    }
 }
@@ -149,13 +176,3 @@ void wordCountReport::save(std::ostream& o)
 }
 
 } // namespace wcnt
-
-std::ostream& operator<<(std::ostream& o, const wcnt::today& t)
-{
-   struct tm *pLt = ::localtime(&t.now);
-   char buffer[1024];
-   //::strftime(buffer,1024,"%d-%b-%Y",pLt);
-   ::strftime(buffer,1024,"%m/%d/%Y",pLt);
-   o << buffer;
-   return o;
-}
