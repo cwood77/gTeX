@@ -1,5 +1,4 @@
 #pragma once
-#include "iHistogramProviderPass.hpp"
 #include <istream>
 #include <set>
 #include <string>
@@ -51,9 +50,8 @@ private:
    std::set<iDictionary*,dictionarySorter> m_parts;
 };
 
-class iDictionaryProviderPass : public iHistogramProviderPass {
+class iDictionaryProviderPass {
 public:
-   virtual iHistogramProviderPass& getPrevious() = 0;
    virtual iDictionary& getDictionary() = 0;
 };
 

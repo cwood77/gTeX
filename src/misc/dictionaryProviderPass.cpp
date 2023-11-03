@@ -13,8 +13,6 @@ class dictionaryProviderPass : public iPass, public dict::iDictionaryProviderPas
 public:
    void run(config& c, passLinks& l, void *pIr)
    {
-      m_pPrev = &l.demandLink<iHistogramProviderPass>();
-
       // TODO HACK - this is terrible, but meh; there's only one gamebook for now
       std::string dictPathBase = "C:\\cygwin64\\home\\chris\\dev\\gTeX\\dict\\";
 
@@ -37,14 +35,9 @@ public:
       }
    }
 
-   virtual std::string getHistogramName() const { return "misspellings"; }
-   virtual histogram& getHistogram() { return m_histogram; }
-   virtual iHistogramProviderPass& getPrevious() { return *m_pPrev; }
    virtual dict::iDictionary& getDictionary() { return m_dict; }
 
 private:
-   histogram m_histogram;
-   iHistogramProviderPass *m_pPrev;
    dict::compositeDictionary m_dict;
 };
 

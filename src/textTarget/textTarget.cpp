@@ -45,7 +45,7 @@ private:
       s.append(c.demand("wordObserverProviderPass"));
       if(writesWordCountLog())
          s.append(c.demand("wordCountPreObservePass"));
-      //s.append(c.demand("histogramPreObservePass"));
+      s.append(c.demand("histogramPreObservePass"));
 
       // observe
       s.append(c.demand("wordObserverPass"));
@@ -53,7 +53,12 @@ private:
       // post-observe
       if(writesWordCountLog())
          s.append(c.demand("wordCountPostObservePass"));
-      //s.append(c.demand("histogramPostObservePass"));
+      if(doesSpellCheck())
+      {
+         s.append(c.demand("dictionaryProviderPass"));
+         s.append(c.demand("spellCheckingPass"));
+      }
+      s.append(c.demand("histogramPrintingPass"));
    }
 
    std::string getPassName(const std::string& baseName)

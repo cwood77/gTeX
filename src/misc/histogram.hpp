@@ -1,11 +1,17 @@
 #pragma once
+#include "iWordObserverProviderPass.hpp"
 #include <map>
 #include <set>
 #include <string>
 
-class histogram {
+class histogram : public iWordObserver {
 public:
+   explicit histogram(const std::string& name) : m_name(name) {}
+
+   std::string name() const { return m_name; }
    void add(const std::string& word, const std::string& filePath);
+   virtual void onWord(const std::string& w, paragraphNode& n)
+   { add(w,n.filePath); }
 
    std::map<size_t,std::set<std::string> >& byCount();
 
@@ -15,12 +21,6 @@ public:
 private:
    void checkWord(const std::string& word, const std::string& filePath);
 
+   std::string m_name;
    std::map<size_t,std::set<std::string> > m_sortedCache;
 };
-
-class iHistogramProviderPass {
-public:
-   virtual std::string getHistogramName() const = 0;
-   virtual histogram& getHistogram() = 0;
-};
-

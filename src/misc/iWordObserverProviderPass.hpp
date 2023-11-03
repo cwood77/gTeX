@@ -6,6 +6,7 @@
 
 class iWordObserver {
 public:
+   virtual ~iWordObserver() {}
    virtual void onWord(const std::string& w, paragraphNode& n) = 0;
 };
 

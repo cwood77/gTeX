@@ -196,11 +196,10 @@ $(FRONT_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 
 MISC_SRC = \
 	src/misc/dictionaryProviderPass.cpp \
+	src/misc/histogram.cpp \
 	src/misc/histogramPreObservePass.cpp \
 	src/misc/histogramPrintingPass.cpp \
-	src/misc/histogramProviderPass.cpp \
 	src/misc/iDictionaryProviderPass.cpp \
-	src/misc/iHistogramProviderPass.cpp \
 	src/misc/iWordObserverProviderPass.cpp \
 	src/misc/module.cpp \
 	src/misc/spellCheckingPass.cpp \

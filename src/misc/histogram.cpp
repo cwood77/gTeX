@@ -1,4 +1,4 @@
-#include "iHistogramProviderPass.hpp"
+#include "histogram.hpp"
 #include <sstream>
 
 void histogram::add(const std::string& word, const std::string& filePath)
