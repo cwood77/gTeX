@@ -1,7 +1,7 @@
 #include "../cmn/node.hpp"
 #include "../prattle/config.hpp"
 #include "../prattle/log.hpp"
-#include "paragraphWordCountingPass.hpp"
+#include "wordCountPreObservePass.hpp"
 #include "wordCountReport.hpp"
 #include <fstream>
 #include <iostream>
@@ -59,7 +59,7 @@ public:
    void run(config& c, passLinks& l, void *pIr)
    {
       auto *pRoot = reinterpret_cast<folderNode*>(pIr);
-      auto& attr = l.demandLink<paragraphWordCountingPass>().wCntAttr;
+      auto& attr = l.demandLink<wordCountPreObservePass>().wCntAttr;
 
       // construct the log
       wcnt::wordCountReport wcr;

@@ -3,11 +3,10 @@
 using namespace prattle;
 using namespace prattle::pass;
 
-class overallWordCountingPass : public iPass {
+class wordCountPostObservePass : public iPass {
 public:
    virtual void decompose(passCatalog& c, std::list<iPass*>& updated)
    {
-      updated.push_back(c.demand("paragraphWordCountingPass").create());
       updated.push_back(c.demand("wordCountRollupPass").create());
       updated.push_back(c.demand("wordCountReporterPass").create());
       delete this;
@@ -19,4 +18,4 @@ public:
    }
 };
 
-cdwExportPass(overallWordCountingPass,"",-1);
+cdwExportPass(wordCountPostObservePass,"",-1);

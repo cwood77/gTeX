@@ -195,15 +195,21 @@ $(FRONT_RELEASE_OBJ): $(OBJ_DIR)/release/%.o: src/%.cpp
 # misc
 
 MISC_SRC = \
+	src/misc/dictionaryProviderPass.cpp \
+	src/misc/histogramPreObservePass.cpp \
 	src/misc/histogramPrintingPass.cpp \
 	src/misc/histogramProviderPass.cpp \
+	src/misc/iDictionaryProviderPass.cpp \
 	src/misc/iHistogramProviderPass.cpp \
+	src/misc/iWordObserverProviderPass.cpp \
 	src/misc/module.cpp \
-	src/misc/overallWordCountingPass.cpp \
-	src/misc/paragraphWordCountingPass.cpp \
+	src/misc/spellCheckingPass.cpp \
+	src/misc/wordCountPostObservePass.cpp \
+	src/misc/wordCountPreObservePass.cpp \
 	src/misc/wordCountReport.cpp \
 	src/misc/wordCountReporterPass.cpp \
 	src/misc/wordCountRollupPass.cpp \
+	src/misc/wordObserverPass.cpp \
 
 MISC_DEBUG_OBJ = $(subst src,$(OBJ_DIR)/debug,$(patsubst %.cpp,%.o,$(MISC_SRC)))
 

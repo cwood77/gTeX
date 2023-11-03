@@ -13,14 +13,15 @@ class histogramPrintingPass : public iPass {
 public:
    void run(config& c, passLinks& l, void *pIr)
    {
+      auto& hpp = l.demandLink<iHistogramProviderPass>();
       {
-         auto path = output(c).ensurePath("out-histo.txt");
+         auto& h = hpp.getHistogram();
+
+         auto path = output(c).ensurePath(hpp.getHistogramName() + ".txt");
          std::cout << "  writing to " << path << std::endl;
          std::ofstream out(path.c_str());
          if(!out.good())
             throw std::runtime_error("can't open file for output: " + path);
-
-         auto& h = l.demandLink<iHistogramProviderPass>().getHistogram();
 
          for(auto it=h.byCount().rbegin();it!=h.byCount().rend();it++)
          {
@@ -40,13 +41,13 @@ public:
          }
       }
       {
-         auto path = output(c).ensurePath("out-histo2.txt");
+         auto& h = hpp.getHistogram();
+
+         auto path = output(c).ensurePath(hpp.getHistogramName() + "-flat.txt");
          std::cout << "  writing to " << path << std::endl;
          std::ofstream out(path.c_str());
          if(!out.good())
             throw std::runtime_error("can't open file for output: " + path);
-
-         auto& h = l.demandLink<iHistogramProviderPass>().getHistogram();
 
          for(auto it=h.counts.begin();it!=h.counts.end();++it)
             out << it->first << std::endl;

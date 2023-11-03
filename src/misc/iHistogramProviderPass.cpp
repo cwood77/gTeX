@@ -11,6 +11,7 @@ void histogram::add(const std::string& word, const std::string& filePath)
 
       // some puncutation is discardable
       if(c==' ' ||
+         c=='_' ||
          c=='.' || c=='!' || c=='?' ||
          c=='"' || c==',' || c==';' || c==':' ||
          c=='(' || c==')' ||
@@ -23,7 +24,7 @@ void histogram::add(const std::string& word, const std::string& filePath)
 
       // keep track if it's a number
       if(isNumber &&
-         !(('0' <= c) && (c <= '9')))
+         !((('0' <= c) && (c <= '9')) || c=='-' || c=='+' ))
          isNumber = false;
 
       // add it
@@ -45,4 +46,16 @@ std::map<size_t,std::set<std::string> >& histogram::byCount()
       for(auto it=counts.begin();it!=counts.end();++it)
          m_sortedCache[it->second].insert(it->first);
    return m_sortedCache;
+}
+
+// more complex rules discovered by example
+void histogram::checkWord(const std::string& word, const std::string& filePath)
+{
+   // remove leading single quotes: e.g. 'em
+   // remove begin+end quotes: e.g. 'evil'
+   // remove leading dashes: e.g. --can't
+   // remove trailing dashes: e.g. agents--
+   // split mid-word dashes: e.g. all--probably
+   // remove apostrophe s: e.g. alyona's
+   // TODO where did 'cold-water' come from?
 }

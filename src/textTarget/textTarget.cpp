@@ -31,22 +31,40 @@ public:
       s.append(c.demand("expandedParagraphStylingPass"));
       s.append(c.demand("contractParagraphPass"));
 
-      // word counting
-      if(m_pCfg->fetch<stringSetting>("wcnt:log-path"))
-      {
-         mLdr.tryLoad("misc.dll");
-         s.append(c.demand("histogramProviderPass"));
-         s.append(c.demand("overallWordCountingPass"));
-         s.append(c.demand("histogramPrintingPass"));
-      }
+      addWordCountingIf(mLdr,c,s);
    }
 
 private:
+   virtual void addWordCountingIf(module::incrementalModuleLoader& mLdr, passCatalog& c, passSchedule& s)
+   {
+      if(!doesWordCounting())
+         return;
+
+      // pre-observe
+      mLdr.tryLoad("misc.dll");
+      s.append(c.demand("wordObserverProviderPass"));
+      if(writesWordCountLog())
+         s.append(c.demand("wordCountPreObservePass"));
+      //s.append(c.demand("histogramPreObservePass"));
+
+      // observe
+      s.append(c.demand("wordObserverPass"));
+
+      // post-observe
+      if(writesWordCountLog())
+         s.append(c.demand("wordCountPostObservePass"));
+      //s.append(c.demand("histogramPostObservePass"));
+   }
+
    std::string getPassName(const std::string& baseName)
    {
       auto& tgt = m_pCfg->demand<stringSetting>("target");
       return tgt.value + baseName;
    }
+
+   bool writesWordCountLog() { return m_pCfg->fetch<stringSetting>("wcnt:log-path"); }
+   bool doesSpellCheck() { return m_pCfg->fetch<stringArraySetting>("dict:names"); }
+   bool doesWordCounting() { return writesWordCountLog() || doesSpellCheck(); }
 
    config *m_pCfg;
 };

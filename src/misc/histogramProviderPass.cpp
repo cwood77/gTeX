@@ -7,6 +7,7 @@ using namespace prattle::pass;
 class histogramProviderPass : public iPass, public iHistogramProviderPass {
 public:
    void run(config& c, passLinks&, void *pIr) {}
+   virtual std::string getHistogramName() const { return "word-hist"; }
    virtual histogram& getHistogram() { return m_histogram; }
 
 private:

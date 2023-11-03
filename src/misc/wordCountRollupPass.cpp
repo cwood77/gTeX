@@ -1,5 +1,5 @@
 #include "../cmn/node.hpp"
-#include "paragraphWordCountingPass.hpp"
+#include "wordCountPreObservePass.hpp"
 
 using namespace prattle;
 using namespace prattle::pass;
@@ -46,7 +46,7 @@ public:
    {
       auto *pRoot = reinterpret_cast<folderNode*>(pIr);
 
-      visitor v(l.demandLink<paragraphWordCountingPass>().wCntAttr);
+      visitor v(l.demandLink<wordCountPreObservePass>().wCntAttr);
       pRoot->acceptVisitor(v);
    }
 };
