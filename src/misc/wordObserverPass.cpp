@@ -93,7 +93,7 @@ private:
       else
       {
          transformSplit(std::string(word.c_str(),pHyphen-word.c_str()),words);
-         transformSplit(pHyphen+2,words);
+         transformSplit(pHyphen+1,words);
       }
    }
 
