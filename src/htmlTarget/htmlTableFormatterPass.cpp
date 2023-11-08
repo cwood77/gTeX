@@ -37,7 +37,8 @@ public:
       else
          throw std::runtime_error("unimpled - html table - normalentity");
 
-      stream << "<table>" << std::endl;
+      stream << "<br/><table>" << std::endl;
+      stream << "<tr><td>To ask character...</td><td>Turn to...</td></tr>" << std::endl;
       for(auto it=n.operandsToLabels.begin();it!=n.operandsToLabels.end();++it)
          stream
             << "<tr><td>" << it->first
