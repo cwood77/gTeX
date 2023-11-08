@@ -15,6 +15,7 @@ public:
       auto& dict = l.demandLink<dict::iDictionaryProviderPass>().getDictionary();
       auto& source = getSourceHistogram(l);
       auto& misspellings = getDestHistogram(l);
+      misspellings.clear();
 
       for(auto it=source.counts.begin();it!=source.counts.end();++it)
       {
@@ -29,7 +30,7 @@ public:
    }
 
 private:
-   histogram& getSourceHistogram(passLinks& l) { return demandHistogram(l,"word-hist"); }
+   histogram& getSourceHistogram(passLinks& l) { return demandHistogram(l,"word-hist-truecase"); }
    histogram& getDestHistogram(passLinks& l) { return demandHistogram(l,"misspellings"); }
    histogram& demandHistogram(passLinks& l, const std::string& name)
    {

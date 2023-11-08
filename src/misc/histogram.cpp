@@ -4,36 +4,20 @@
 void histogram::add(const std::string& word, const std::string& filePath)
 {
    std::stringstream noob;
-   bool isNumber = true;
    for(size_t i=0;i<word.length();i++)
    {
       char c = word.c_str()[i];
 
-      // some puncutation is discardable
-      if(c==' ' ||
-         c=='_' ||
-         c=='.' || c=='!' || c=='?' ||
-         c=='"' || c==',' || c==';' || c==':' ||
-         c=='(' || c==')' ||
-         c=='[' || c==']')
-         continue;
-
       // lowercase it
-      if(('A' <= c) && (c <= 'Z'))
-         c += ('a' - 'A');
-
-      // keep track if it's a number
-      if(isNumber &&
-         !((('0' <= c) && (c <= '9')) || c=='-' || c=='+' ))
-         isNumber = false;
+      if(m_lowercase)
+      {
+         if(('A' <= c) && (c <= 'Z'))
+            c += ('a' - 'A');
+      }
 
       // add it
       noob << c;
    }
-
-   // if it's only numbers, then it's a jump, so ignore it
-   if(isNumber)
-      return;
 
    counts[noob.str()]++;
    files[noob.str()].insert(filePath);
@@ -46,16 +30,4 @@ std::map<size_t,std::set<std::string> >& histogram::byCount()
       for(auto it=counts.begin();it!=counts.end();++it)
          m_sortedCache[it->second].insert(it->first);
    return m_sortedCache;
-}
-
-// more complex rules discovered by example
-void histogram::checkWord(const std::string& word, const std::string& filePath)
-{
-   // remove leading single quotes: e.g. 'em
-   // remove begin+end quotes: e.g. 'evil'
-   // remove leading dashes: e.g. --can't
-   // remove trailing dashes: e.g. agents--
-   // split mid-word dashes: e.g. all--probably
-   // remove apostrophe s: e.g. alyona's
-   // TODO where did 'cold-water' come from?
 }
